@@ -420,7 +420,7 @@ var RegionPanel = function(app) {
 		"CAMERA-RIGHT": $(this.CSS["CAMERA-RIGHT"])
 	}
 
-	this.svgWriter = new SVGLoader(this);
+	this.svgWriter = new SVGLoader(this.app);
 
 	this.getBgCurrentCamera = function() {
 		return this.app.getResByPath(ConfigApp["REGIONS"][this.currentCamera]["MAP"]) ;
