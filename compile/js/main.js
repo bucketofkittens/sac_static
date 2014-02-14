@@ -598,9 +598,27 @@ var MapEventsPanel = function(app) {
 
 	this.show = function() {
 		this.elements["CONTAINER"].removeClass("onHidden");
-		this.app.eventRightWidgets.fullShow();
+		/*this.app.eventRightWidgets.fullShow();
 		this.app.eventLegendWidgets.fullShow();
-		this.app.eventsLegendWidget.show();
+		this.app.eventsLegendWidget.show();*/
+
+    // начало из DistrictsPanel
+		this.app.eventsMapStateManager.removeBlur();
+		if(this.app.currentZoom != 1) {
+			this.app.eventsMapStateManager.miniMapWriter.opacityShow();	
+		}
+		
+		this.app.eventsMapStateManager.SVGWriter.show();
+		this.app.eventsMapStateManager.SVGWriter.load(this.app.configManager.getSvgById(this.app.currentRegion));
+		//this.app.parametrsWidgets.fullShow();
+		//this.app.mapColorWidget.updateParams();
+		//this.app.mapColorel.show();
+		this.app.pageTitleWidget.show();
+
+		//if(this.app.parametrsWidgets.currentParametr && this.app.parametrsWidgets.currentParametr.id) {
+		//	this.app.legendWidget.show();
+		//}
+    // конец из DistrictsPanel
 	}
 
 	this.hidden = function() {
@@ -733,6 +751,132 @@ var MapStateManager = function(app) {
 }
 
 /**
+ * [EventsMapStateManager description]
+ * @param {[type]} app [description]
+ */
+var EventsMapStateManager = function(app) {
+	this.miniMapWriter = new MiniMapWriter();
+	this.miniMapWriter.setText(this.backTitleText);
+
+	this.OnDistrictChangeState = new signals.Signal();
+	this.OnDistrictChangeState.add(OnDistrictChangeState);
+
+	this.onAfterStateChange = null;
+
+	this.stateCSS = {
+		"BG-IMAGE": "#bg-event-image"
+	}
+
+	this.stateElements =  {
+		"BG-IMAGE": {}
+	}
+
+	this.bgImage = {};
+	this.regions = {};
+	this.currentRegionData = {};
+	this.stateElements["BG-IMAGE"] = $(this.stateCSS["BG-IMAGE"]);
+
+	this.addBlur = function() {
+		this.stateElements["BG-IMAGE"].addClass("blur");
+	}
+
+	this.removeBlur = function() {
+		this.stateElements["BG-IMAGE"].removeClass("blur");
+	}
+
+	this.setPrevRegion = function(data) {
+		this.prevRegion = data;
+		this.miniMapWriter.setText(this.prevRegion.name);
+		this.miniMapWriter.show(
+			this.app.configManager.getMiniMapById(this.app.currentRegion), 
+			$.proxy(this.onBack_, this)
+		);
+	}
+
+	this.setRootRegions = function(data) {
+		this.regions = this.app.regionsManagerLocal.getRegionsByParent(this.app.currentRegion, data);
+		this.currentRegionData = this.app.regionsManagerLocal.getRegionById(this.app.currentRegion, data);
+
+		this.app.setAppTitle(this.currentRegionData.name);
+		if(this.app.currentZoom != 1) {
+			if(this.currentRegionData.parent_id) {
+				this.setPrevRegion(
+					this.app.regionsManagerLocal.getRegionById(
+						this.currentRegionData.parent_id, 
+						data
+					)
+				);
+			}
+		}
+	}
+
+	this.show = function() {
+		this.app.regionsManagerLocal.getRegions($.proxy(this.setRootRegions, this));
+		
+		this.setBgImage();
+		//this.app.mapColorWidget.updateParams();
+		this.SVGWriter.load(this.app.configManager.getSvgById(this.app.currentRegion));
+		this.app.parametrsWidgets.getParamsByRegionAndYeage(this.app.currentRegion);
+	}
+
+	this.setBgImage = function(bgImageLoaded) {
+    console.log(this.app.currentRegion)
+    if (this.app.currentRegion == 100) {
+		  this.stateElements["BG-IMAGE"].css("backgroundImage", "url('/static/images/bg-map-events-100.jpg')");
+    } else {
+		  this.bgImage = this.app.configManager.getMapById(this.app.currentRegion);
+		  this.stateElements["BG-IMAGE"].css("backgroundImage", "url('"+this.bgImage+"')");
+    }
+	}
+
+	this.onBack_ = function() {
+		this.onBeforeVideoPlay_();
+
+		var outVideo = this.app.configManager.getOutVideoById(this.app.currentRegion);
+
+		this.app.currentRegion = this.prevRegion.id;
+		this.app.prevState();
+
+		this.OnDistrictChangeState.dispatch(this.app, this, outVideo);
+
+		this.app.legendWidget.hide();
+	}
+
+	this.clear = function() {
+		this.miniMapWriter.hiden();
+	}
+
+	this.onBeforeVideoPlay_ = function() {
+		this.miniMapWriter.hiden();
+		this.app.mapColorel.hidden();
+		this.SVGWriter.hide();
+	}
+
+	this.onSvgClick_ = function(evt) {
+		var newIdRegion = $(evt.target).parent().attr("target");
+
+		if(newIdRegion) {
+			this.app.legendWidget.hide();
+			var inVideo = this.app.configManager.getInVideoById(newIdRegion);
+			if(inVideo) {
+				this.onBeforeVideoPlay_();
+
+				this.app.currentRegion = newIdRegion;
+				this.app.nextState();
+
+				this.OnDistrictChangeState.dispatch(this.app, this, inVideo);
+			}
+		}
+	}
+
+	this.app = app;
+	this.SVGWriter = new SVGLoader(app, {
+		onClick: $.proxy(this.onSvgClick_, this)
+	});
+}
+
+
+/**
  * [Application description]
  */
 var Application = function() {
@@ -856,6 +1000,7 @@ var Application = function() {
 		this.paramsManager = new ParamsManager(this);
 		
 		this.mapStateManager = new MapStateManager(this);
+		this.eventsMapStateManager = new EventsMapStateManager(this);
 		this.legendManager = new LegendManager(this);
 		this.graphManager = new GraphManager(this);
 		this.regionsManagerLocal = new RegionsManagerLocal(this);
@@ -926,6 +1071,13 @@ var Application = function() {
 
 		this.loadingState.stop();
 		this.onPanelsShow();
+// hardcore
+  /*this.mapColorel.colored(
+    32,//this.currentParametr.id, 
+    100,//this.app.currentRegion, 
+    2014//this.app.ageSelectorWidget.selectedYear,
+    //$.proxy(this.mapColorel.show(), this) 
+  );*/
 	}
 
 	this.setAppTitle = function(title) {
@@ -938,5 +1090,6 @@ var Application = function() {
 $(document).ready(function() {
 	var application = new Application();
 	application.run();
+
 	
 })
