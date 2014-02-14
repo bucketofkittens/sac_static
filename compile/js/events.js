@@ -96,8 +96,8 @@ var OnDistrictChangeState = function(app, mapStateManager, video_id, currentRegi
 		//this.app.mapColorel.show();
 		this.app.videoPlayer.hide();
 		
-		if(this.app.mapStateManager.onAfterStateChange) {
-			this.app.mapStateManager.onAfterStateChange();
+		if(this.mapStateManager.onAfterStateChange) {
+			this.mapStateManager.onAfterStateChange();
 		}
 	}
 
@@ -122,14 +122,14 @@ var OnDistrictChangeState = function(app, mapStateManager, video_id, currentRegi
 		this.finishEvent += 1;
 		this.app.legendWidget.hide();
 	}
+  console.log(this.mapStateManager.bgImage);
 
 	this.app.videoPlayer.play(
 		video_id,
 		{
 			onEndedCallback: $.proxy(this.onAfterEvent_, this),
+			//poster: this.mapStateManager.getBgImage()	
 			poster: this.mapStateManager.bgImage	
 		}
 	);
-
-	
 }

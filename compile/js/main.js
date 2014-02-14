@@ -583,6 +583,7 @@ var MapEventsPanel = function(app) {
 		"latitude": 55.7517,
 		"longitude": 37.6178
 	}];
+  this.currentRegion = 100;
 
 	this.OnEvensMapChangeState = new signals.Signal();
 	this.OnEvensMapChangeState.add(OnEvensMapChangeState);
@@ -604,12 +605,12 @@ var MapEventsPanel = function(app) {
 
     // начало из DistrictsPanel
 		this.app.eventsMapStateManager.removeBlur();
-		if(this.app.currentZoom != 1) {
-			this.app.eventsMapStateManager.miniMapWriter.opacityShow();	
-		}
-		
+		//if(this.app.currentZoom != 1) {
+		//	this.app.eventsMapStateManager.miniMapWriter.opacityShow();	
+		//}
+		var region = (this.app.eventsMapStateManager.currentRegion || this.currentRegion)
+		this.app.eventsMapStateManager.SVGWriter.load(this.app.configManager.getSvgById(region));
 		this.app.eventsMapStateManager.SVGWriter.show();
-		this.app.eventsMapStateManager.SVGWriter.load(this.app.configManager.getSvgById(this.app.currentRegion));
 		//this.app.parametrsWidgets.fullShow();
 		//this.app.mapColorWidget.updateParams();
 		//this.app.mapColorel.show();
@@ -698,8 +699,12 @@ var MapStateManager = function(app) {
 		this.SVGWriter.load(this.app.configManager.getSvgById(this.app.currentRegion));
 		this.app.parametrsWidgets.getParamsByRegionAndYeage(this.app.currentRegion);
 	}
+	//this.getBgImage = function(bgImageLoaded) {
+  //  return this.app.configManager.getMapById(this.app.currentRegion);
+	//}
 
 	this.setBgImage = function(bgImageLoaded) {
+		//this.bgImage = this.getBgImage();
 		this.bgImage = this.app.configManager.getMapById(this.app.currentRegion);
 		this.stateElements["BG-IMAGE"].css("backgroundImage", "url('"+this.bgImage+"')");
 	}
@@ -762,6 +767,7 @@ var EventsMapStateManager = function(app) {
 	this.OnDistrictChangeState.add(OnDistrictChangeState);
 
 	this.onAfterStateChange = null;
+  this.currentRegion = null;
 
 	this.stateCSS = {
 		"BG-IMAGE": "#bg-event-image"
@@ -788,14 +794,14 @@ var EventsMapStateManager = function(app) {
 		this.prevRegion = data;
 		this.miniMapWriter.setText(this.prevRegion.name);
 		this.miniMapWriter.show(
-			this.app.configManager.getMiniMapById(this.app.currentRegion), 
+			this.app.configManager.getMiniMapById(this.currentRegion), 
 			$.proxy(this.onBack_, this)
 		);
 	}
 
 	this.setRootRegions = function(data) {
-		this.regions = this.app.regionsManagerLocal.getRegionsByParent(this.app.currentRegion, data);
-		this.currentRegionData = this.app.regionsManagerLocal.getRegionById(this.app.currentRegion, data);
+		this.regions = this.app.regionsManagerLocal.getRegionsByParent(this.currentRegion, data);
+		this.currentRegionData = this.app.regionsManagerLocal.getRegionById(this.currentRegion, data);
 
 		this.app.setAppTitle(this.currentRegionData.name);
 		if(this.app.currentZoom != 1) {
@@ -815,26 +821,30 @@ var EventsMapStateManager = function(app) {
 		
 		this.setBgImage();
 		//this.app.mapColorWidget.updateParams();
-		this.SVGWriter.load(this.app.configManager.getSvgById(this.app.currentRegion));
-		this.app.parametrsWidgets.getParamsByRegionAndYeage(this.app.currentRegion);
+		this.SVGWriter.load(this.app.configManager.getSvgById(this.currentRegion));
+		this.app.parametrsWidgets.getParamsByRegionAndYeage(this.currentRegion);
 	}
+  this.getBgImage = function(){
+    if (this.currentRegion == 100) {
+		  return '/static/images/bg-map-events-100.jpg';
+    } else if (this.currentRegion == 101) {
+		  return '/static/images/bg-map-events-101.jpg';
+    } else {
+		  return this.app.configManager.getMapById(this.currentRegion);
+    }
+  }
 
 	this.setBgImage = function(bgImageLoaded) {
-    console.log(this.app.currentRegion)
-    if (this.app.currentRegion == 100) {
-		  this.stateElements["BG-IMAGE"].css("backgroundImage", "url('/static/images/bg-map-events-100.jpg')");
-    } else {
-		  this.bgImage = this.app.configManager.getMapById(this.app.currentRegion);
-		  this.stateElements["BG-IMAGE"].css("backgroundImage", "url('"+this.bgImage+"')");
-    }
+		this.bgImage = this.getBgImage();
+		this.stateElements["BG-IMAGE"].css("backgroundImage", "url('"+this.bgImage+"')");
 	}
 
 	this.onBack_ = function() {
 		this.onBeforeVideoPlay_();
 
-		var outVideo = this.app.configManager.getOutVideoById(this.app.currentRegion);
+		var outVideo = this.app.configManager.getOutVideoById(this.currentRegion);
 
-		this.app.currentRegion = this.prevRegion.id;
+		this.currentRegion = this.prevRegion.id;
 		this.app.prevState();
 
 		this.OnDistrictChangeState.dispatch(this.app, this, outVideo);
@@ -861,7 +871,7 @@ var EventsMapStateManager = function(app) {
 			if(inVideo) {
 				this.onBeforeVideoPlay_();
 
-				this.app.currentRegion = newIdRegion;
+				this.currentRegion = newIdRegion;
 				this.app.nextState();
 
 				this.OnDistrictChangeState.dispatch(this.app, this, inVideo);
