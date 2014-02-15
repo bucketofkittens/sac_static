@@ -7,16 +7,16 @@ var ConfigApp = {
 	},
 	"API-HOST": window.location.origin, /* window.location.origin works only in webkit */
 	"FOOTER-NAV": {
-		"MAP": {
+		"DISTRICTS": {
 			"title": "округа"
 		},
 		"REGIONS": {
 			"title": "Регионы"
 		},
-		"FORMAT": {
+		"FORMATS": {
 			"title": "Форматы"
 		},
-		"GRAPH": {
+		"GRAPHS": {
 			"title": "Графики"
 		}, 
 		"EVENTS": {

@@ -106,7 +106,7 @@ var FooterNavWidget = function(app) {
 		if(element["cooming"]) {
 			$(newLink).addClass("cooming");
 		}
-		if(index == "MAP") {
+		if(index == "DISTRICTS") {
 			$(newLink).addClass("active");
 		}
 		this.elements["MAIN"].append(newLink);
@@ -119,63 +119,8 @@ var FooterNavWidget = function(app) {
 		var itemId = curElement.attr("data-id");
 
 		if(!curElement.hasClass("cooming")) {
-			if(itemId == "GRAPH") {
-				this.app.districtsPanel.hidden();
-				this.app.regionPanel.hidden();
-				this.app.formatPanel.hidden();
-				this.app.mapEventsPanel.hidden();
-				this.app.reportsPanel.hidden();
-
-				this.app.graphPanel.show();
-			}
-			
-			if(itemId == "FORMAT") {
-				this.app.districtsPanel.hidden();
-				this.app.regionPanel.hidden();
-				this.app.graphPanel.hidden();
-				this.app.mapEventsPanel.hidden();
-				this.app.reportsPanel.hidden();
-
-				this.app.formatPanel.show();
-			}
-
-			if(itemId == "REGIONS") {
-				this.app.districtsPanel.hidden();
-				this.app.graphPanel.hidden();
-				this.app.formatPanel.hidden();
-				this.app.mapEventsPanel.hidden();
-				this.app.reportsPanel.hidden();
-
-				this.app.regionPanel.show();
-			}
-			if(itemId == "MAP") {
-				this.app.regionPanel.hidden();
-				this.app.graphPanel.hidden();
-				this.app.formatPanel.hidden();
-				this.app.mapEventsPanel.hidden();
-				this.app.reportsPanel.hidden();
-
-				this.app.districtsPanel.show();
-			}
-			if(itemId == "EVENTS") {
-				this.app.regionPanel.hidden();
-				this.app.graphPanel.hidden();
-				this.app.formatPanel.hidden();
-				this.app.districtsPanel.hidden();
-				this.app.reportsPanel.hidden();
-				
-				this.app.mapEventsPanel.show();
-			}
-
-			if(itemId == "REPORTS") {
-				this.app.regionPanel.hidden();
-				this.app.graphPanel.hidden();
-				this.app.formatPanel.hidden();
-				this.app.districtsPanel.hidden();
-				this.app.mapEventsPanel.hidden();
-
-				this.app.reportsPanel.show();
-			}
+      _.each(this.app.panels, function(panel) { panel.hidden() })
+      this.app.panels[itemId].show()
 		}
 		
 		if(!curElement.hasClass("cooming")) {

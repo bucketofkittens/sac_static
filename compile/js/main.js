@@ -914,25 +914,20 @@ var Application = function() {
 		this.regionsParametrsWidgets = new RegionsParametrsWidgets(this);
 		this.regionsLegendWidget = new RegionsLegendWidget(this);
 
-		this.regionPanel = new RegionPanel(this);
-		this.districtsPanel = new DistrictsPanel(this);
-		this.graphPanel = new GraphPanel(this);
-		this.formatPanel = new FormatPanel(this);
-		this.reportsPanel = new ReportsPanel(this);
-		this.mapEventsPanel = new MapEventsPanel(this);
+    this.panels = {
+      'DISTRICTS': new DistrictsPanel(this),
+      'REGIONS': new RegionPanel(this),
+      'FORMATS': new FormatPanel(this),
+      'GRAPHS': new GraphPanel(this),
+      'EVENTS': new MapEventsPanel(this),
+      'REPORTS': new ReportsPanel(this)
+    };
 
 		this.regionsMapColorWidget.enable();
 		this.mapColorWidget.enable();
 
 		this.loadingState.stop();
 		this.onPanelsShow();
-// hardcore
-  /*this.mapColorel.colored(
-    32,//this.currentParametr.id, 
-    100,//this.app.currentRegion, 
-    2014//this.app.ageSelectorWidget.selectedYear,
-    //$.proxy(this.mapColorel.show(), this) 
-  );*/
 	}
 
 	this.setAppTitle = function(title) {
@@ -945,6 +940,4 @@ var Application = function() {
 $(document).ready(function() {
 	var application = new Application();
 	application.run();
-
-	
 })
