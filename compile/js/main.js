@@ -1,166 +1,4 @@
 /**
- * [SVGLoader description]
- * @param {[type]} app [description]
- */
-var SVGLoader = function(app, config) {
-	this.app = app;
-	this.maxOpacity = 0.3;
-	this.minOpacity = 0.001;
-
-	if(config && config.onClick) {
-		this.onGroupClick = config.onClick;
-	}
-
-	this.CSS = {
-		"BG": "#bg-svg",
-		"SVG": "#svg",
-		"IN-SVG-CSS": "#in-svg-css"
-	}
-
-	this.elements = {
-		"BG": $(this.CSS["BG"]),
-		"SVG": $(this.CSS["SVG"]),
-		"IN-SVG-CSS": $(this.CSS["IN-SVG-CSS"])
-	}
-
-	this.load = function(path) {
-		this.elements["BG"].hide();
-
-		var newObject = document.createElement("object");
-		newObject.setAttribute("id", "svg");
-		newObject.setAttribute("type", "image/svg+xml");
-		newObject.setAttribute("data", path);
-		newObject.setAttribute("width", "100%");
-		newObject.setAttribute("height", "100%");
-
-		this.elements["BG"].html("");
-		this.elements["BG"].append(newObject);
-		this.elements["SVG"] = $(this.CSS["SVG"]);
-
-		this.prepareSvg_();
-	}
-
-	this.hide = function() {
-		this.elements["BG"].addClass("onHidden");
-	}
-
-	this.show = function() {
-		this.elements["BG"].removeClass("onHidden");
-	}
-
-	this.prepareSvg_ = function() {
-		this.elements["SVG"].on("load", $.proxy(this.onLoadSvg_, this));
-		this.elements["BG"].show();
-	}
-
-	this.appendCSS_ = function(svg) {
-		var styleElement = svg.createElementNS("http://www.w3.org/2000/svg", "style");
-		styleElement.textContent = this.elements["IN-SVG-CSS"].html();
-		$(svg).find("svg")[0].appendChild(styleElement);
-	}
-
-	this.onLoadSvg_ = function() {
-		var svg = this.elements["SVG"][0].getSVGDocument();
-		var self = this;
-		console.log(svg);
-		this.appendCSS_(svg);
-		
-		$.each($(svg).find("path"), function(key, value) {
-			$(value).attr("fill", "#ffffff");
-			$(value).attr("fill-opacity", "0");
-			$(value).removeAttr("opacity");
-			if(self.app.currentZoom != 3) {
-				$(value).css("cursor", "pointer");	
-			}
-		});
-
-		var groups = $(svg).find("g");
-		groups.off();
-
-		groups.on("mouseover", function() {
-			var paths = $(this).find("path");
-			paths.attr({
-				"fill-opacity": self.maxOpacity
-			});
-
-			if(self.app.parametrsWidgets.currentParametr && self.app.parametrsWidgets.currentParametr.id) {
-				self.app.legendManager.getLegendByParamAndSubject(
-					self.app.parametrsWidgets.currentParametr.id, 
-					$(this).attr("target"),
-					function(data) {
-						self.app.legendWidget.setLevelText(data);
-						self.app.legendWidget.show();
-					}
-				);	
-			}
-		});
-		groups.on("mouseout", function() {
-			var paths = $(this).stop().find("path");
-			paths.attr({
-				"fill-opacity": self.minOpacity
-			});
-
-			self.app.legendWidget.hide();
-		});
-
-		if(this.onGroupClick) {
-			groups.on("click", this.onGroupClick);	
-		}
-	}
-
-	this.drawParamValues = function(data, CSSclasses) {
-		this.removeParamValues();
-
-		var svg = $(this.CSS["SVG"])[0].getSVGDocument();
-		var self = this;
-		console.log($(this.CSS["SVG"])[0].getSVGDocument());
-		$.each($(svg).find("g"), function(key, value) {
-			var id = $(value).attr("target");
-			if(id && data[id] != 0) {
-				var newElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
-				var path = $(value).find("path")[0];
-
-				var x = parseInt(($(path).offset().left + path.getBoundingClientRect().width/2));
-				var y = parseInt(($(path).offset().top + path.getBoundingClientRect().height/2));
-
-				var correctPath = "DISTRICT";
-
-				if(CSSclasses == "regions") {
-					correctPath = "REGIONS";
-				}
-				if(ConfigApp["TARGETS"][correctPath][id]) {
-					x = x + parseInt(ConfigApp["TARGETS"][correctPath][id]["x"]);
-					y = y + parseInt(ConfigApp["TARGETS"][correctPath][id]["y"]);
-				}
-
-				var classes = "zoom"+self.app.currentZoom+" "+CSSclasses;
-				var val = decorateValues(data[id], 2);
-				$(newElement).html(Number(val));
-				$(newElement).attr({
-					x: x,
-					y: y,
-					"fill": "#ffffff",
-					"class": classes,
-					"fill-opacity": "0"
-				});
-
-				$(svg).find("svg")[0].appendChild(newElement);	
-			}
-
-			$(svg).find("text").attr({
-				"fill-opacity": "1"
-			});
-		});
-	}
-
-	this.removeParamValues = function() {
-		var svg = $(this.CSS["SVG"])[0].getSVGDocument();
-		$(svg).find("text").remove();
-	}
-
-}
-
-/**
  * [ description]
  * @return {[type]} [description]
  */
@@ -309,7 +147,7 @@ var DistrictsPanel = function(app) {
 
 	this.show = function() {
 		this.app.mapStateManager.removeBlur();
-		if(this.app.currentZoom != 1) {
+		if(this.app.currentZoom['districts'] != 1) {
 			this.app.mapStateManager.miniMapWriter.opacityShow();	
 		}
 		
@@ -679,7 +517,7 @@ var MapStateManager = function(app) {
 		this.currentRegionData = this.app.regionsManagerLocal.getRegionById(this.app.currentRegion, data);
 
 		this.app.setAppTitle(this.currentRegionData.name);
-		if(this.app.currentZoom != 1) {
+		if(this.app.currentZoom['districts'] != 1) {
 			if(this.currentRegionData.parent_id) {
 				this.setPrevRegion(
 					this.app.regionsManagerLocal.getRegionById(
@@ -742,7 +580,7 @@ var MapStateManager = function(app) {
 				this.onBeforeVideoPlay_();
 
 				this.app.currentRegion = newIdRegion;
-				this.app.nextState();
+				this.app.nextState('districts');
 
 				this.OnDistrictChangeState.dispatch(this.app, this, inVideo);
 			}
@@ -751,7 +589,8 @@ var MapStateManager = function(app) {
 
 	this.app = app;
 	this.SVGWriter = new SVGLoader(app, {
-		onClick: $.proxy(this.onSvgClick_, this)
+		onClick: $.proxy(this.onSvgClick_, this),
+    panelName: 'districts'
 	});
 }
 
@@ -760,6 +599,7 @@ var MapStateManager = function(app) {
  * @param {[type]} app [description]
  */
 var EventsMapStateManager = function(app) {
+  this.panelName = 'events';
 	this.miniMapWriter = new MiniMapWriter();
 	this.miniMapWriter.setText(this.backTitleText);
 
@@ -804,7 +644,7 @@ var EventsMapStateManager = function(app) {
 		this.currentRegionData = this.app.regionsManagerLocal.getRegionById(this.currentRegion, data);
 
 		this.app.setAppTitle(this.currentRegionData.name);
-		if(this.app.currentZoom != 1) {
+		if(this.app.currentZoom['events'] != 1) {
 			if(this.currentRegionData.parent_id) {
 				this.setPrevRegion(
 					this.app.regionsManagerLocal.getRegionById(
@@ -845,7 +685,7 @@ var EventsMapStateManager = function(app) {
 		var outVideo = this.app.configManager.getOutVideoById(this.currentRegion);
 
 		this.currentRegion = this.prevRegion.id;
-		this.app.prevState();
+		this.app.prevState('events');
 
 		this.OnDistrictChangeState.dispatch(this.app, this, outVideo);
 
@@ -872,7 +712,7 @@ var EventsMapStateManager = function(app) {
 				this.onBeforeVideoPlay_();
 
 				this.currentRegion = newIdRegion;
-				this.app.nextState();
+				this.app.nextState('events');
 
 				this.OnDistrictChangeState.dispatch(this.app, this, inVideo);
 			}
@@ -881,7 +721,8 @@ var EventsMapStateManager = function(app) {
 
 	this.app = app;
 	this.SVGWriter = new SVGLoader(app, {
-		onClick: $.proxy(this.onSvgClick_, this)
+		onClick: $.proxy(this.onSvgClick_, this),
+    panelName: 'events'
 	});
 }
 
@@ -893,7 +734,11 @@ var Application = function() {
 	this.appSize = [1920, 1080];
 	this.currentRegion = 100;
 	this.maxZoom = 3;
-	this.currentZoom = 1;
+  this.currentZoom = {
+    districts: 1,
+    events: 1
+  }
+	//this.currentZoom = 1;
 	this.russianId = 100;
 
 	this.apiHost = ConfigApp["API-HOST"];
@@ -928,12 +773,12 @@ var Application = function() {
 		"TITLE": $(this.CSS["TITLE"])
 	}
 
-	this.prevState = function() {
-		this.currentZoom--;
+	this.prevState = function(panelName) {
+		this.currentZoom[panelName]--;
 	}
 
-	this.nextState = function() {
-		this.currentZoom++;
+	this.nextState = function(panelName) {
+		this.currentZoom[panelName]++;
 	}
 
 	this.run = function() {
