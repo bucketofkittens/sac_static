@@ -873,68 +873,6 @@ var MapColorWidget = function(app) {
 	}
 
 	this.paramsLoaded_ = function(data) {
-		var ret = {};
-		$.each(data, function(key, value) {
-			if(value.val_numeric != 0) {
-				ret[value.subject_id] = value.val_numeric;	
-			}
-		});
-		var self = this;
-		setTimeout(function() {
-			self.app.mapStateManager.SVGWriter.drawParamValues(ret);
-		}, 0);
-	}
-
-	this.updateParams = function() {
-		if(this.state && this.app.parametrsWidgets.currentParametr) {
-			this.app.paramsManager.getParamValues(
-				this.app.parametrsWidgets.currentParametr.id,
-				this.app.currentRegion,
-				this.app.ageSelectorWidget.selectedYear,
-				$.proxy(this.paramsLoaded_, this)
-			);
-		}
- 	}
-
-	this.onToggle_ = function() {
-		if(this.state == false) {
-			this.elements["TOGGLE"].addClass("onShow");
-			this.state = true;
-
-			this.updateParams();
-		} else {
-			this.elements["TOGGLE"].removeClass("onShow");
-			this.state = false;
-			this.app.mapStateManager.SVGWriter.removeParamValues();
-		}
-
-		return false;
-	}
-
-	this.bindEvents_();
-}
-
-/**
- * [MapColorWidget description]
- * @param {[type]} app [description]
- */
-var MapColorWidget = function(app) {
-	this.app = app;
-	this.state = false;
-
-	this.CSS = {
-		"TOGGLE": "#map-color-toggler"
-	}
-
-	this.elements = {
-		"TOGGLE": $(this.CSS["TOGGLE"])
-	}
-
-	this.bindEvents_ = function() {
-		this.elements["TOGGLE"].on("click", $.proxy(this.onToggle_, this));
-	}
-
-	this.paramsLoaded_ = function(data) {
 		var self = this;
 		setTimeout(function() {
 			self.app.mapStateManager.SVGWriter.drawParamValues(data);
