@@ -345,9 +345,9 @@ var EventsPanel = Panel.extend({
 	  this.CSS = { "CONTAINER": "#bg-event-image" }
 	  this.elements = { "CONTAINER": $(this.CSS["CONTAINER"]) }
 
-    this.widgets = {
-      alarm: new EventsAlarmWidget(this)
-    }
+    this.widgets.sceneInfo =  new SceneInfoWidget(this.app);
+    this.widgets.sceneInfoExtra =  new SceneInfoExtraWidget(this.app);
+    this.widgets.alarm = new EventsAlarmWidget(this);
 
 	  //this.OnEvensMapChangeState = new signals.Signal();
 	  //this.OnEvensMapChangeState.add(OnEvensMapChangeState);
@@ -363,8 +363,9 @@ var EventsPanel = Panel.extend({
 
 		this.map.removeBlur();
 		if(this.map.currentZoom != 1) {
-			this.map.miniMap.opacityShow();	
-		} else if (this.map.currentZoom == 3 && this.map.currentRegion == 63) {
+			this.map.miniMap.opacityShow();
+		}
+    if (Number(this.map.currentZoom) == 3 && Number(this.map.currentRegion) == 63) {
       this.widgets.alarm.show()
     }
 		var region = (this.map.currentRegion || this.currentRegion)
@@ -375,7 +376,7 @@ var EventsPanel = Panel.extend({
 
 	hide: function() {
 		this.elements["CONTAINER"].addClass("onHidden");
-    this.widgets.alarm.hide()
+    _.each(this.widgets, function(w){ console.log(w); w.hide() })
 		//this.app.eventRightWidgets.fullHidden();
 		//this.app.eventLegendWidgets.fullHidden();
 		//this.app.eventsDrawWidget.hidden();

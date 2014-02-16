@@ -45,7 +45,7 @@ var SceneInfoWidget = function(app) {
         this.elements["MAIN"].removeClass('hidden');
     }
 
-    this.hidden = function() {
+    this.hide = function() {
         this.elements["MAIN"].addClass('hidden');
     }
 
@@ -157,7 +157,7 @@ var SceneInfoExtraWidget = function(app, options) {
         this.elements["MAIN"].removeClass('hidden');
     }
 
-    this.hidden = function() {
+    this.hide = function() {
         this.elements["MAIN"].addClass('hidden');
     }
 
