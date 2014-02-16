@@ -184,6 +184,8 @@ var OnEventsChangeState = function(app, map, video_id, currentRegion) {
 	this.finishEvent += 1;
 	//this.app.legendWidget.hide();
 
+  console.log('event')
+  console.log(this.map.bgImage)
 	this.app.videoPlayer.play(
 		video_id,
 		{

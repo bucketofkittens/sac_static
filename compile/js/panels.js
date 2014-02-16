@@ -368,7 +368,7 @@ var EventsPanel = Panel.extend({
 		if(this.map.currentZoom != 1) {
 			this.map.miniMap.opacityShow();
 		}
-    if (Number(this.map.currentZoom) == 3 && Number(this.map.currentRegion) == 63) {
+    if (Number(this.map.currentZoom) == 3 && Number(this.map.currentRegion) == 72) {
       this.widgets.alarm.show()
     }
 		var region = (this.map.currentRegion || this.currentRegion)

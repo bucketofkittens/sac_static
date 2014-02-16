@@ -4,7 +4,7 @@ var Map = function(app, panel) {
   this.currentRegion = 100;
   this.currentZoom = 1;
   this.miniMap = new MiniMapWriter();
-	this.bgImage = {};
+	//this.bgImage = '';
 	this.regions = {};
 	this.currentRegionData = {};
 
@@ -145,11 +145,13 @@ var EventsMapStateManager = Map.extend({
     return this.OnEventsChangeState
   },
 
+  bgImage: '/static/images/bg-map-events-100.jpg',
+
   getBgImage: function(){
     if (this.currentRegion == 100) {
-		  return '/static/images/bg-map-events-100.jpg';
+		  return '/static/images/bg-events-100.jpg';
     } else if (this.currentRegion == 101) {
-		  return '/static/images/bg-map-events-101.jpg';
+		  return '/static/images/bg-events-101.jpg';
     } else {
 		  return this.app.configManager.getMapById(this.currentRegion);
     }
@@ -162,7 +164,7 @@ var EventsMapStateManager = Map.extend({
 	},
 
   onAfterStateChange: function(){
-    if (this.currentZoom == 3 && this.currentRegion == 63) {
+    if (this.currentZoom == 3 && this.currentRegion == 72) {
       this.panel.widgets.alarm.show()
     }
   }
