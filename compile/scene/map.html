@@ -1,1 +1,44 @@
-TODO: Запилить карту
+<script id="ymaps_script" src="http://api-maps.yandex.ru/2.0-stable/?load=package.full&lang=ru-RU" type="text/javascript"></script>
+<div id="scene-info-map" style="width: 1050px; height: 640px"></div>
+<script type="text/javascript">
+
+    var sceneInfoMap, zlobin, zlobinPath, zlobinMover;
+
+    $(function () {
+
+
+        // Hack
+        var ymt = window.setInterval(function () {
+            if (ymaps) sceneInfoMapInit();
+        }, 250);
+
+        function sceneInfoMapInit(){
+            console.log('YMaps init.');
+            sceneInfoMap = new ymaps.Map ("scene-info-map", {
+                center: [54.62906, 39.73045],
+                zoom: 18,
+                behaviors: ['default', 'scrollZoom']
+            });
+            sceneInfoMap.controls.add('smallZoomControl');
+            window.clearInterval(ymt);
+            // The show
+            zlobin = new ymaps.Placemark([54.62906, 39.73045], {}, {
+                preset: 'twirl#redIcon'
+            });
+            sceneInfoMap.geoObjects.add(zlobin);
+            zlobinPath = new ymaps.Polyline([[54.62906, 39.73045]]);
+            sceneInfoMap.geoObjects.add(zlobinPath);
+            zlobinMover = setInterval(moveZlobin, 1000);
+        }
+
+        function moveZlobin () {
+            if (!sceneInfoMap) window.clearInterval(zlobinMover);
+            var coords, x, y, dx=-0.00004, dy=-0.0000001;
+            coords = zlobin.geometry.getCoordinates();
+            x = coords[0]; y = coords[1];
+            coords = [x+dx, y+dy];
+            zlobin.geometry.setCoordinates(coords);
+            zlobinPath.geometry.insert(zlobinPath.geometry.getLength(), coords);
+        }
+    });
+</script>
