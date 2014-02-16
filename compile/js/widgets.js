@@ -103,12 +103,12 @@ var FooterNavWidget = function(app) {
 		newLink.appendChild(newLinkContent);
 		newLink.setAttribute("data-id", index);
 
-		if(element["cooming"]) {
-			$(newLink).addClass("cooming");
+		if(element["coming"]) {
+			$(newLink).addClass("coming");
 		}
-		if(index == "DISTRICTS") {
+		/*if(index == "DISTRICTS") {
 			$(newLink).addClass("active");
-		}
+		}*/
 		this.elements["MAIN"].append(newLink);
 	}
 	this.addEvents_ = function() {
@@ -118,12 +118,10 @@ var FooterNavWidget = function(app) {
 		var curElement = $(evt.target);
 		var itemId = curElement.attr("data-id");
 
-		if(!curElement.hasClass("cooming")) {
+		if(!curElement.hasClass("coming")) {
       _.each(this.app.panels, function(panel) { panel.hide() })
-      this.app.panels[itemId].show()
-		}
-		
-		if(!curElement.hasClass("cooming")) {
+      this.app.panels[itemId].show();
+
 			if(!curElement.hasClass("active")) {
 				$(this.CSS["MAIN"]).find("a").removeClass("active");
 				curElement.toggleClass("active");		
@@ -136,7 +134,7 @@ var FooterNavWidget = function(app) {
 		this.addEvents_();	
 	}
 
-	this.hidden = function() {
+	this.hide = function() {
 		this.elements["MAIN"].removeClass("onShow");
 	}
 }

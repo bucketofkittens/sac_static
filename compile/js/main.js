@@ -261,17 +261,20 @@ var Application = function() {
 		this.reportsWidget = new ReportsWidget(this);
 
     this.panels = {
-      'DISTRICTS':  new DistrictsPanel(this),
+      'EVENTS':     new EventsPanel(this),
       'REGIONS':    new RegionPanel(this),
+      /*'DISTRICTS':  new DistrictsPanel(this),
       'FORMATS':    new FormatsPanel(this),
       'GRAPHS':     new GraphPanel(this),
-      'EVENTS':     new EventsPanel(this),
-      'REPORTS':    new ReportsPanel(this)
+      'REPORTS':    new ReportsPanel(this)*/
     };
 
 		this.footerNavWidget.draw();
 		this.loadingState.stop();
-    this.panels["DISTRICTS"].show();
+
+    // открываем первую панель
+    this.footerNavWidget.elements['MAIN'].find('a').first().click()
+    this.panels["EVENTS"].show();
 	}
 
 	this.setAppTitle = function(title) {

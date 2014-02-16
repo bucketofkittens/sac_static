@@ -346,7 +346,14 @@ var EventsPanel = Panel.extend({
 	  this.elements = { "CONTAINER": $(this.CSS["CONTAINER"]) }
 
     this.widgets.sceneInfo =  new SceneInfoWidget(this.app);
-    this.widgets.sceneInfoExtra =  new SceneInfoExtraWidget(this.app);
+    var self = this;
+    this.widgets.wx1 = new SceneInfoExtraWidget(this.app);
+    $.get('/static/compile/scene/extra-1.html', function (data) { self.widgets.wx1.setContent(data); });
+    this.widgets.wx2 = new SceneInfoExtraWidget(this.app, {MAIN: '#sceneinfo-extra-2'});
+    $.get('/static/compile/scene/extra-2.html', function (data) { self.widgets.wx2.setContent(data); });
+    this.widgets.wx3 = new SceneInfoExtraWidget(this.app, {MAIN: '#sceneinfo-extra-3'});
+    $.get('/static/compile/scene/extra-3.html', function (data) { self.widgets.wx3.setContent(data); });
+
     this.widgets.alarm = new EventsAlarmWidget(this);
 
 	  //this.OnEvensMapChangeState = new signals.Signal();
@@ -357,10 +364,6 @@ var EventsPanel = Panel.extend({
 
 	show: function() {
 		this.elements["CONTAINER"].removeClass("onHidden");
-		//this.app.eventRightWidgets.fullShow();
-		//this.app.eventLegendWidgets.fullShow();
-		//this.app.eventsLegendWidget.show();
-
 		this.map.removeBlur();
 		if(this.map.currentZoom != 1) {
 			this.map.miniMap.opacityShow();
@@ -376,10 +379,6 @@ var EventsPanel = Panel.extend({
 
 	hide: function() {
 		this.elements["CONTAINER"].addClass("onHidden");
-    _.each(this.widgets, function(w){ console.log(w); w.hide() })
-		//this.app.eventRightWidgets.fullHidden();
-		//this.app.eventLegendWidgets.fullHidden();
-		//this.app.eventsDrawWidget.hidden();
-		//this.app.eventsLegendWidget.hide();
+    _.each(this.widgets, function(w){ w.hide() })
 	}
 });

@@ -219,12 +219,13 @@ header h1
 {
   width:100px;
   height:30px;
-  font-family:NeoSansPro-Light;
-  font-size:20px;
-  color:#fff;
+  font-family:EuropeExt;
+  font-size:19px;
+  color:#BBDDFF;
   text-decoration:none;
   display:inline-block;
-  text-transform:lowercase;
+  line-height: 30px;
+  /*text-transform:lowercase;*/
   cursor:pointer;
   -moz-transition:all .7s linear;
   -o-transition:all .7s linear;
@@ -240,7 +241,8 @@ header h1
 
 #content .nav a.active
 {
-  font-weight:700;
+  /*font-weight:700;*/
+  color: #fff;
 }
 
 #content .nav a:hover
@@ -248,12 +250,12 @@ header h1
   text-shadow:0 0 14px #000;
 }
 
-#content .nav a.cooming
+#content .nav a.coming
 {
   cursor:default;
   -ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
   filter:alpha(opacity=50);
-  opacity:0.5;
+  opacity:0.4;
 }
 
 #content .legend

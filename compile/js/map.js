@@ -16,10 +16,6 @@ _.extend(Map.prototype, {
   initialize: function(){
     this.bg = $(this.stateCSS['BG-IMAGE']);
     this.setStateEvent();
-    /*this.onAfterStateChange = function(){
-      console.log(this.currentZoom)
-      console.log(this.currentRegion)
-    }*/
     this.SVGWriter = new SVGLoader(this.app, {
       onClick: $.proxy(this.onSvgClick_, this),
       map: this
