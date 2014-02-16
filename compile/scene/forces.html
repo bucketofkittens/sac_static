@@ -1,20 +1,77 @@
-<table id="scene-info-forces">
-    <thead>
-        <tr>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-    </tbody>
-</table>
+<div id="scene-info-forces">
+    <table>
+        <col class="forces-icon">
+        <col class="forces-icon">
+        <col>
+        <col>
+        <col>
+        <thead>
+            <tr>
+                <th></th>
+                <th></th>
+                <th>Типы сил и средств</th>
+                <th>Время до достижения цели</th>
+                <th>Статус</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-force-id="1">
+                <td><input type="checkbox" name="forces" value="1" id="forces_1"><label for="forces_1"></label></td>
+                <td><img src="/static/images/scene/forces-icon-patrol.png" alt="Патрульная группа"></td>
+                <td>Патрульная группа №567</td>
+                <td>0 минут</td>
+                <td class="forces-state-accepted">Принято к исполнению</td>
+            </tr>
+            <tr data-force-id="2">
+                <td><input type="checkbox" name="forces" value="2" id="forces_2"><label for="forces_2"></label></td>
+                <td><img src="/static/images/scene/forces-icon-post.png" alt="Пост"></td>
+                <td>Пост №68</td>
+                <td>5 минут</td>
+                <td class="forces-state-received">Информация принята</td>
+            </tr>
+            <tr data-force-id="3">
+                <td><input type="checkbox" name="forces" value="3" id="forces_3"><label for="forces_3"></label></td>
+                <td><img src="/static/images/scene/forces-icon-car.png" alt="ППС"></td>
+                <td>Наряд ППС №72</td>
+                <td>5 минут</td>
+                <td class="forces-state-sending">Отправка…</td>
+            </tr>
+            <tr data-force-id="4">
+                <td><input type="checkbox" name="forces" value="4" id="forces_4"><label for="forces_4"></label></td>
+                <td><img src="/static/images/scene/forces-icon-car.png" alt=""></td>
+                <td>Наряд милиции для сопровождения</td>
+                <td>5 минут</td>
+                <td class="forces-state-sending">Отправка…</td>
+            </tr>
+            <tr data-force-id="5">
+                <td><input type="checkbox" name="forces" value="5" id="forces_5"><label for="forces_5"></label></td>
+                <td><img src="/static/images/scene/forces-icon-car.png" alt="Контрольно-пропускной пункт"></td>
+                <td>Контрольно-пропускной пункт</td>
+                <td>15 минут</td>
+                <td class="forces-state-sending">Отправка…</td>
+            </tr>
+            <tr data-force-id="6">
+                <td><input type="checkbox" name="forces" value="6" id="forces_6"><label for="forces_6"></label></td>
+                <td><img src="/static/images/scene/forces-icon-patrol.png" alt="Контрольный пост милиции"></td>
+                <td>Контрольный пост милиции</td>
+                <td>18 минут</td>
+                <td class="forces-state-ready">Готовность</td>
+            </tr>
+            <tr data-force-id="7">
+                <td><input type="checkbox" name="forces" value="7" id="forces_7"><label for="forces_7"></label></td>
+                <td><img src="/static/images/scene/forces-icon-car.png" alt="Заслон"></td>
+                <td>Заслон №27</td>
+                <td>21 минута</td>
+                <td class="forces-state-ready">Готовность</td>
+            </tr>
+            <tr data-force-id="8">
+                <td><input type="checkbox" name="forces" value="8" id="forces_8"><label for="forces_8"></label></td>
+                <td><img src="/static/images/scene/forces-icon-car.png" alt="Резерв"></td>
+                <td>Резерв №13</td>
+                <td>22 минуты</td>
+                <td class="forces-state-ready">Готовность</td>
+            </tr>
+        </tbody>
+    </table>
+    <button type="button" id="forces-send">Отправить</button>
+</div>
