@@ -8,9 +8,6 @@ var Map = function(app, panel) {
 	this.regions = {};
 	this.currentRegionData = {};
 
-	this.OnDistrictChangeState = new signals.Signal();
-	this.OnDistrictChangeState.add(OnDistrictChangeState);
-
 	this.onAfterStateChange = null;
 
   this.initialize.apply(this, arguments);
@@ -20,10 +17,20 @@ _.extend(Map.prototype, {
 
   initialize: function(){
     this.bg = $(this.stateCSS['BG-IMAGE']);
+    this.setStateEvent();
     this.SVGWriter = new SVGLoader(this.app, {
       onClick: $.proxy(this.onSvgClick_, this),
       map: this
     });
+  },
+
+  setStateEvent: function(){
+	  this.OnDistrictChangeState = new signals.Signal();
+	  this.OnDistrictChangeState.add(OnDistrictChangeState);
+  },
+
+  getStateEvent: function(){
+    return this.OnDistrictChangeState
   },
 
 	stateCSS: {
@@ -90,7 +97,7 @@ _.extend(Map.prototype, {
 		this.currentRegion = this.prevRegion.id;
     this.currentZoom--;
 
-		this.OnDistrictChangeState.dispatch(this.app, this, outVideo);
+		this.getStateEvent().dispatch(this.app, this, outVideo);
 
 		this.app.legendWidget.hide();
 	},
@@ -117,7 +124,7 @@ _.extend(Map.prototype, {
 				this.currentRegion = newIdRegion;
         this.currentZoom++;
 
-				this.OnDistrictChangeState.dispatch(this.app, this, inVideo);
+				this.getStateEvent().dispatch(this.app, this, inVideo);
 			}
 		}
 	}
@@ -130,6 +137,15 @@ var EventsMapStateManager = Map.extend({
 	stateCSS: {
 		"BG-IMAGE": "#bg-event-image"
 	},
+
+  setStateEvent: function(){
+	  this.OnEventsChangeState = new signals.Signal();
+	  this.OnEventsChangeState.add(OnEventsChangeState);
+  },
+
+  getStateEvent: function(){
+    return this.OnEventsChangeState
+  },
 
   getBgImage: function(){
     if (this.currentRegion == 100) {

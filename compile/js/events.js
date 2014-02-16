@@ -138,3 +138,57 @@ var OnDistrictChangeState = function(app, map, video_id, currentRegion) {
 		}
 	);
 }
+
+/**
+ * [ description]
+ * @param  {[type]} app [description]
+ * @return {[type]}     [description]
+ */
+var OnEventsChangeState = function(app, map, video_id, currentRegion) {
+	this.app = app;
+	this.map = map;
+  this.widgets = this.map.panel.widgets
+	this.finishEvent = 0;
+	this.maxEvent = 2;
+
+	this.onAfterEvent_ = function() {
+		this.finishEvent += 1;
+		this.testEvents_();
+	}
+
+	this.testEvents_ = function() {
+		if(this.finishEvent == this.maxEvent) {
+			this.onAllFinish_();
+		}
+	}
+
+	this.onAllFinish_ = function() {
+		this.finishEvent = 0;
+
+		this.map.SVGWriter.show();
+		this.map.show();
+
+    if (this.map.panel.mapColorel) {
+		  this.map.panel.mapColorel.show();
+    }
+
+		this.app.videoPlayer.hide();
+		
+		if(this.map.onAfterStateChange) {
+			this.map.onAfterStateChange();
+		}
+	}
+
+	var self = this;
+
+	this.finishEvent += 1;
+	//this.app.legendWidget.hide();
+
+	this.app.videoPlayer.play(
+		video_id,
+		{
+			onEndedCallback: $.proxy(this.onAfterEvent_, this),
+			poster: this.map.bgImage	
+		}
+	);
+}
