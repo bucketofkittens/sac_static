@@ -119,7 +119,7 @@ var FooterNavWidget = function(app) {
 		var itemId = curElement.attr("data-id");
 
 		if(!curElement.hasClass("cooming")) {
-      _.each(this.app.panels, function(panel) { panel.hidden() })
+      _.each(this.app.panels, function(panel) { panel.hide() })
       this.app.panels[itemId].show()
 		}
 		

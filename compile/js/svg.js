@@ -13,6 +13,13 @@ var SVGLoader = function(app, config) {
 	if(config && config.panelName) {
 		this.panelName = config.panelName;
 	}
+	if(config && config.map) {
+		this.map = config.map;
+	}
+	if(config && config.panel) {
+		this.panel = config.panel;
+	}
+  this.panel = this.panel || this.map.panel
 
 	this.CSS = {
 		"BG": "#bg-svg",
@@ -65,14 +72,14 @@ var SVGLoader = function(app, config) {
 	this.onLoadSvg_ = function() {
 		var svg = this.elements["SVG"][0].getSVGDocument();
 		var self = this;
-		console.log(svg);
 		this.appendCSS_(svg);
+    var zoom = this.map ? this.map.currentZoom : 1 
 		
 		$.each($(svg).find("path"), function(key, value) {
 			$(value).attr("fill", "#ffffff");
 			$(value).attr("fill-opacity", "0");
 			$(value).removeAttr("opacity");
-			if(self.app.currentZoom[self.panelName] != 3) {
+			if(zoom != 3) {
 				$(value).css("cursor", "pointer");	
 			}
 		});
@@ -86,9 +93,9 @@ var SVGLoader = function(app, config) {
 				"fill-opacity": self.maxOpacity
 			});
 
-			if(self.app.parametrsWidgets.currentParametr && self.app.parametrsWidgets.currentParametr.id) {
+			if(self.panel.widgets.parametrs && self.panel.widgets.parametrs.currentParametr && self.panel.widgets.parametrs.currentParametr.id) {
 				self.app.legendManager.getLegendByParamAndSubject(
-					self.app.parametrsWidgets.currentParametr.id, 
+					self.panel.widgets.parametrs.currentParametr.id, 
 					$(this).attr("target"),
 					function(data) {
 						self.app.legendWidget.setLevelText(data);
@@ -115,8 +122,9 @@ var SVGLoader = function(app, config) {
 		this.removeParamValues();
 
 		var svg = $(this.CSS["SVG"])[0].getSVGDocument();
+    var zoom = this.map ? this.map.currentZoom : 1 
 		var self = this;
-		console.log($(this.CSS["SVG"])[0].getSVGDocument());
+
 		$.each($(svg).find("g"), function(key, value) {
 			var id = $(value).attr("target");
 			if(id && data[id] != 0) {
@@ -136,7 +144,7 @@ var SVGLoader = function(app, config) {
 					y = y + parseInt(ConfigApp["TARGETS"][correctPath][id]["y"]);
 				}
 
-				var classes = "zoom"+self.app.currentZoom[self.panelName]+" "+CSSclasses;
+				var classes = "zoom" + zoom + " "+CSSclasses;
 				var val = decorateValues(data[id], 2);
 				$(newElement).html(Number(val));
 				$(newElement).attr({
@@ -160,6 +168,4 @@ var SVGLoader = function(app, config) {
 		var svg = $(this.CSS["SVG"])[0].getSVGDocument();
 		$(svg).find("text").remove();
 	}
-
 }
-

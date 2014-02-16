@@ -13,7 +13,7 @@ function hiddenParentList(list) {
 function decorateValues(val, fixed) {
 	var valItem = val;
 	if(valItem) {
-		var valItemAr = valItem.split(".");
+		var valItemAr = String(valItem).split(".");
 		if(valItemAr[1] && valItemAr[1] == 0) {
 			valItem = valItemAr[0];
 		} else {
@@ -25,11 +25,11 @@ function decorateValues(val, fixed) {
 }
 
 /**
- * [ParametrsWidgets description]
+ * [ description]
  * @param {[type]} app [description]
  */
-var RegionsParametrsWidgets = function(app) {
-	this.app =  app;
+var RegionsParametrsWidgets = function(panel) {
+	this.panel =  panel;
 	this.parametrs = {};
 	this.currentParametr = null;
 	this.CSS = {
@@ -95,11 +95,11 @@ var RegionsParametrsWidgets = function(app) {
 			
 			this.setTitle($(evt.target).html());
 			this.currentParametr = this.getParametrById(parentLi.attr("data-id"));
-			this.app.regionsMapColorel.colored(
+			this.panel.regionsMapColorel.colored(
 				this.currentParametr.id, 
-				this.app.ageSelectorRegionsWidget.selectedYear
+				this.panel.widgets.yearSelector.selectedYear
 			);
-			this.app.regionsMapColorWidget.updateParams();
+			this.panel.widgets.regionsMapColor.updateParams();
 			this.elements["UOM"].html(parentLi.attr("data-uom"));
 		} else {
 			/*$(this.CSS["PARAMETRS-LIST"]).find(".active").removeClass("active");
@@ -148,7 +148,7 @@ var RegionsParametrsWidgets = function(app) {
 		if(this.currentParametr) {
 			this.app.legendManager.getLegendByParamAndSubject(
 				this.currentParametr.id, 
-				this.app.currentRegion,
+				this.panel.map.currentRegion,
 				function(data) {
 					self.legendWidget.setLevelText(data);
 					self.legendWidget.show();
@@ -264,15 +264,15 @@ var RegionsParametrsWidgets = function(app) {
 	}
 
 	this.getParamsByRegionAndYeage = function(region_id) {
-		this.app.paramsManager.getParamsByRegionAndYeage(
+		this.panel.app.paramsManager.getParamsByRegionAndYeage(
 			region_id, 
-			this.app.ageSelectorRegionsWidget.selectedYear, 
+			this.panel.widgets.yearSelector.selectedYear, 
 			$.proxy(this.getParametrs_, this)
 		);
 	}
 
 	this.getRegionsParams = function() {
-		this.app.paramsManager.getRegionsParams($.proxy(this.getParametrs_, this));
+		this.panel.app.paramsManager.getRegionsParams($.proxy(this.getParametrs_, this));
 	}
 
 	this.bindEvents_ = function() {
@@ -283,15 +283,15 @@ var RegionsParametrsWidgets = function(app) {
 
 	this.initScroll_();
 	this.bindEvents_();
-	this.app.ageSelectorRegionsWidget.draw();
+	this.panel.widgets.yearSelector.draw();
 }
 
 /**
  * [ParametrsWidgets description]
  * @param {[type]} app [description]
  */
-var ParametrsWidgets = function(app) {
-	this.app =  app;
+var ParametrsWidgets = function(panel) {
+	this.panel =  panel;
 	this.parametrs = {};
 	this.currentParametr = null;
 	this.CSS = {
@@ -351,7 +351,7 @@ var ParametrsWidgets = function(app) {
 	}
 
 	this.coloredLoad_ = function() {
-		this.app.mapColorel.show();
+		this.panel.mapColorel.show();
 	}
 
 	this.parametrsNameClick_ = function(evt) {
@@ -364,14 +364,14 @@ var ParametrsWidgets = function(app) {
 			this.setTitle($(evt.target).html());
 
 			this.currentParametr = this.getParametrById(parentLi.attr("data-id"));
-			this.app.mapColorel.colored(
+			this.panel.mapColorel.colored(
 				this.currentParametr.id, 
-				this.app.currentRegion, 
-				this.app.ageSelectorWidget.selectedYear,
+				this.panel.map.currentRegion, 
+				this.panel.widgets.yearSelector.selectedYear,
 				$.proxy(this.coloredLoad_, this) 
 			);
-			this.app.mapColorWidget.updateParams();
-			this.app.paramsManager.getParamUom(this.currentParametr.id, function(data) {
+			this.panel.widgets.mapColor.updateParams();
+			this.panel.app.paramsManager.getParamUom(this.currentParametr.id, function(data) {
 				if(data && data.responseText) {
 					self.elements["UOM"].html(data.responseText);
 				} else {
@@ -433,9 +433,9 @@ var ParametrsWidgets = function(app) {
 		this.drawParamets_(this.parametrs);
 
 		if(this.currentParametr) {
-			this.app.legendManager.getLegendByParamAndSubject(
+			this.panel.app.legendManager.getLegendByParamAndSubject(
 				this.currentParametr.id, 
-				this.app.currentRegion,
+				this.panel.map.currentRegion,
 				function(data) {
 					self.legendWidget.setLevelText(data);
 					self.legendWidget.show();
@@ -575,15 +575,15 @@ var ParametrsWidgets = function(app) {
 	}
 
 	this.getParamsByRegionAndYeage = function(region_id) {
-		this.app.paramsManager.getParamsByRegionAndYeage(
+		this.panel.app.paramsManager.getParamsByRegionAndYeage(
 			region_id, 
-			this.app.ageSelectorWidget.selectedYear, 
+			this.panel.widgets.yearSelector.selectedYear, 
 			$.proxy(this.getParametrs_, this)
 		);
 	}
 
 	this.getRegionsParams = function() {
-		this.app.paramsManager.getRegionsParams($.proxy(this.getParametrs_, this));
+		this.panel.app.paramsManager.getRegionsParams($.proxy(this.getParametrs_, this));
 	}
 
 	this.bindEvents_ = function() {
@@ -597,7 +597,7 @@ var ParametrsWidgets = function(app) {
 
 	this.initScroll_();
 	this.bindEvents_();
-	this.app.ageSelectorWidget.draw();
+	this.panel.widgets.yearSelector.draw();
 }
 
 /**
@@ -856,8 +856,8 @@ var EventsLegendWidget = function(app) {
  * [MapColorWidget description]
  * @param {[type]} app [description]
  */
-var MapColorWidget = function(app) {
-	this.app = app;
+var MapColorWidget = function(panel) {
+	this.panel = panel;
 	this.state = false;
 
 	this.CSS = {
@@ -875,16 +875,16 @@ var MapColorWidget = function(app) {
 	this.paramsLoaded_ = function(data) {
 		var self = this;
 		setTimeout(function() {
-			self.app.mapStateManager.SVGWriter.drawParamValues(data);
+			self.panel.map.SVGWriter.drawParamValues(data);
 		}, 0);
 	}
 
 	this.updateParams = function() {
-		if(this.state && this.app.parametrsWidgets.currentParametr) {
-			this.app.paramsManager.getParamValues(
-				this.app.parametrsWidgets.currentParametr.id,
-				this.app.currentRegion,
-				this.app.ageSelectorWidget.selectedYear,
+		if(this.state && this.panel.widgets.parametrs.currentParametr) {
+			this.panel.app.paramsManager.getParamValues(
+				this.panel.widgets.parametrs.currentParametr.id,
+				this.panel.map.currentRegion,
+				this.panel.widgets.yearSelector.selectedYear,
 				$.proxy(this.paramsLoaded_, this)
 			);
 		}
@@ -920,8 +920,8 @@ var MapColorWidget = function(app) {
  * [RegionsMapColorWidget description]
  * @param {[type]} app [description]
  */
-var RegionsMapColorWidget = function(app) {
-	this.app = app;
+var RegionsMapColorWidget = function(panel) {
+	this.panel = panel;
 	this.state = false;
 
 	this.CSS = {
@@ -943,14 +943,14 @@ var RegionsMapColorWidget = function(app) {
 				ret[value.subject_id] = value.val_numeric;	
 			}
 		});
-		this.app.mapStateManager.SVGWriter.drawParamValues(ret, "regions");
+		this.panel.svgWriter.drawParamValues(ret, "regions");
 	}
 
 	this.updateParams = function() {
-		if(this.state && this.app.regionsParametrsWidgets.currentParametr) {
-			this.app.paramsManager.getRegionsParamValues(
-				this.app.regionsParametrsWidgets.currentParametr.id,
-				this.app.ageSelectorRegionsWidget.selectedYear,
+		if(this.state && this.panel.widgets.regionsParametrs.currentParametr) {
+			this.panel.app.paramsManager.getRegionsParamValues(
+				this.panel.widgets.regionsParametrs.currentParametr.id,
+				this.panel.widgets.yearSelector.selectedYear,
 				$.proxy(this.paramsLoaded_, this)
 			);
 		}
@@ -1044,8 +1044,8 @@ var MapColorel = function(app) {
  * [MapColorel description]
  * @param {[type]} app [description]
  */
-var RegionsMapColorel = function(app) {
-	this.app = app;
+var RegionsMapColorel = function(panel) {
+	this.panel = panel;
 	this.ajaxPath = "/param_values/";
 	this.CSS = {
 		"CONTAINER": "#bg-regions-image",
@@ -1060,16 +1060,16 @@ var RegionsMapColorel = function(app) {
 
 	this.getColoredPath = function(params_id, year) {
 		var mapPath = "";
-		if(this.app.regionPanel.currentCamera == "CENTER") {
-			mapPath = this.app.apiHost+this.ajaxPath+params_id+"/"+year+"/map";
+		if(this.panel.currentCamera == "CENTER") {
+			mapPath = this.panel.app.apiHost+this.ajaxPath+params_id+"/"+year+"/map";
 		}
 
-		if(this.app.regionPanel.currentCamera == "LEFT") {
-			mapPath = this.app.apiHost+this.ajaxPath+params_id+"/"+year+"/map-west";
+		if(this.panel.currentCamera == "LEFT") {
+			mapPath = this.panel.app.apiHost+this.ajaxPath+params_id+"/"+year+"/map-west";
 		}
 
-		if(this.app.regionPanel.currentCamera == "RIGHT") {
-			mapPath = this.app.apiHost+this.ajaxPath+params_id+"/"+year+"/map-east";
+		if(this.panel.currentCamera == "RIGHT") {
+			mapPath = this.panel.app.apiHost+this.ajaxPath+params_id+"/"+year+"/map-east";
 		}
 
 		return mapPath;
@@ -1089,14 +1089,13 @@ var RegionsMapColorel = function(app) {
 		var link = data.responseText;
 		var self = this;
 		var image = new Image();
-
-        image.src = self.app.apiHost+link;
-
-        image.onload = function() {
-        	self.app.regionPanel.setBg(self.app.apiHost+link);
+    console.log(self.panel)
+    image.src = self.panel.app.apiHost+link;
+    image.onload = function() {
+      self.panel.setBg(self.panel.app.apiHost+link);
 			self.elements["CONTAINER"].addClass("onShow");
 			//$(self.CSS["LOAD"]).removeClass("onShow");
-        }
+    }
 	}
 
 	this.show = function() {
@@ -1114,8 +1113,9 @@ var RegionsMapColorel = function(app) {
  * [RegionsSelector description]
  * @param {[type]} app [description]
  */
-var RegionsSelectorWidget = function(app) {
-	this.app = app;
+var RegionsSelectorWidget = function(panel) {
+  this.panel = panel
+	//this.app = app;
 	this.CSS = {
 		"MAIN": "#regions-selector",
 		"HIDDEN": "hidden",
@@ -1181,7 +1181,7 @@ var RegionsSelectorWidget = function(app) {
 		}
 
 		$(this.CSS["LOAD"]).addClass("onShow");
-		this.app.formatWidget.updateContent();
+		this.panel.widgets.format.updateContent();
 	}
 
 	this.onRegionNameClick_ = function(evt) {
@@ -1202,15 +1202,14 @@ var RegionsSelectorWidget = function(app) {
 
 	this.onResponseRegions_ = function(data) {
 		this.regions = data;
-		this.elements["DATA-PLACE"].html(this.findRegionsByParent_(data, this.app.russianId, "", ""));
+		this.elements["DATA-PLACE"].html(this.findRegionsByParent_(data, this.panel.app.russianId, "", ""));
 		this.addChilds(data);
 
-		this.app.paramsManager.getParamsByRegionAndAge(
+		this.panel.app.paramsManager.getParamsByRegionAndAge(
 			this.getCurrentIds(),
-			this.app.ageSelectorFormatWidget.selectedYear
+			this.panel.widgets.yearSelector.selectedYear
 		);
-
-		this.app.paramsSelectorWidget.updateParams(this.getCurrentIds(), this.app.ageSelectorFormatWidget.selectedYear);
+		this.panel.widgets.paramsSelector.updateParams(this.getCurrentIds(), this.panel.widgets.yearSelector.selectedYear);
 			
 		$(this.CSS["DATA-PLACE"]+ " li a").on("click", $.proxy(this.onRegionClick_, this));
 		$(this.CSS["DATA-PLACE"]+ " li span").on("click", $.proxy(this.onRegionNameClick_, this));
@@ -1281,15 +1280,15 @@ var RegionsSelectorWidget = function(app) {
 	}
 
 	this.bindEvents_();
-	this.app.regionManager.getAll($.proxy(this.onResponseRegions_, this));
+	this.panel.app.regionManager.getAll($.proxy(this.onResponseRegions_, this));
 }
 
 /**
- * [RegionsSelector description]
+ * [ParamsSelector description]
  * @param {[type]} app [description]
  */
-var ParamsSelectorWidget = function(app) {
-	this.app = app;
+var ParamsSelectorWidget = function(panel) {
+	this.panel = panel;
 	this.CSS = {
 		"MAIN": "#params-selector",
 		"HIDDEN": "hidden",
@@ -1359,11 +1358,11 @@ var ParamsSelectorWidget = function(app) {
 		this.parametrs = this.prepareParamerts_(data);
 		this.drawParamets_(this.parametrs);
 
-		this.app.formatWidget.updateContent();
+		if (this.panel.widgets.format) this.panel.widgets.format.updateContent();
 	}
 
 	this.updateParams = function(ids, age) {
-		this.app.paramsManager.getParamsByRegionAndAge(
+		this.panel.app.paramsManager.getParamsByRegionAndAge(
 			ids,
 			age,
 			$.proxy(this.onParamsGet_, this)
@@ -1440,7 +1439,8 @@ var ParamsSelectorWidget = function(app) {
 		}
 
 		$(this.CSS["LOAD"]).addClass("onShow");
-		this.app.formatWidget.updateContent();
+    console.log(this.panel.widgets)
+		this.panel.widgets.format.updateContent();
 	}
 
 	this.onParamNameClick_ = function(evt) {
@@ -1489,7 +1489,7 @@ var ParamsSelectorWidget = function(app) {
 
 	this.initScroll_();
 	this.bindEvents_();
-	this.app.ageSelectorFormatWidget.draw();
+	this.panel.widgets.yearSelector.draw();
 	
 }
 
@@ -1497,8 +1497,8 @@ var ParamsSelectorWidget = function(app) {
  * [FormatWidget description]
  * @param {[type]} app [description]
  */
-var FormatWidget = function(app) {
-	this.app = app;
+var FormatWidget = function(panel) {
+	this.panel = panel;
 	this.scrollApi = null;
 	this.CSS = {
 		"MAIN": "#format-data",
@@ -1521,10 +1521,10 @@ var FormatWidget = function(app) {
 	}
 
 	this.updateContent = function() {
-		this.app.formatManager.getFormat(
-			this.app.regionsSelectorWidget.getCurrentIds(),
-			this.app.paramsSelectorWidget.getCurrentIds(),
-			this.app.ageSelectorFormatWidget.selectedYear,
+		this.panel.app.formatManager.getFormat(
+			this.panel.widgets.regionsSelector.getCurrentIds(),
+			this.panel.widgets.paramsSelector.getCurrentIds(),
+			this.panel.widgets.yearSelector.selectedYear,
 			$.proxy(this.draw_, this)
 		);
 	}
@@ -1563,11 +1563,11 @@ var FormatWidget = function(app) {
 
 
 /**
- * [GraphParametrsWidgets description]
+ * [GraphParamsSelector description]
  * @param {[type]} app [description]
  */
-var GraphParamsSelector = function(app) {
-	this.app = app;
+var GraphParamsSelector = function(panel) {
+	this.panel = panel;
 	this.CSS = {
 		"MAIN": "#graph-selector",
 		"HIDDEN": "hidden",
@@ -1639,11 +1639,11 @@ var GraphParamsSelector = function(app) {
 		this.parametrs = this.prepareParamerts_(data);
 		this.drawParamets_(this.parametrs);
 
-		this.app.formatWidget.updateContent();
+		if (this.panel.widgets.format) this.panel.widgets.format.updateContent();
 	}
 
 	this.updateParams = function(ids, age) {
-		this.app.paramsManager.getParamsByRegionAndAge(
+		this.panel.app.paramsManager.getParamsByRegionAndAge(
 			ids,
 			age,
 			$.proxy(this.onParamsGet_, this)
@@ -1720,7 +1720,7 @@ var GraphParamsSelector = function(app) {
 		}
 
 		$(this.CSS["LOAD"]).addClass("onShow");
-		this.onUpdateGraph.dispatch(this.app);
+		this.onUpdateGraph.dispatch(this.panel);
 	}
 
 	this.onParamNameClick_ = function(evt) {
@@ -1778,8 +1778,8 @@ var GraphParamsSelector = function(app) {
 	this.initScroll_();
 	this.bindEvents_();
 
-	this.app.regionsManagerLocal.getRegions($.proxy(this.onResponseRegions_, this));
-	this.app.ageSelectorFormatWidget.draw();
+	this.panel.app.regionsManagerLocal.getRegions($.proxy(this.onResponseRegions_, this));
+	this.panel.widgets.yearSelector.draw();
 }
 
 /**
@@ -1849,7 +1849,6 @@ var ReportsParamsSelector = function(app) {
 
 			if(filterValue.length > 0) {
 				var elements = $(self.CSS["DATA"]).find("li");
-				console.log(elements);
 				$.each(elements, function(key, value) {
 					var elem = $(value).attr("data-name");
 					if(elem.toLowerCase().indexOf(filterValue.toLowerCase()) == -1) {
@@ -1969,7 +1968,7 @@ var ReportsParamsSelector = function(app) {
 		}
 
 		$(this.CSS["LOAD"]).addClass("onShow");
-		this.onUpdateGraph.dispatch(this.app);
+		this.onUpdateGraph.dispatch(this.panel);
 	}
 
 	this.onParamNameClick_ = function(evt) {
@@ -2185,7 +2184,6 @@ var ReportsDiscSelector = function(app) {
 	this.onParamClick_ = function(evt) {
 		var current = $(evt.target);
 		var parent = $(evt.target).parent();
-		console.log(parent.parent());
 		$(evt.target).toggleClass("current");
 
 		if(current.hasClass("current")) {
@@ -2260,8 +2258,8 @@ var ReportsDiscSelector = function(app) {
  * [GraphRegionsSelectorWidget description]
  * @param {[type]} app [description]
  */
-var GraphRegionsSelectorWidget = function(app) {
-	this.app = app;
+var GraphRegionsSelectorWidget = function(panel) {
+	this.panel = panel;
 	this.CSS = {
 		"MAIN": "#graph-regions-selector",
 		"HIDDEN": "hidden",
@@ -2328,7 +2326,7 @@ var GraphRegionsSelectorWidget = function(app) {
 		}
 
 		$(this.CSS["LOAD"]).addClass("onShow");
-		this.onUpdateGraph.dispatch(this.app);
+		this.onUpdateGraph.dispatch(this.panel);
 	}
 
 	this.onRegionNameClick_ = function(evt) {
@@ -2349,7 +2347,7 @@ var GraphRegionsSelectorWidget = function(app) {
 
 	this.onResponseRegions_ = function(data) {
 		this.regions = data;
-		this.elements["DATA-PLACE"].html(this.findRegionsByParent_(data, this.app.russianId, "", ""));
+		this.elements["DATA-PLACE"].html(this.findRegionsByParent_(data, this.panel.app.russianId, "", ""));
 		this.addChilds(data);
 			
 		$(this.CSS["DATA-PLACE"]+ " li a").on("click", $.proxy(this.onRegionClick_, this));
@@ -2419,7 +2417,7 @@ var GraphRegionsSelectorWidget = function(app) {
 	}
 
 	this.bindEvents_();
-	this.app.regionsManagerLocal.getRegions($.proxy(this.onResponseRegions_, this));
+	this.panel.app.regionsManagerLocal.getRegions($.proxy(this.onResponseRegions_, this));
 }
 
 /**
@@ -2469,7 +2467,7 @@ var GraphWidget = function(app) {
 	this.ageSelectorGraphEndWidget.draw();
 
 	this.onUpdateGraphDispather_ = function() {
-		this.onUpdateGraph.dispatch(this.app);
+		this.onUpdateGraph.dispatch(this.panel);
 	}
 
 	this.show = function() {
@@ -2653,12 +2651,10 @@ var ReportsWidget = function(app) {
 				if(value.region_name) {
 					html += '<td>'+value.region_name+"</td>";
 				}
-				console.log(value);
 				html += "</tr>";
 				main.append(html);
 			});
 			app.reportsWidget.scrollApi.reinitialise();
-			console.log(app.reportsWidget.scrollApi);
 		});
 	}
 

@@ -2,20 +2,20 @@
  * [OnGraphUpdateEvent description]
  * @param {[type]} app [description]
  */
-var OnGraphUpdateEvent = function(app) {
-	this.app = app;
+var OnGraphUpdateEvent = function(panel) {
+	this.panel = panel;
 
 	this.onGraphDataRequest_ = function(data) {
-		$(this.app.graphWidget.CSS["LOAD"]).removeClass("onShow");
-		this.app.graphWidget.showGraph();
-		this.app.graphWidget.updateContent(data);
+		$(this.panel.widgets.graph.CSS["LOAD"]).removeClass("onShow");
+		this.panel.widgets.graph.showGraph();
+		this.panel.widgets.graph.updateContent(data);
 	}
 	
-	this.app.graphManager.getGraph(
-		this.app.graphRegionsSelectorWidget.getCurrentIds(),
-		this.app.graphParamsSelector.getCurrentIds(),
-		this.app.graphWidget.getBeginData(),
-		this.app.graphWidget.getEndData(),
+	this.panel.app.graphManager.getGraph(
+		this.panel.widgets.regionsSelector.getCurrentIds(),
+		this.panel.widgets.paramsSelector.getCurrentIds(),
+		this.panel.widgets.graph.getBeginData(),
+		this.panel.widgets.graph.getEndData(),
 		$.proxy(this.onGraphDataRequest_, this)
 	);
 }
@@ -25,24 +25,25 @@ var OnGraphUpdateEvent = function(app) {
  * @param  {[type]} app [description]
  * @return {[type]}     [description]
  */
-var OnDistrictUpdateMapEvent = function(app) {
-	this.app = app;
+var OnDistrictUpdateMapEvent = function(panel) {
+  console.log('OnDistrictUpdateMapEvent')
+	this.panel = panel;
 
-	this.app.paramsManager.getParamsByRegionAndYeage(
-		this.app.currentRegion, 
-		this.app.ageSelectorWidget.selectedYear, 
-		$.proxy(this.app.parametrsWidgets.getParametrs_, this.app.parametrsWidgets)
+	this.panel.app.paramsManager.getParamsByRegionAndYeage(
+		this.panel.map.currentRegion, 
+		this.panel.widgets.yearSelector.selectedYear, 
+		$.proxy(this.panel.widgets.parametrs.getParametrs_, this.panel.widgets.parametrs)
 	);
-	if(this.app.parametrsWidgets.currentParametr) {
-		this.app.mapColorel.colored(
-			this.app.parametrsWidgets.currentParametr.id, 
-			this.app.currentRegion, 
-			this.app.ageSelectorWidget.selectedYear
+	if(this.panel.widgets.parametrs.currentParametr) {
+		this.panel.mapColorel.colored(
+			this.panel.widgets.parametrs.currentParametr.id, 
+			this.panel.map.currentRegion, 
+			this.panel.widgets.yearSelector.selectedYear
 		);
-		this.app.mapColorWidget.updateParams();
-		this.app.legendManager.getLegendByParamAndSubject(
-			this.app.parametrsWidgets.currentParametr.id, 
-			this.app.currentRegion
+		if (this.panel.widgets.mapColor) this.panel.widgets.mapColor.updateParams();
+		this.panel.app.legendManager.getLegendByParamAndSubject(
+			this.panel.widgets.parametrs.currentParametr.id, 
+			this.panel.map.currentRegion
 		);
 	}
 }
@@ -52,9 +53,9 @@ var OnDistrictUpdateMapEvent = function(app) {
  * @param  {[type]} app [description]
  * @return {[type]}     [description]
  */
-var OnFormatUpdateContentEvent = function(app) {
-	this.app = app;
-	this.app.formatWidget.updateContent();
+var OnFormatUpdateContentEvent = function(panel) {
+  this.panel = panel
+	this.panel.widgets.format.updateContent();
 }
 
 /**
@@ -71,9 +72,10 @@ var OnEvensMapChangeState = function(app) {
  * @param  {[type]} app [description]
  * @return {[type]}     [description]
  */
-var OnDistrictChangeState = function(app, mapStateManager, video_id, currentRegion) {
+var OnDistrictChangeState = function(app, map, video_id, currentRegion) {
 	this.app = app;
-	this.mapStateManager = mapStateManager;
+	this.map = map;
+  this.widgets = this.map.panel.widgets
 	this.finishEvent = 0;
 	this.maxEvent = 2;
 
@@ -91,28 +93,32 @@ var OnDistrictChangeState = function(app, mapStateManager, video_id, currentRegi
 	this.onAllFinish_ = function() {
 		this.finishEvent = 0;
 
-		this.mapStateManager.SVGWriter.show();
-		this.mapStateManager.show();
-		//this.app.mapColorel.show();
+		this.map.SVGWriter.show();
+		this.map.show();
+
+    if (this.map.panel.mapColorel) {
+		  this.map.panel.mapColorel.show();
+    }
+
 		this.app.videoPlayer.hide();
 		
-		if(this.mapStateManager.onAfterStateChange) {
-			this.mapStateManager.onAfterStateChange();
+		if(this.map.onAfterStateChange) {
+			this.map.onAfterStateChange();
 		}
 	}
 
 	var self = this;
 
-	if(this.app.parametrsWidgets.currentParametr != null) {
-		this.app.mapColorel.colored(
-			this.app.parametrsWidgets.currentParametr.id, 
-			this.app.currentRegion, 
-			this.app.ageSelectorWidget.selectedYear,
+	if(this.widgets.parametrs && this.widgets.parametrs.currentParametr != null && this.map.panel.mapColorel) {
+		this.map.panel.mapColorel.colored(
+			this.widgets.parametrs.currentParametr.id, 
+			this.map.currentRegion, 
+			this.map.panel.widgets.yearSelector.selectedYear,
 			$.proxy(this.onAfterEvent_, this)
 		);
 		this.app.legendManager.getLegendByParamAndSubject(
-			this.app.parametrsWidgets.currentParametr, 
-			this.app.parametrsWidgets.currentParametr.id,
+			this.map.panel.widgets.parametrs.currentParametr, 
+			this.map.panel.widgets.parametrs.currentParametr.id,
 			function(data) {
 				self.app.legendWidget.setLevelText(data);
 				self.app.legendWidget.show();
@@ -122,14 +128,13 @@ var OnDistrictChangeState = function(app, mapStateManager, video_id, currentRegi
 		this.finishEvent += 1;
 		this.app.legendWidget.hide();
 	}
-  console.log(this.mapStateManager.bgImage);
 
 	this.app.videoPlayer.play(
 		video_id,
 		{
 			onEndedCallback: $.proxy(this.onAfterEvent_, this),
 			//poster: this.mapStateManager.getBgImage()	
-			poster: this.mapStateManager.bgImage	
+			poster: this.map.bgImage	
 		}
 	);
 }
