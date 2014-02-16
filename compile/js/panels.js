@@ -170,8 +170,8 @@ var RegionPanel = Panel.extend({
 
 	  this.widgets.regionsParametrs = new RegionsParametrsWidgets(this); 
     this.widgets.regionsParametrs.getRegionsParams();
-		this.widgets.paramsSelector = new ParamsSelectorWidget(this);
-    this.widgets.regionsSelector = new RegionsSelectorWidget(this)
+		//this.widgets.paramsSelector = new ParamsSelectorWidget(this);
+    //this.widgets.regionsSelector = new RegionsSelectorWidget(this)
 	  this.widgets.regionsMapColor = new RegionsMapColorWidget(this); 
 		this.widgets.regionsMapColor.enable();
 	  this.bindEvents_();
@@ -245,7 +245,6 @@ var RegionPanel = Panel.extend({
 		this.elements["CAMERA-RIGHT"].removeClass("onShow");
 
 		this.widgets.regionsParametrs.fullHidden();
-		this.widgets.regionsSelector.hidden();
 
 		this.app.regionsLegendWidget.hide();
 	},
@@ -380,5 +379,7 @@ var EventsPanel = Panel.extend({
 	hide: function() {
 		this.elements["CONTAINER"].addClass("onHidden");
     _.each(this.widgets, function(w){ w.hide() })
+		this.map.miniMap.opacityHidden();
+
 	}
 });
