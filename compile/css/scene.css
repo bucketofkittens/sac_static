@@ -146,3 +146,30 @@
 #content #sceneinfo-extra-3 {
     top: 595px;
 }
+
+#events-alarm-data {
+    position:absolute;
+    background:url(/static/images/formats/table.png) center center no-repeat;
+    height:830px;
+    width:1130px;
+    left:650px;
+    top:155px;
+    z-index:200;
+    overflow: hidden;
+    color: #DDFFFF;
+    font-family: NeoSansPro-Light;
+    font-size: 16pt;
+}
+
+#events-alarm-data.hidden
+{
+    top:1200px!important;
+}
+
+#events-alarm-data
+{
+    -moz-transition:all 0.5s ease-in-out;
+    -o-transition:all 0.5s ease-in-out;
+    -webkit-transition:all 0.5s ease-in-out;
+    transition:all 0.5s ease-in-out;
+}

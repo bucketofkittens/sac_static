@@ -345,8 +345,12 @@ var EventsPanel = Panel.extend({
 	  this.CSS = { "CONTAINER": "#bg-event-image" }
 	  this.elements = { "CONTAINER": $(this.CSS["CONTAINER"]) }
 
-	  this.OnEvensMapChangeState = new signals.Signal();
-	  this.OnEvensMapChangeState.add(OnEvensMapChangeState);
+    this.widgets = {
+      alarm: new EventsAlarmWidget(this)
+    }
+
+	  //this.OnEvensMapChangeState = new signals.Signal();
+	  //this.OnEvensMapChangeState.add(OnEvensMapChangeState);
 
     this.map = new EventsMapStateManager(this.app, this);
   },
