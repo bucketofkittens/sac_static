@@ -161,26 +161,56 @@
     top: 595px;
 }
 
-#events-alarm-data {
+#events-alarm {
     position:absolute;
-    background:url(/static/images/formats/table.png) center center no-repeat;
-    height:830px;
-    width:1130px;
-    left:650px;
-    top:155px;
+    left:720px;
+    top:400px;
     z-index:200;
     overflow: hidden;
     color: #DDFFFF;
-    font-family: NeoSansPro-Light;
-    font-size: 16pt;
+    font-family: EuropeExt;
 }
 
-#events-alarm-data.hidden
+#events-alarm-msg {
+    float: left;
+    background:url(/static/images/scene/alarm-msg.png) center center no-repeat;
+    height:129px;
+    width:377px;
+    text-align: center;
+}
+
+#events-alarm-msg h2 {
+  margin: 30px 0 10px;
+  font-size: 29px;
+}
+
+#events-alarm-msg a {
+  text-decoration: none;
+  color: #71b6e0;
+  font-size: 18px;
+}
+
+#events-alarm-msg a:hover {
+  color: #fff;
+}
+
+#events-alarm-icon {
+    float: left;
+    background:url(/static/images/scene/alarm-icon.png) center center no-repeat;
+    height:129px;
+    width:120px;
+}
+
+#events-alarm.hidden /*, #events-alarm.hidden #events-alarm-msg, #events-alarm.hidden #events-alarm-icon*/
 {
     top:1200px!important;
 }
 
-#events-alarm-data
+/*#events-alarm.hidden #events-alarm-msg, #events-alarm.hidden #events-alarm-icon {
+  height: 0;
+}*/
+
+#events-alarm, #events-alarm #events-alarm-msg, #events-alarm #events-alarm-icon
 {
     -moz-transition:all 0.5s ease-in-out;
     -o-transition:all 0.5s ease-in-out;

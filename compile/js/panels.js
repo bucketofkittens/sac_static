@@ -364,7 +364,9 @@ var EventsPanel = Panel.extend({
 		this.map.removeBlur();
 		if(this.map.currentZoom != 1) {
 			this.map.miniMap.opacityShow();	
-		}
+		} else if (this.map.currentZoom == 3 && this.map.currentRegion == 63) {
+      this.widgets.alarm.show()
+    }
 		var region = (this.map.currentRegion || this.currentRegion)
 		this.map.SVGWriter.load(this.app.configManager.getSvgById(region));
 		this.map.SVGWriter.show();
@@ -373,6 +375,7 @@ var EventsPanel = Panel.extend({
 
 	hide: function() {
 		this.elements["CONTAINER"].addClass("onHidden");
+    this.widgets.alarm.hide()
 		//this.app.eventRightWidgets.fullHidden();
 		//this.app.eventLegendWidgets.fullHidden();
 		//this.app.eventsDrawWidget.hidden();

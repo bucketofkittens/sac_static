@@ -16,7 +16,7 @@ var EventsAlarmWidget = function(panel) {
 		this.elements["MAIN"].removeClass(this.CSS["HIDDEN"]);
 	}
 
-	this.hidden = function() {
+	this.hide = function() {
 		this.elements["MAIN"].addClass(this.CSS["HIDDEN"]);
 	}
 }

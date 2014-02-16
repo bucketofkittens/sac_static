@@ -8,8 +8,6 @@ var Map = function(app, panel) {
 	this.regions = {};
 	this.currentRegionData = {};
 
-	this.onAfterStateChange = null;
-
   this.initialize.apply(this, arguments);
 }
 
@@ -18,6 +16,10 @@ _.extend(Map.prototype, {
   initialize: function(){
     this.bg = $(this.stateCSS['BG-IMAGE']);
     this.setStateEvent();
+    /*this.onAfterStateChange = function(){
+      console.log(this.currentZoom)
+      console.log(this.currentRegion)
+    }*/
     this.SVGWriter = new SVGLoader(this.app, {
       onClick: $.proxy(this.onSvgClick_, this),
       map: this
@@ -154,6 +156,18 @@ var EventsMapStateManager = Map.extend({
 		  return '/static/images/bg-map-events-101.jpg';
     } else {
 		  return this.app.configManager.getMapById(this.currentRegion);
+    }
+  },
+
+	onBeforeVideoPlay_ : function() {
+		this.miniMap.hiden();
+		this.SVGWriter.hide();
+    this.panel.widgets.alarm.hide()
+	},
+
+  onAfterStateChange: function(){
+    if (this.currentZoom == 3 && this.currentRegion == 63) {
+      this.panel.widgets.alarm.show()
     }
   }
 });

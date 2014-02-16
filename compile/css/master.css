@@ -28,6 +28,17 @@
         -ms-transform: rotate(360deg);
     }
 }
+
+#logo {
+  position:absolute;
+  left: 15px;
+  top: 15px;
+  z-index: 130;
+  width: 438px;
+  height: 100px;
+  background: url(/static/images/mvd-logo.png) left center no-repeat;  
+}
+
 header
 {
   /*background:url(/static/images/name.png) left top no-repeat;
@@ -78,8 +89,9 @@ header h1
   background:url(/static/images/region.png) center center no-repeat;
   height:70px;
   width:590px;
-  font-family:NeoSansPro-Light;
-  font-size:21px;
+  /*font-family:NeoSansPro-Light;*/
+  font-family:EuropeExt;
+  font-size:19px;
   color:#fff;
   line-height:67px;
   left:660px;
