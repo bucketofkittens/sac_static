@@ -54,6 +54,9 @@ var SceneInfoWidget = function(app) {
     }
 
     this.showInfo = function (hide) {
+        if (!_.isBoolean(hide)){
+          hide.preventDefault()
+        }
         that = this;
         if (hide) that.elements["SCENEINFO"].addClass('hidden');
         $('#sceneinfo-main', this.elements["MAIN"]).siblings().removeClass('current');
@@ -64,7 +67,8 @@ var SceneInfoWidget = function(app) {
                 that.elements["SCENEINFO"].removeClass('hidden');
                 // Page stuff
                 var menu_items = $("#scene-info-selector li");
-                menu_items.on('click', function () {
+                menu_items.on('click', function (e) {
+                    e.preventDefault();
                     menu_items.removeClass('current');
                     $(this).addClass('current');
                     var target = $('#'+$(this).attr('data-target'));
@@ -76,7 +80,8 @@ var SceneInfoWidget = function(app) {
         }, (hide ? 400 : 0));
     }
 
-    this.showMap = function () {
+    this.showMap = function (e) {
+        e.preventDefault()
         that = this;
         that.elements["SCENEINFO"].addClass('hidden');
         $('#sceneinfo-map', this.elements["MAIN"]).siblings().removeClass('current');
@@ -91,7 +96,8 @@ var SceneInfoWidget = function(app) {
         }, 400);
     }
 
-    this.showForces = function () {
+    this.showForces = function (e) {
+        e.preventDefault()
         that = this;
         that.elements["SCENEINFO"].addClass('hidden');
         $('#sceneinfo-forces', this.elements["MAIN"]).siblings().removeClass('current');
