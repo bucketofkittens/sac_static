@@ -96,20 +96,28 @@ var SceneInfoWidget = function(app) {
         }, 400);
     }
 
-    this.showForces = function (e) {
+    this.showText = function (e) {
         e.preventDefault()
         that = this;
-        that.elements["SCENEINFO"].addClass('hidden');
-        $('#sceneinfo-forces', this.elements["MAIN"]).siblings().removeClass('current');
-        $('#sceneinfo-forces', this.elements["MAIN"]).addClass('current');
-        setTimeout(function() {
-            $.get('/static/compile/scene/forces.html', {}, function (data, status, jqxhr) {
-                that.elements["SCENEINFO"].html(data);
-                that.elements["SCENEINFO"].removeClass('hidden');
-                // Forces stuff
-                // TODO: Forces scripts
-            });
-        }, 400);
+        that.elements["SCENEINFO"].addClass('hidden')
+          .html('<h1>Текст</h1>')
+          .removeClass('hidden');
+    }
+
+    this.showGraph = function (e) {
+        e.preventDefault()
+        that = this;
+        that.elements["SCENEINFO"].addClass('hidden')
+          .html('<img src="/static/images/connect.png" />')
+          .removeClass('hidden');
+    }
+
+    this.showDiagram = function (e) {
+        e.preventDefault()
+        that = this;
+        that.elements["SCENEINFO"].addClass('hidden')
+          .html('<h1>Диаграмма</h1>')
+          .removeClass('hidden');
     }
 
     // Bind events to main menu
@@ -143,7 +151,6 @@ var OnSceneInfoExtraUpdateEvent = function(app) {
 
 var SceneInfoExtraWidget = function(app, options) {
     this.app = app;
-    this.scrollApi = null;
     this.onUpdateSceneInfoExtra = new signals.Signal();
     this.onUpdateSceneInfoExtra.add(OnSceneInfoExtraUpdateEvent);
 
@@ -151,7 +158,8 @@ var SceneInfoExtraWidget = function(app, options) {
         "MAIN": "#sceneinfo-extra-1",
         "LOAD": "#load",
         "ONSHOW": function() {},
-        "ONHIDE": function() {}
+        "ONHIDE": function() {},
+        "ONCLICK": function() {}
     }, options);
 
     this.elements = {
@@ -176,5 +184,7 @@ var SceneInfoExtraWidget = function(app, options) {
     this.setContent = function (content) {
         this.elements["SCENEINFO"].html(content);
     }
+
+    this.elements["MAIN"].on('click', $.proxy(this.CSS["ONCLICK"], this));
 
 }

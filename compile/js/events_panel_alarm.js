@@ -4,7 +4,6 @@ var EventsAlarmWidget = function(panel) {
 		"MAIN": "#events-alarm",
 		"HIDDEN": "hidden",
 		"DATA-PLACE": "#events-alarm-data",
-		"LOAD": "#load",
     "LINK": "#events-alarm-msg a"
 	}
 
