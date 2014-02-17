@@ -26,7 +26,6 @@ var OnGraphUpdateEvent = function(panel) {
  * @return {[type]}     [description]
  */
 var OnDistrictUpdateMapEvent = function(panel) {
-  console.log('OnDistrictUpdateMapEvent')
 	this.panel = panel;
 
 	this.panel.app.paramsManager.getParamsByRegionAndYeage(
@@ -184,8 +183,6 @@ var OnEventsChangeState = function(app, map, video_id, currentRegion) {
 	this.finishEvent += 1;
 	//this.app.legendWidget.hide();
 
-  console.log('event')
-  console.log(this.map.bgImage)
 	this.app.videoPlayer.play(
 		video_id,
 		{

@@ -243,6 +243,7 @@ var RegionPanel = Panel.extend({
 		this.elements["BG-IMAGE"].removeClass("onShow");
 		this.elements["CAMERA-LEFT"].removeClass("onShow");
 		this.elements["CAMERA-RIGHT"].removeClass("onShow");
+    $('#bg-colored-image').css({backgroundImage: 'none'});
 
 		this.widgets.regionsParametrs.fullHidden();
 

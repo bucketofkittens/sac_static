@@ -139,6 +139,8 @@ var OnSceneInfoExtraUpdateEvent = function(app) {
 
 // Example: wx2 = new SceneInfoExtraWidget(app, {MAIN: '#sceneinfo-extra-2'}); wx2.show();
 
+// _.each([1,2,3,4,5,6], function(i){ w = new SceneInfoExtraWidget(app, {MAIN: '#sceneinfo-extra-'+i}); w.show();})
+
 var SceneInfoExtraWidget = function(app, options) {
     this.app = app;
     this.scrollApi = null;

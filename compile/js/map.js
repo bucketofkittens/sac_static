@@ -145,7 +145,7 @@ var EventsMapStateManager = Map.extend({
     return this.OnEventsChangeState
   },
 
-  bgImage: '/static/images/bg-map-events-100.jpg',
+  bgImage: '/static/images/bg-events-100.jpg',
 
   getBgImage: function(){
     if (this.currentRegion == 100) {

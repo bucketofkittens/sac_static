@@ -4,8 +4,9 @@
     background:url(/static/images/formats/table.png) center center no-repeat;
     height:830px;
     width:1130px;
-    left:650px;
+    left:50%;
     top:155px;
+    margin-left: -565px;
     z-index:200;
     overflow: hidden;
     color: #DDFFFF;
@@ -248,12 +249,23 @@
     background:url('/static/images/scene/scene-info-extra.png') center center no-repeat;
     height:225px;
     width:308px;
-    left:325px;
     z-index:200;
 }
 
-#content .sceneinfo-extras.hidden {
+#content .sceneinfo-extras.left {
+  left: 50px;
+}
+
+#content .sceneinfo-extras.left.hidden {
     left:-350px !important;
+}
+
+#content .sceneinfo-extras.right {
+  right: 50px;
+}
+
+#content .sceneinfo-extras.right.hidden {
+  right:-350px !important;
 }
 
 .sceneinfo-extra-panel {
@@ -262,14 +274,14 @@
     text-align: center;
 }
 
-#content #sceneinfo-extra-1 {
-    top: 175px;
+#content #sceneinfo-extra-1, #content #sceneinfo-extra-4 {
+    top: 210px;
 }
-#content #sceneinfo-extra-2 {
-    top: 425px;
+#content #sceneinfo-extra-2, #content #sceneinfo-extra-5{
+    top: 460px;
 }
-#content #sceneinfo-extra-3 {
-    top: 675px;
+#content #sceneinfo-extra-3, #content #sceneinfo-extra-6 {
+    top: 710px;
 }
 
 #events-alarm {
