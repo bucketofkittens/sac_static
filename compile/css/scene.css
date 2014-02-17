@@ -29,7 +29,7 @@
     top: 1200px !important;
 }
 
-#sceneinfo-content, .sceneinfo-panel, .sceneinfo-extras
+#sceneinfo-content, .sceneinfo-extras
 {
     -moz-transition:all 0.5s ease-in-out;
     -o-transition:all 0.5s ease-in-out;
@@ -60,15 +60,29 @@
 .sceneinfo-panel {
     position: absolute;
     top: 0;
+    left: 0;
+    right: 0;
+    opacity: 1;
     width: 1130px;
     height: 640px;
     margin: 50px 40px 20px 40px;
     overflow: hidden;
+    transition: all 0.5s ease-in-out;
 }
 
 .sceneinfo-panel.hidden {
     top: 690px;
     opacity: 0;
+}
+
+.sceneinfo-panel.hidden.hide-to-left {
+    top: 0;
+    left: -1200px;
+}
+
+.sceneinfo-panel.hidden.hide-to-right {
+    top: 0;
+    left: 1200px;
 }
 
 #scene-info-main {
