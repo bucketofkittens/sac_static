@@ -360,3 +360,23 @@
   display: none;
 }
 
+#scene-patrol-menu {
+    position: absolute;
+    width: 12em;
+    background: #18426A;
+    border: 2px solid #33749F;
+    border-radius: 4px;
+    padding-bottom: 10px;
+    z-index: 202;
+    text-align: center;
+}
+
+#scene-patrol-menu input[type="submit"] {
+    margin: 1em auto;
+    padding: 1em 2em;
+    border: 1px solid #BBDDFF;
+    border-radius: 1px;
+    background: rgba(128,191,255,0.1);
+    color: #BBDDFF;
+}
+

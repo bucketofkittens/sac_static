@@ -2,10 +2,100 @@
 <div id="scene-info-map" style="width: 1050px; height: 640px"></div>
 <script type="text/javascript">
 
-    var sceneInfoMap, zlobin, zlobinPath, zlobinMover;
+    var zlobinPos = [54.223790, 37.624592];
+    var patrols = [
+        {
+            index: 0,
+            type: 'pps',
+            startPos: [54.224889, 37.632542],
+            currentPos: {ll: [54.224889, 37.632542], msecs: 0},
+            startedAt: null,
+            finished: false,
+            route: [
+                // Finish point latitude, longitude, time, and balloon text
+                {ll: [54.224889, 37.632542], msecs:      0, status: 'Отправляем данные...'},
+                {ll: [54.224889, 37.632542], msecs:  10000, status: 'Принято'},
+                {ll: [54.225990, 37.625457], msecs:  45000},
+                {ll: [54.223824, 37.624347], msecs:  60000},
+                {ll: [54.223824, 37.624347], msecs:  70000, status: 'Готовы'},
+                {ll: [54.223820, 37.624443], msecs:  80000, status: 'Приступили'},
+                {ll: [54.223790, 37.624592], msecs: 100000, status: 'Преступник обезврежен'}
+            ]
+        },
+        {
+            index: 1,
+            type: 'pps',
+            startPos: [54.221777, 37.633675],
+            currentPos: {ll: [54.221777, 37.633675], msecs: 0},
+            startedAt: null,
+            finished: false,
+            route: [
+                // Finish point latitude, longitude, time, and balloon text
+                {ll: [54.221777, 37.633675], msecs:      0, status: 'Отправляем данные...'},
+                {ll: [54.221777, 37.633675], msecs:  10000, status: 'Принято'},
+                {ll: [54.222325, 37.633262], msecs:  20000},
+                {ll: [54.224572, 37.634302], msecs:  45000},
+                {ll: [54.225990, 37.625457], msecs:  90000},
+                {ll: [54.223824, 37.624347], msecs: 120000},
+                {ll: [54.223824, 37.624347], msecs: 130000, status: 'Готовы'},
+                {ll: [54.223820, 37.624443], msecs: 140000, status: 'Приступили'},
+                {ll: [54.223790, 37.624592], msecs: 160000, status: 'Преступник обезврежен'}
+            ]
+        },
+        {
+            index: 2,
+            type: 'pps',
+            startPos: [54.217935, 37.630969],
+            currentPos: {ll: [54.217935, 37.630969], msecs: 0},
+            startedAt: null,
+            finished: false,
+            route: [
+                // Finish point latitude, longitude, time, and balloon text
+                {ll: [54.217935, 37.630969], msecs:      0, status: 'Отправляем данные...'},
+                {ll: [54.217935, 37.630969], msecs:  10000, status: 'Принято'},
+                {ll: [54.218868, 37.625229], msecs:  20000},
+                {ll: [54.221856, 37.626661], msecs:  45000},
+                {ll: [54.222228, 37.623555], msecs:  90000},
+                {ll: [54.223824, 37.624347], msecs: 120000},
+                {ll: [54.223824, 37.624347], msecs: 130000, status: 'Готовы'},
+                {ll: [54.223820, 37.624443], msecs: 140000, status: 'Приступили'},
+                {ll: [54.223790, 37.624592], msecs: 160000, status: 'Преступник обезврежен'}
+            ]
+        }
+    ];
+
+    var sceneInfoMap, zlobin, patrolMarks, operationState;
+
+    function patrolMenu (e, index) {
+        if ($('#scene-patrol-menu').css('display') == 'block') {
+            $('#scene-patrol-menu').remove();
+        } else {
+            // HTML-содержимое контекстного меню.
+            var menuContent =
+                    '<div id="scene-patrol-menu">\
+                        <div align="center"><input type="submit" value="Отправить" /></div>\
+                    </div>';
+
+            // Размещаем контекстное меню на странице
+            $('body').append(menuContent);
+
+            // Задаем позицию меню.
+            $('#scene-patrol-menu').css({
+                left: e.get('position')[0],
+                top: e.get('position')[1]
+            });
+
+            $('#scene-patrol-menu input[type="submit"]').click(function () {
+                // Запускаем её
+                console.log('Launching patrol with index', index);
+                patrols[index].startedAt = new Date();
+                // Удаляем меню.
+                $('#scene-patrol-menu').remove();
+            });
+        }
+    }
 
     $(function () {
-
 
         // Hack
         var ymt = window.setInterval(function () {
@@ -15,30 +105,72 @@
         function sceneInfoMapInit(){
             console.log('YMaps init.');
             sceneInfoMap = new ymaps.Map ("scene-info-map", {
-                center: [54.62906, 39.73045],
-                zoom: 18,
+                center: zlobinPos,
+                zoom: 15,
                 behaviors: ['default', 'scrollZoom']
             });
             sceneInfoMap.controls.add('smallZoomControl');
             window.clearInterval(ymt);
-            // The show
-            zlobin = new ymaps.Placemark([54.62906, 39.73045], {}, {
+            // Add Zlobin to the map
+            zlobin = new ymaps.Placemark(zlobinPos, {}, {
                 preset: 'twirl#redIcon'
             });
             sceneInfoMap.geoObjects.add(zlobin);
-            zlobinPath = new ymaps.Polyline([[54.62906, 39.73045]]);
-            sceneInfoMap.geoObjects.add(zlobinPath);
-            zlobinMover = setInterval(moveZlobin, 1000);
-        }
-
-        function moveZlobin () {
-            if (!sceneInfoMap) window.clearInterval(zlobinMover);
-            var coords, x, y, dx=-0.00004, dy=-0.0000001;
-            coords = zlobin.geometry.getCoordinates();
-            x = coords[0]; y = coords[1];
-            coords = [x+dx, y+dy];
-            zlobin.geometry.setCoordinates(coords);
-            zlobinPath.geometry.insert(zlobinPath.geometry.getLength(), coords);
+            // Add patrols to the map
+            patrolMarks = new ymaps.GeoObjectArray();
+            _.each(patrols, function (patrol, index) {
+                var patrolMark = new ymaps.Placemark(patrol.startPos, {}, {
+                    hideIconOnBalloonOpen: false
+                });
+                patrolMark.events.add('click', function(e) { patrolMenu(e, index) });
+                patrolMarks.add(patrolMark);
+            });
+            sceneInfoMap.geoObjects.add(patrolMarks);
+            // Start animation
+            webkitRequestAnimationFrame(operationProceed);
         }
     });
+
+        function operationProceed (time) {
+            var activePatrols = _.filter(patrols, function(patrol) {
+                return patrol.startedAt && !patrol.finished;
+            })
+            console.log('Animating', activePatrols.length, 'patrols');
+            _.each(activePatrols, function (patrol) {
+                var elapsed = time - patrol.startedAt;
+                var patrolMark = patrolMarks.get(patrol.index);
+                // Remove stale segments
+                var staleSegments = _.filter(patrol.route, function (segment) {
+                   return segment.msecs < elapsed;
+                });
+                _.each(staleSegments, function (route) {
+                    patrol.currentPos = {ll: route.ll, msecs: elapsed};
+                    var segment = patrol.route.shift();
+                    if (segment.status) {
+                        //sceneInfoMap.hint.show(segment.ll, segment.status);
+                        patrolMark.properties.set('balloonContent', segment.status);
+                        patrolMark.balloon.open();
+                    } else patrolMark.balloon.close();
+                });
+                if (!patrol.route.length) {
+                    patrol.finished = true;
+                    operationState  = 'finished';
+                } else {
+                    // Start calculation
+                    var timeRange = patrol.route[0].msecs - patrol.currentPos.msecs;
+                    var timeDiff  = elapsed - patrol.currentPos.msecs;
+                    // Latitude calculation
+                    var latDiff  = patrol.route[0].ll[0] - patrol.currentPos.ll[0];
+                    var latitude = patrol.currentPos.ll[0] + latDiff * ( timeDiff / timeRange );
+                    // Longitude
+                    var lonDiff   = patrol.route[0].ll[1] - patrol.currentPos.ll[1];
+                    var longitude = patrol.currentPos.ll[1] + lonDiff * ( timeDiff / timeRange );
+                    // Done
+                    patrolMark.geometry.setCoordinates([latitude, longitude]);
+                }
+            });
+
+            if (operationState != 'finished')
+                webkitRequestAnimationFrame(operationProceed);
+        }
 </script>
