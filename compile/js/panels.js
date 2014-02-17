@@ -347,11 +347,18 @@ var EventsPanel = Panel.extend({
 
     this.widgets.sceneInfo =  new SceneInfoWidget(this.app);
     var self = this;
-    this.widgets.wx1 = new SceneInfoExtraWidget(this.app);
+    this.widgets.wx1 = new SceneInfoExtraWidget(this.app, {
+      ONSHOW: function() { if ( $('#sampleMovie')[0] ) { $('#sampleMovie').show(), $('#sampleMovie')[0].play(); } },
+      ONHIDE: function() { if ( $('#sampleMovie')[0] ) { $('#sampleMovie')[0].pause(); $('#sampleMovie')[0].currentTime = 0 } }
+    });
     $.get('/static/compile/scene/extra-1.html', function (data) { self.widgets.wx1.setContent(data); });
     this.widgets.wx2 = new SceneInfoExtraWidget(this.app, {MAIN: '#sceneinfo-extra-2'});
     $.get('/static/compile/scene/extra-2.html', function (data) { self.widgets.wx2.setContent(data); });
-    this.widgets.wx3 = new SceneInfoExtraWidget(this.app, {MAIN: '#sceneinfo-extra-3'});
+    this.widgets.wx3 = new SceneInfoExtraWidget(this.app, {
+      MAIN: '#sceneinfo-extra-3',
+      ONSHOW: function() { $('#waveform').addClass('waveform-playback'); },
+      ONHIDE: function() { $('#waveform').removeClass('waveform-playback'); }
+    });
     $.get('/static/compile/scene/extra-3.html', function (data) { self.widgets.wx3.setContent(data); });
 
     this.widgets.alarm = new EventsAlarmWidget(this);

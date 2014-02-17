@@ -147,7 +147,9 @@ var SceneInfoExtraWidget = function(app, options) {
 
     this.CSS = jQuery.extend({
         "MAIN": "#sceneinfo-extra-1",
-        "LOAD": "#load"
+        "LOAD": "#load",
+        "ONSHOW": function() {},
+        "ONHIDE": function() {}
     }, options);
 
     this.elements = {
@@ -161,10 +163,12 @@ var SceneInfoExtraWidget = function(app, options) {
 
     this.show = function() {
         this.elements["MAIN"].removeClass('hidden');
+        this.CSS["ONSHOW"]();
     }
 
     this.hide = function() {
         this.elements["MAIN"].addClass('hidden');
+        this.CSS["ONHIDE"]();
     }
 
     this.setContent = function (content) {
