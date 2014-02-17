@@ -51,6 +51,8 @@ var SceneInfoWidget = function(app) {
 
     this.setContent = function (content) {
         this.elements["SCENEINFO"].html(content);
+        this.elements["SCENEINFO"].removeClass('hidden');
+        this.elements["SCENEINFO"].siblings().addClass('hidden');
     }
 
     this.showInfo = function (hide) {
@@ -58,26 +60,35 @@ var SceneInfoWidget = function(app) {
           hide.preventDefault()
         }
         that = this;
-        if (hide) that.elements["SCENEINFO"].addClass('hidden');
+        if (hide) $('.sceneinfo-panel', that.elements["SCENEINFO"]).addClass('hidden');
         $('#sceneinfo-main', this.elements["MAIN"]).siblings().removeClass('current');
         $('#sceneinfo-main', this.elements["MAIN"]).addClass('current');
-        setTimeout(function() {
-            $.get('/static/compile/scene/info.html', {}, function (data, status, jqxhr) {
-                that.elements["SCENEINFO"].html(data);
-                that.elements["SCENEINFO"].removeClass('hidden');
-                // Page stuff
-                var menu_items = $("#scene-info-selector li");
-                menu_items.on('click', function (e) {
-                    e.preventDefault();
-                    menu_items.removeClass('current');
-                    $(this).addClass('current');
-                    var target = $('#'+$(this).attr('data-target'));
-                    target.removeClass('hidden-left hidden-right hidden');
-                    target.prevAll('section').addClass('hidden hidden-left').removeClass('hidden-right');
-                    target.nextAll('section').addClass('hidden hidden-right').removeClass('hidden-left');
+        var thisContainer = $('#sceneinfo-panel-main');
+        if (thisContainer.length) {
+            thisContainer.removeClass('hidden');
+            thisContainer.siblings().addClass('hidden');
+        } else {
+            setTimeout(function() {
+                $.get('/static/compile/scene/info.html', {}, function (data, status, jqxhr) {
+                    var thisContainer = $('<div id="sceneinfo-panel-main" class="sceneinfo-panel '+ ( hide ? 'hidden' : '' ) + '">');
+                    thisContainer.html(data);
+                    that.elements["MAIN"].append(thisContainer);
+                    thisContainer.removeClass('hidden');
+                    thisContainer.siblings().addClass('hidden');
+                    // Page stuff
+                    var menu_items = $("#scene-info-selector li");
+                    menu_items.on('click', function (e) {
+                        e.preventDefault();
+                        menu_items.removeClass('current');
+                        $(this).addClass('current');
+                        var target = $('#'+$(this).attr('data-target'));
+                        target.removeClass('hidden-left hidden-right hidden');
+                        target.prevAll('section').addClass('hidden hidden-left').removeClass('hidden-right');
+                        target.nextAll('section').addClass('hidden hidden-right').removeClass('hidden-left');
+                    });
                 });
-            });
-        }, (hide ? 400 : 0));
+            }, (hide ? 400 : 0));
+        }
     }
 
     this.showMap = function (e) {
@@ -86,14 +97,23 @@ var SceneInfoWidget = function(app) {
         that.elements["SCENEINFO"].addClass('hidden');
         $('#sceneinfo-map', this.elements["MAIN"]).siblings().removeClass('current');
         $('#sceneinfo-map', this.elements["MAIN"]).addClass('current');
-        setTimeout(function() {
-            $.get('/static/compile/scene/map.html', {}, function (data, status, jqxhr) {
-                that.elements["SCENEINFO"].html(data);
-                that.elements["SCENEINFO"].removeClass('hidden');
-                // Map stuff
-                // TODO: Map scripts
-            });
-        }, 400);
+        var thisContainer = $('#sceneinfo-panel-map');
+        if (thisContainer.length) {
+            thisContainer.removeClass('hidden');
+            thisContainer.siblings().addClass('hidden');
+        } else {
+            setTimeout(function() {
+                $.get('/static/compile/scene/map.html', {}, function (data, status, jqxhr) {
+                    thisContainer = $('<div id="sceneinfo-panel-map" class="sceneinfo-panel">');
+                    thisContainer.html(data);
+                    that.elements["MAIN"].append(thisContainer);
+                    thisContainer.removeClass('hidden');
+                    thisContainer.siblings().addClass('hidden');
+                    // Map stuff
+                    // TODO: Map scripts
+                });
+            }, 400);
+        }
     }
 
     this.showForces = function (e) {
@@ -102,14 +122,24 @@ var SceneInfoWidget = function(app) {
         that.elements["SCENEINFO"].addClass('hidden');
         $('#sceneinfo-forces', this.elements["MAIN"]).siblings().removeClass('current');
         $('#sceneinfo-forces', this.elements["MAIN"]).addClass('current');
-        setTimeout(function() {
-            $.get('/static/compile/scene/forces.html', {}, function (data, status, jqxhr) {
-                that.elements["SCENEINFO"].html(data);
-                that.elements["SCENEINFO"].removeClass('hidden');
-                // Forces stuff
-                // TODO: Forces scripts
-            });
-        }, 400);
+        // Load data to its container unless it's already there
+        var thisContainer = $('#sceneinfo-panel-network');
+        if (thisContainer.length) {
+            thisContainer.removeClass('hidden');
+            thisContainer.siblings().addClass('hidden');
+        } else {
+            setTimeout(function() {
+                $.get('/static/compile/scene/forces.html', {}, function (data, status, jqxhr) {
+                    thisContainer = $('<div id="sceneinfo-panel-network" class="sceneinfo-panel">');
+                    thisContainer.html(data);
+                    that.elements["MAIN"].append(thisContainer);
+                    thisContainer.removeClass('hidden');
+                    thisContainer.siblings().addClass('hidden');
+                    // Forces stuff
+                    // TODO: Forces scripts
+                });
+            }, 400);
+        }
     }
 
     // Bind events to main menu
