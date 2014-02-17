@@ -64,7 +64,7 @@
         }
     ];
 
-    var sceneInfoMap, zlobin, patrolMarks, operationState;
+    var sceneInfoMap, zlobin, patrolMarks, operationState, operationTimer;
 
     function patrolMenu (e, index) {
         if ($('#scene-patrol-menu').css('display') == 'block') {
@@ -127,7 +127,7 @@
             });
             sceneInfoMap.geoObjects.add(patrolMarks);
             // Start animation
-            webkitRequestAnimationFrame(operationProceed);
+            operationTimer = setInterval(function(){ webkitRequestAnimationFrame(operationProceed) }, 100);
         }
     });
 
@@ -155,6 +155,7 @@
                 if (!patrol.route.length) {
                     patrol.finished = true;
                     operationState  = 'finished';
+                    clearInterval(operationTimer);
                 } else {
                     // Start calculation
                     var timeRange = patrol.route[0].msecs - patrol.currentPos.msecs;
@@ -169,8 +170,5 @@
                     patrolMark.geometry.setCoordinates([latitude, longitude]);
                 }
             });
-
-            if (operationState != 'finished')
-                webkitRequestAnimationFrame(operationProceed);
         }
 </script>
