@@ -60,7 +60,7 @@ var RegionsParametrsWidgets = function(panel) {
 
 	this.animateStep = "-500px";
 	this.animateSpeed = 1000;
-	this.legendWidget = new RegionsLegendWidget(this.app);
+	//this.legendWidget = new RegionsLegendWidget(this.app);
 	this.scrollApi = null;
 
 	this.fullHidden = function() {
@@ -966,7 +966,7 @@ var RegionsMapColorWidget = function(panel) {
  	this.disable = function() {
  		this.elements["TOGGLE"].removeClass("onShow");
 		this.state = false;
-		this.app.mapStateManager.SVGWriter.removeParamValues();
+		this.panel.map.SVGWriter.removeParamValues();
  	}
 
 	this.onToggle_ = function() {
@@ -1048,14 +1048,13 @@ var RegionsMapColorel = function(panel) {
 	this.panel = panel;
 	this.ajaxPath = "/param_values/";
 	this.CSS = {
-		"CONTAINER": "#bg-regions-image",
+		"CONTAINER": "#bg-colored-image",
 		"LOAD": "#load"
 	};
 	this.isShowed = false;
 
 	this.elements = {
-		"CONTAINER": $(this.CSS["CONTAINER"]),
-		"IMAGE": $(this.CSS["CONTAINER"]).find("img")
+		"CONTAINER": $(this.CSS["CONTAINER"])
 	}
 
 	this.getColoredPath = function(params_id, year) {
@@ -1076,12 +1075,12 @@ var RegionsMapColorel = function(panel) {
 	}
 
 
-	this.colored = function(params_id, year) {
-		//$(this.CSS["LOAD"]).addClass("onShow");
+	this.colored = function(params_id, year, callback) {
 
 		if(this.isShowed) {
-			this.elements["CONTAINER"].removeClass("onShow");
+      this.hidden()
 		}
+    this.callback = callback
 		$.ajax({ url: this.getColoredPath(params_id, year) }).always($.proxy(this.onGetMapLink_, this));
 	}
 
@@ -1089,13 +1088,12 @@ var RegionsMapColorel = function(panel) {
 		var link = data.responseText;
 		var self = this;
 		var image = new Image();
-    console.log(self.panel)
-    image.src = self.panel.app.apiHost+link;
     image.onload = function() {
-      self.panel.setBg(self.panel.app.apiHost+link);
-			self.elements["CONTAINER"].addClass("onShow");
-			//$(self.CSS["LOAD"]).removeClass("onShow");
+      self.elements["CONTAINER"].css("backgroundImage", "url('"+self.panel.app.apiHost+link+"')");
+      self.show()
+      if (self.callback) self.callback();
     }
+    image.src = self.panel.app.apiHost+link;
 	}
 
 	this.show = function() {
@@ -1439,7 +1437,6 @@ var ParamsSelectorWidget = function(panel) {
 		}
 
 		$(this.CSS["LOAD"]).addClass("onShow");
-    console.log(this.panel.widgets)
 		this.panel.widgets.format.updateContent();
 	}
 

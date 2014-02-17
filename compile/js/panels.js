@@ -236,7 +236,7 @@ var RegionPanel = Panel.extend({
 		this.widgets.regionsParametrs.fullShow();
 		this.widgets.regionsMapColor.updateParams();
 
-		this.app.regionsLegendWidget.show();
+		//this.app.regionsLegendWidget.show();
 	},
 
 	hide: function() {
@@ -246,7 +246,7 @@ var RegionPanel = Panel.extend({
 
 		this.widgets.regionsParametrs.fullHidden();
 
-		this.app.regionsLegendWidget.hide();
+		//this.app.regionsLegendWidget.hide();
 	},
 
 	addBlur: function() {
@@ -275,6 +275,7 @@ var RegionPanel = Panel.extend({
 			startState = "RIGHT";
 			endState = "CENTER";
 		}
+
 		this.app.videoPlayer.play(
 			this.app.getResByPath(this.getVideoName(startState, endState)) ,
 			{
@@ -287,20 +288,21 @@ var RegionPanel = Panel.extend({
 
 	onVideoPlayEnd_ : function() {
 		var self = this;
+		if(this.widgets.regionsParametrs.currentParametr) {
+      this.regionsMapColorel.colored(
+				this.widgets.regionsParametrs.currentParametr.id, 
+				this.widgets.yearSelector.selectedYear,
+        function(){self.app.videoPlayer.hide()}
+			);	
+		}
+		this.widgets.regionsMapColor.updateParams();
 
 		this.setBg(this.getBgCurrentCamera());
 		this.svgWriter.load(this.getSVGCurrentCamera());
 
-		if(this.widgets.regionsParametrs.currentParametr) {
-      this.regionsMapColorel.colored(
-				this.widgets.regionsParametrs.currentParametr.id, 
-				this.widgets.yearSelector.selectedYear
-			);	
-		}
-		this.widgets.regionsMapColor.updateParams();
-		setTimeout(function() {
-			self.app.videoPlayer.hide();
-		}, 0);
+		/*setTimeout(function() {*/
+		//	self.app.videoPlayer.hide();
+		/*}, 0);*/
 		
 	},
 

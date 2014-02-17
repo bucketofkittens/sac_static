@@ -655,10 +655,10 @@ header h1
   -ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
   filter:alpha(opacity=0);
   opacity:0;
-  -moz-transition:opacity .5s linear;
-  -o-transition:opacity .5s linear;
-  -webkit-transition:opacity .5s linear;
-  transition:opacity .5s linear;
+  -moz-transition:opacity .3s ease-out 0s;
+  -o-transition:opacity .3s ease-out 0s;
+  -webkit-transition:opacity .3s ease-out 0s;
+  transition:opacity .3s ease-out 0s;
 }
 
 .onShow

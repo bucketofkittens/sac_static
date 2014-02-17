@@ -251,14 +251,14 @@ var Application = function() {
 		this.regionsLegendWidget = new RegionsLegendWidget(this);
 		//this.eventsLegendWidget = new EventsLegendWidget(this);
 		this.pageTitleWidget = new PageTitleWidget(this);
-		this.eventsDrawWidget = new EventsDrawWidget(this);
 		
-
+    /*
+		this.eventsDrawWidget = new EventsDrawWidget(this);
 		this.formatManager = new FormatManager(this);
-
 		this.reportsParamsSelector = new ReportsParamsSelector(this);
 		this.reportsDiscSelector = new ReportsDiscSelector(this);
 		this.reportsWidget = new ReportsWidget(this);
+    */
 
     this.panels = {
       'EVENTS':     new EventsPanel(this),
