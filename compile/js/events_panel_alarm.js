@@ -23,7 +23,7 @@ var EventsAlarmWidget = function(panel) {
       self.panel.map.addBlur()
       self.panel.map.SVGWriter.hide()
       
-      _.each(['sceneInfo', 'wx1', 'wx2', 'wx3'], function(w){ self.panel.widgets[w].show()})
+      _.each(['sceneInfo', 'wx1', 'wx2', 'wx3', 'wx4', 'wx5', 'wx6'], function(w){ self.panel.widgets[w].show()})
     })
 	}
 

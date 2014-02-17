@@ -116,27 +116,43 @@ var SceneInfoWidget = function(app) {
         }
     }
 
+    this.showSimpleContent = function(options){
+      var that = this;
+      that.elements["SCENEINFO"].addClass('hidden')
+      var thisContainer = $(options.id);
+      if (thisContainer.length) {
+        thisContainer.removeClass('hidden');
+        thisContainer.siblings().addClass('hidden');
+      } else {
+        thisContainer = $('<div id="'+ options.id +'" class="sceneinfo-panel">');
+        thisContainer.html(options.content);
+        that.elements["MAIN"].append(thisContainer);
+        thisContainer.removeClass('hidden');
+        thisContainer.siblings().addClass('hidden');
+      }
+    }
+
     this.showText = function (e) {
         e.preventDefault()
         that = this;
         that.elements["SCENEINFO"].addClass('hidden')
-        $('#sceneinfo-forces', this.elements["MAIN"]).siblings().removeClass('current');
-        $('#sceneinfo-forces', this.elements["MAIN"]).addClass('current');
+        $('#sceneinfo-text', this.elements["MAIN"]).siblings().removeClass('current');
+        $('#sceneinfo-text', this.elements["MAIN"]).addClass('current');
         // Load data to its container unless it's already there
-        var thisContainer = $('#sceneinfo-panel-network');
+        var thisContainer = $('#sceneinfo-text');
         if (thisContainer.length) {
             thisContainer.removeClass('hidden');
             thisContainer.siblings().addClass('hidden');
         } else {
             setTimeout(function() {
-                $.get('/static/compile/scene/forces.html', {}, function (data, status, jqxhr) {
-                    thisContainer = $('<div id="sceneinfo-panel-network" class="sceneinfo-panel">');
+                $.get('/static/compile/scene/text.html', {}, function (data, status, jqxhr) {
+                    thisContainer = $('<div id="sceneinfo-text" class="sceneinfo-panel">');
                     thisContainer.html(data);
                     that.elements["MAIN"].append(thisContainer);
                     thisContainer.removeClass('hidden');
                     thisContainer.siblings().addClass('hidden');
-                    // Forces stuff
-                    // TODO: Forces scripts
+                    // Map stuff
+                    // TODO: Map scripts
                 });
             }, 400);
         }
@@ -144,82 +160,20 @@ var SceneInfoWidget = function(app) {
 
     this.showGraph = function (e) {
         e.preventDefault()
-        that = this;
-        that.elements["SCENEINFO"].addClass('hidden');
-        $('#sceneinfo-forces', this.elements["MAIN"]).siblings().removeClass('current');
-        $('#sceneinfo-forces', this.elements["MAIN"]).addClass('current');
-        // Load data to its container unless it's already there
-        var thisContainer = $('#sceneinfo-panel-network');
-        if (thisContainer.length) {
-            thisContainer.removeClass('hidden');
-            thisContainer.siblings().addClass('hidden');
-        } else {
-            setTimeout(function() {
-                $.get('/static/compile/scene/forces.html', {}, function (data, status, jqxhr) {
-                    thisContainer = $('<div id="sceneinfo-panel-network" class="sceneinfo-panel">');
-                    thisContainer.html(data);
-                    that.elements["MAIN"].append(thisContainer);
-                    thisContainer.removeClass('hidden');
-                    thisContainer.siblings().addClass('hidden');
-                    // Forces stuff
-                    // TODO: Forces scripts
-                });
-            }, 400);
-        }
+        this.showSimpleContent({
+          id: 'sceneinfo-graph',
+          content: '<img src="/static/images/connect.png">'
+        })
     }
 
     this.showDiagram = function (e) {
         e.preventDefault()
-        that = this;
-        that.elements["SCENEINFO"].addClass('hidden');
-        $('#sceneinfo-forces', this.elements["MAIN"]).siblings().removeClass('current');
-        $('#sceneinfo-forces', this.elements["MAIN"]).addClass('current');
-        // Load data to its container unless it's already there
-        var thisContainer = $('#sceneinfo-panel-network');
-        if (thisContainer.length) {
-            thisContainer.removeClass('hidden');
-            thisContainer.siblings().addClass('hidden');
-        } else {
-            setTimeout(function() {
-                $.get('/static/compile/scene/forces.html', {}, function (data, status, jqxhr) {
-                    thisContainer = $('<div id="sceneinfo-panel-network" class="sceneinfo-panel">');
-                    thisContainer.html(data);
-                    that.elements["MAIN"].append(thisContainer);
-                    thisContainer.removeClass('hidden');
-                    thisContainer.siblings().addClass('hidden');
-                    // Forces stuff
-                    // TODO: Forces scripts
-                });
-            }, 400);
-        }
+        this.showSimpleContent({
+          id: 'sceneinfo-diagram',
+          content: '<h1>Диаграмма</h1>'
+        })
     }
 
-    this.showDiagram = function (e) {
-        e.preventDefault()
-        that = this;
-        that.elements["SCENEINFO"].addClass('hidden');
-        that.elements["SCENEINFO"].addClass('hidden');
-        $('#sceneinfo-forces', this.elements["MAIN"]).siblings().removeClass('current');
-        $('#sceneinfo-forces', this.elements["MAIN"]).addClass('current');
-        // Load data to its container unless it's already there
-        var thisContainer = $('#sceneinfo-panel-network');
-        if (thisContainer.length) {
-            thisContainer.removeClass('hidden');
-            thisContainer.siblings().addClass('hidden');
-        } else {
-            setTimeout(function() {
-                $.get('/static/compile/scene/forces.html', {}, function (data, status, jqxhr) {
-                    thisContainer = $('<div id="sceneinfo-panel-network" class="sceneinfo-panel">');
-                    thisContainer.html(data);
-                    that.elements["MAIN"].append(thisContainer);
-                    thisContainer.removeClass('hidden');
-                    thisContainer.siblings().addClass('hidden');
-                    // Forces stuff
-                    // TODO: Forces scripts
-                });
-            }, 400);
-        }
-    }
 
     // Bind events to main menu
     $('#sceneinfo-main   a', this.elements["MAIN"]).on('click', $.proxy(this.showInfo, this));
