@@ -363,8 +363,7 @@ var EventsPanel = Panel.extend({
 
     this.widgets.wx3 = new SceneInfoExtraWidget(this.app, {
       MAIN: '#sceneinfo-extra-3',
-      ONSHOW: function() { $('#waveform').addClass('waveform-playback'); },
-      ONHIDE: function() { $('#waveform').removeClass('waveform-playback'); }
+      ONCLICK: function(e){ self.widgets.sceneInfo.showMap(e) }
     });
     $.get('/static/compile/scene/extra-3.html', function (data) { self.widgets.wx3.setContent(data); });
 

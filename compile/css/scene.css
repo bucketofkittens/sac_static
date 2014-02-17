@@ -344,26 +344,6 @@
     transition:all 0.5s ease-in-out;
 }
 
-#waveform-obscure {
-  position: absolute;
-  height: 197px;
-  width: 282px;
-  overflow: hidden;
-}
-
-#waveform {
-  position: absolute;
-  background: url('/static/images/scene/waveform-2.png') repeat 0 0;
-  height: 197px;
-  width: 62830px;
-  left: 0;
-}
-
-#waveform.waveform-playback {
-  transition: all 2700s linear;
-  left: -62548px;
-}
-
 #section-obscure {
   position: absolute;
   overflow: hidden;
@@ -383,7 +363,7 @@
     height: 593px;
 }
 
-#scene-info-map {
+.scene-map {
     background: url('/static/images/scene/blue-map.jpg') top left no-repeat;
     width: 931px;
     height: 593px;
@@ -391,7 +371,7 @@
     overflow: hidden;
 }
 
-#scene-info-map .placemark {
+.scene-map .placemark {
     position: absolute;
     border: 4px solid black;
     min-height: 24px;
@@ -406,12 +386,12 @@
     background-size: 24px;
 }
 
-#scene-info-map .placemark.police {
+.scene-map .placemark.police {
     border-color: blue;
     background-image: url('/static/images/scene/icon-patrolcar.png');
 }
 
-#scene-info-map .placemark.criminal {
+.scene-map .placemark.criminal {
     border-color: red;
     background-image: url('/static/images/scene/icon-criminal.png');
 }
@@ -436,3 +416,7 @@
     color: #BBDDFF;
 }
 
+#sceneinfo-extra-3 .sceneinfo-extra-panel {
+    overflow: hidden;
+    box-shadow: inset 0 0 50px 0 black;
+}

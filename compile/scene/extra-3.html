@@ -1,3 +1,58 @@
-<div id="waveform-obscure">
-    <div id="waveform"></div>
+<div id="scene-minimap" class="scene-map">
+    <div class="placemark criminal"></div>
 </div>
+<script>
+    $(function () {
+
+        var zlobin = {
+            current: {top: 271, left: 350, msecs: 0},
+            startedAt: new Date(),
+            route: [
+                {top: 257, left: 367, msecs: 30000},
+                {top: 270, left: 388, msecs: 75000},
+                {top: 274, left: 383, msecs: 90000}
+            ]
+        }
+
+        var miniMap = $('#scene-minimap');
+        var zlobinTimer;
+
+        function moveZlobin(time) {
+            var elapsed = time - zlobin.startedAt;
+            var zlobinMark = $('.criminal.placemark');
+            // Remove stale segments
+            var staleSegments = _.filter(zlobin.route, function (segment) {
+                return segment.msecs < elapsed;
+            });
+            _.each(staleSegments, function (route) {
+                zlobin.current = {top: route.top, left: route.left, msecs: elapsed};
+                var segment = zlobin.route.shift();
+                if (segment.status) {
+                    zlobinMark.text(segment.status);
+                } else zlobinMark.text(null);
+            });
+            if (!zlobin.route.length) {
+                clearInterval(zlobinTimer);
+            } else {
+                // Start calculation
+                var timeRange = zlobin.route[0].msecs - zlobin.current.msecs;
+                var timeDiff  = elapsed - zlobin.current.msecs;
+                // Latitude calculation
+                var topDiff = zlobin.route[0].top - zlobin.current.top;
+                var top = zlobin.current.top + topDiff * ( timeDiff / timeRange );
+                // Longitude
+                var leftDiff = zlobin.route[0].left - zlobin.current.left;
+                var left = zlobin.current.left + leftDiff * ( timeDiff / timeRange );
+                // Done, move Zlobin
+                zlobinMark.css({ top: top, left: left });
+                // Done, move map
+                offsetX = Math.ceil(-left+miniMap.parent().width()/2);
+                offsetY = Math.ceil(-top+miniMap.parent().height()/2);
+                miniMap.css({marginLeft: offsetX+'px', marginTop: offsetY+'px' })
+            }
+        }
+
+        zlobinTimer = setInterval(function(){ webkitRequestAnimationFrame(moveZlobin) }, 100);
+
+    });
+</script>
