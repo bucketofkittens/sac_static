@@ -190,6 +190,7 @@
 #scene-info-photos h2 { text-align: left; font-size: 12pt; margin: 1em 0 0.25em 45px; color: #BBDDFF; text-transform: uppercase;}
 
 #scene-info-forces {
+  padding-top: 35px;
     text-align: center;
 }
 
