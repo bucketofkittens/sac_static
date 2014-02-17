@@ -119,11 +119,28 @@ var SceneInfoWidget = function(app) {
     this.showText = function (e) {
         e.preventDefault()
         that = this;
-<<<<<<< HEAD
         that.elements["SCENEINFO"].addClass('hidden')
-          .html('<h1>Текст</h1>')
-          .removeClass('hidden');
-    }
+        $('#sceneinfo-forces', this.elements["MAIN"]).siblings().removeClass('current');
+        $('#sceneinfo-forces', this.elements["MAIN"]).addClass('current');
+        // Load data to its container unless it's already there
+        var thisContainer = $('#sceneinfo-panel-network');
+        if (thisContainer.length) {
+            thisContainer.removeClass('hidden');
+            thisContainer.siblings().addClass('hidden');
+        } else {
+            setTimeout(function() {
+                $.get('/static/compile/scene/forces.html', {}, function (data, status, jqxhr) {
+                    thisContainer = $('<div id="sceneinfo-panel-network" class="sceneinfo-panel">');
+                    thisContainer.html(data);
+                    that.elements["MAIN"].append(thisContainer);
+                    thisContainer.removeClass('hidden');
+                    thisContainer.siblings().addClass('hidden');
+                    // Forces stuff
+                    // TODO: Forces scripts
+                });
+            }, 400);
+        }
+    } 
 
     this.showGraph = function (e) {
         e.preventDefault()
