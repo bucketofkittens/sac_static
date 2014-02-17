@@ -350,14 +350,14 @@ var EventsPanel = Panel.extend({
     this.widgets.sceneInfo =  new SceneInfoWidget(this.app);
     var self = this;
     this.widgets.wx1 = new SceneInfoExtraWidget(this.app, {
-      ONSHOW: function() { if ( $('#sampleMovie')[0] ) { $('#sampleMovie').show(), $('#sampleMovie')[0].play(); } },
-      ONHIDE: function() { if ( $('#sampleMovie')[0] ) { $('#sampleMovie')[0].pause(); $('#sampleMovie')[0].currentTime = 0 } }
+      ONSHOW: function(e) { if ( $('#sampleMovie')[0] ) { $('#sampleMovie').show(), $('#sampleMovie')[0].play(); } },
+      ONHIDE: function(e) { if ( $('#sampleMovie')[0] ) { $('#sampleMovie')[0].pause(); $('#sampleMovie')[0].currentTime = 0 } }
     });
     $.get('/static/compile/scene/extra-1.html', function (data) { self.widgets.wx1.setContent(data); });
 
     this.widgets.wx2 = new SceneInfoExtraWidget(this.app, {
       MAIN: '#sceneinfo-extra-2',
-      ONCLICK: function(){ self.widgets.sceneInfo.showInfo() }
+      ONCLICK: function(e){ self.widgets.sceneInfo.showInfo(e) }
     });
     $.get('/static/compile/scene/extra-2.html', function (data) { self.widgets.wx2.setContent(data); });
 
@@ -369,17 +369,17 @@ var EventsPanel = Panel.extend({
 
     this.widgets.wx4 = new SceneInfoExtraWidget(this.app, {
       MAIN: '#sceneinfo-extra-4',
-      ONCLICK: function(){ self.widgets.sceneInfo.showText() }
+      ONCLICK: function(e){ self.widgets.sceneInfo.showText(e) }
     })
 
     this.widgets.wx5 = new SceneInfoExtraWidget(this.app, {
       MAIN: '#sceneinfo-extra-5',
-      ONCLICK: function(){ self.widgets.sceneInfo.showGraph() }
+      ONCLICK: function(e){ self.widgets.sceneInfo.showGraph(e) }
     })
 
     this.widgets.wx6 = new SceneInfoExtraWidget(this.app, {
       MAIN: '#sceneinfo-extra-6',
-      ONCLICK: function(){ self.widgets.sceneInfo.showDiagram() }
+      ONCLICK: function(e){ self.widgets.sceneInfo.showDiagram(e) }
     })
 
     this.widgets.alarm = new EventsAlarmWidget(this);
