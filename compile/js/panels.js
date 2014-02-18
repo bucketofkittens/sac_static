@@ -350,10 +350,10 @@ var EventsPanel = Panel.extend({
 	  this.CSS = { "CONTAINER": "#bg-event-image" }
 	  this.elements = { "CONTAINER": $(this.CSS["CONTAINER"]) }
 
-    this.widgets.sceneInfo =  new SceneInfoWidget(this.app);
+    this.widgets.sceneInfo =  new SceneInfoWidget(this.app, this);
     var self = this;
     this.widgets.wx1 = new SceneInfoExtraWidget(this.app, {
-      ONSHOW: function(e) { if ( $('#sampleMovie')[0] ) { $('#sampleMovie').show(), $('#sampleMovie')[0].play(); } },
+      ONSHOW: function(e) { if ( $('#sampleMovie')[0] ) { $('#sampleMovie').show(), $('#sampleMovie')[0].play(); }},
       ONHIDE: function(e) { if ( $('#sampleMovie')[0] ) { $('#sampleMovie')[0].pause(); $('#sampleMovie')[0].currentTime = 0 } }
     });
     $.get('/static/compile/scene/extra-1.html', function (data) { self.widgets.wx1.setContent(data); });
@@ -377,12 +377,14 @@ var EventsPanel = Panel.extend({
 
     this.widgets.wx5 = new SceneInfoExtraWidget(this.app, {
       MAIN: '#sceneinfo-extra-5',
-      ONCLICK: function(e){ self.widgets.sceneInfo.showGraph(e) }
+      ONCLICK: function(e){ self.widgets.sceneInfo.showGraph(e) },
+      ONSHOW: function(e) { $('#sceneinfo-extra-5').html('<img src="/static/images/scene/mini-graph.png">')}
     })
 
     this.widgets.wx6 = new SceneInfoExtraWidget(this.app, {
       MAIN: '#sceneinfo-extra-6',
-      ONCLICK: function(e){ self.widgets.sceneInfo.showDiagram(e) }
+      ONCLICK: function(e){ self.widgets.sceneInfo.showDiagram(e) },
+      ONSHOW: function(e) { $('#sceneinfo-extra-6').html('<img src="/static/images/scene/mini-diagram.png">')}
     })
 
     this.widgets.alarm = new EventsAlarmWidget(this);

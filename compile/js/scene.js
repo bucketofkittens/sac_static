@@ -1,33 +1,13 @@
-var OnSceneInfoUpdateEvent = function(app) {
-    this.app = app;
-
-//    this.onGraphDataRequest_ = function(data) {
-//        $(this.app.graphWidget.CSS["LOAD"]).removeClass("onShow");
-//        this.app.graphWidget.showGraph();
-//        this.app.graphWidget.updateContent(data);
-//    }
-//
-//    this.app.graphManager.getGraph(
-//        this.app.graphRegionsSelectorWidget.getCurrentIds(),
-//        this.app.graphParamsSelector.getCurrentIds(),
-//        this.app.graphWidget.getBeginData(),
-//        this.app.graphWidget.getEndData(),
-//        $.proxy(this.onGraphDataRequest_, this)
-//    );
-}
-
-
 // Example: w = new SceneInfoWidget(app); w.show();
 
-var SceneInfoWidget = function(app) {
+var SceneInfoWidget = function(app, panel) {
     this.app = app;
+    this.panel = panel;
+    
     this.scrollApi = null;
-    this.onUpdateSceneInfo = new signals.Signal();
-    this.onUpdateSceneInfo.add(OnSceneInfoUpdateEvent);
 
     this.CSS = {
         "MAIN": "#sceneinfo-content",
-        "LOAD": "#load",
         "SCENEINFO": "#sceneinfo-panel"
     }
 
@@ -36,13 +16,9 @@ var SceneInfoWidget = function(app) {
         "SCENEINFO": $(this.CSS["SCENEINFO"])
     }
 
-    this.onUpdateSceneInfoDispather_ = function() {
-        this.onUpdateSceneInfo.dispatch(this.app);
-    }
-
     this.show = function() {
-        this.showInfo(false);
         this.elements["MAIN"].removeClass('hidden');
+        this.showLoad();
     }
 
     this.hide = function() {
@@ -55,7 +31,22 @@ var SceneInfoWidget = function(app) {
         this.elements["SCENEINFO"].siblings().addClass('hidden');
     }
 
-    this.showInfo = function (hide) {
+    this.showLoad = function(){
+      this.elements["SCENEINFO"].html('<div id="scene-load" class="onShow">' +
+                                      '<p class="text" id="scene-loading"></p>'+
+                                      '<img src="/static/images/load.png" id="load-image" alt="">'+
+                                      '</div>')
+      this.panel.widgets.wx1.show()
+      var self = this
+      $('#sampleMovie').on('ended', function(){
+        $('#sampleMovie')[0].pause();
+         _.each(['wx2', 'wx3', 'wx4', 'wx5', 'wx6'], function(w){self.panel.widgets[w].show()})
+        self.elements["SCENEINFO"].addClass('onHidden')
+        self.showInfo()
+      })
+    }
+
+    /*this.showVideo = function (hide) {
         if (!_.isBoolean(hide)){
           hide.preventDefault()
         }
@@ -71,23 +62,45 @@ var SceneInfoWidget = function(app) {
             setTimeout(function() {
                 var thisContainer = $('<div id="sceneinfo-panel-main" class="sceneinfo-panel '+ ( hide ? 'hidden' : '' ) + ' hide-to-left">');
                 that.elements["MAIN"].append(thisContainer);
+                $.get('/static/compile/scene/video.html', {}, function (data, status, jqxhr) {
+                    thisContainer.html(data);
+                    thisContainer.siblings().addClass('hidden');
+                    thisContainer.removeClass('hidden');
+                    var video = thisContainer.find('video');
+                    video[0].play()
+                    video.on('ended', function(){
+                      $('#video-text-1').removeClass('hidden')
+                      setTimeout(function(){
+                        _.each(['wx1', 'wx4', 'wx2', 'wx5', 'wx3', 'wx6'], function(w){that.panel.widgets[w].show()})
+                        $('#video-text-1').removeClass('onHidde')
+                        that.showInfo()
+                      }, 2000)
+                  })
+                });
+            }, (hide ? 400 : 0));
+        }
+      }*/
+
+    this.showInfo = function (e) {
+        if (e) e.preventDefault()
+        that = this;
+        that.elements["SCENEINFO"].addClass('hidden');
+        $('#sceneinfo-map', this.elements["MAIN"]).siblings().removeClass('current');
+        $('#sceneinfo-map', this.elements["MAIN"]).addClass('current');
+        var thisContainer = $('#sceneinfo-panel-info');
+        if (thisContainer.length) {
+            thisContainer.removeClass('hidden');
+            thisContainer.siblings().addClass('hidden');
+        } else {
+            setTimeout(function() {
+                thisContainer = $('<div id="sceneinfo-panel-info" class="sceneinfo-panel hidden hide-to-left">');
+                that.elements["MAIN"].append(thisContainer);
                 $.get('/static/compile/scene/info.html', {}, function (data, status, jqxhr) {
                     thisContainer.html(data);
                     thisContainer.siblings().addClass('hidden');
                     thisContainer.removeClass('hidden');
-                    // Page stuff
-                    var menu_items = $("#scene-info-selector li");
-                    menu_items.on('click', function (e) {
-                        e.preventDefault();
-                        menu_items.removeClass('current');
-                        $(this).addClass('current');
-                        var target = $('#'+$(this).attr('data-target'));
-                        target.removeClass('hidden-left hidden-right hidden');
-                        target.prevAll('section').addClass('hidden hidden-left').removeClass('hidden-right');
-                        target.nextAll('section').addClass('hidden hidden-right').removeClass('hidden-left');
-                    });
                 });
-            }, (hide ? 400 : 0));
+            }, 400);
         }
     }
 
@@ -170,7 +183,7 @@ var SceneInfoWidget = function(app) {
         e.preventDefault()
         this.showSimpleContent({
           id: 'sceneinfo-diagram',
-          content: '<h1>Диаграмма</h1>'
+          content: '<img src="/static/images/scene/diagram.png">'
         })
     }
 
@@ -182,33 +195,12 @@ var SceneInfoWidget = function(app) {
 
 }
 
-var OnSceneInfoExtraUpdateEvent = function(app) {
-    this.app = app;
-
-//    this.onGraphDataRequest_ = function(data) {
-//        $(this.app.graphWidget.CSS["LOAD"]).removeClass("onShow");
-//        this.app.graphWidget.showGraph();
-//        this.app.graphWidget.updateContent(data);
-//    }
-//
-//    this.app.graphManager.getGraph(
-//        this.app.graphRegionsSelectorWidget.getCurrentIds(),
-//        this.app.graphParamsSelector.getCurrentIds(),
-//        this.app.graphWidget.getBeginData(),
-//        this.app.graphWidget.getEndData(),
-//        $.proxy(this.onGraphDataRequest_, this)
-//    );
-}
-
 // Example: wx2 = new SceneInfoExtraWidget(app, {MAIN: '#sceneinfo-extra-2'}); wx2.show();
 
 // _.each([1,2,3,4,5,6], function(i){ w = new SceneInfoExtraWidget(app, {MAIN: '#sceneinfo-extra-'+i}); w.show();})
 
 var SceneInfoExtraWidget = function(app, options) {
     this.app = app;
-    this.onUpdateSceneInfoExtra = new signals.Signal();
-    this.onUpdateSceneInfoExtra.add(OnSceneInfoExtraUpdateEvent);
-
     this.CSS = jQuery.extend({
         "MAIN": "#sceneinfo-extra-1",
         "LOAD": "#load",

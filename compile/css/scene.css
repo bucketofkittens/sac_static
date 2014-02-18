@@ -37,6 +37,14 @@
     transition: all 0.5s ease-out;
 }
 
+#sceneinfo-extra-2, #sceneinfo-extra-5 {
+  transition-delay: 0.2s;
+}
+
+#sceneinfo-extra-3, #sceneinfo-extra-6 {
+  transition-delay: 0.4s;
+}
+
 .sceneinfo-extras .left-outer-text {
   font-family: EuropeExt;
   color: #61a9d6;
@@ -47,6 +55,30 @@
   top: 15px;
   width: 150px;
   line-height: 120%;
+}
+
+#sceneinfo-extra-5 img {
+  display: block;
+  width: 249px;
+  height: 178px;
+  margin: 24px auto;
+}
+
+#sceneinfo-extra-6 img {
+  display: block;
+  width: 261px;
+  height: 195px;
+  margin: 15px auto;
+}
+
+#sceneinfo-diagram img {
+  position: absolute;
+  width: 908px;
+  height: 554px;
+  top: 50%;
+  margin-top: -277px;
+  left: 50%;
+  margin-left: -454px;
 }
 
 #sceneinfo-content section
@@ -272,6 +304,7 @@
     height:225px;
     width:308px;
     z-index:200;
+    cursor: pointer;
 }
 
 #content .sceneinfo-extras.left {
@@ -382,6 +415,27 @@
     height: 593px;
 }
 
+#scene-info-video h2, #scene-info-video h3 {
+  text-align: center;
+  transition:all 0.5s ease-in;
+}
+
+#scene-info-video h3 {
+  margin-top: -25px;
+}
+
+#scene-info-video-container {
+    position: absolute;
+    top: 50%;
+    margin-top: -240px;
+    left: 50%;
+    margin-left: -320px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    width: 640px;
+    height: 480px;
+}
+
 .scene-map {
     background: url('/static/images/scene/blue-map.jpg') top left no-repeat;
     width: 931px;
@@ -451,4 +505,39 @@
   display: block;
   width: 880px;
   margin: 20px auto;  
+}
+
+#scene-load
+{
+  opacity:0;
+  display:none;
+  /*width:1019px;
+  height:1000px;*/
+  position:absolute;
+  left:50%;
+  margin-left:-510px;
+  top:40px;
+  z-index:500;
+  -moz-transition:all .5s linear;
+  -o-transition:all .5s linear;
+  -webkit-transition:all .5s linear;
+  transition:all .5s linear;
+}
+
+#scene-load img
+{
+  display:block;
+  left:50%;
+  top:50%;
+  width:154px;
+  height:153px;
+  position:absolute;
+  margin:-90px 0 0 -78px;
+}
+
+#scene-load.onShow img
+{
+  -webkit-animation:rotating 4s linear infinite;
+  -moz-animation:rotating 4s linear infinite;
+  -ms-animation:rotating 4s linear infinite;
 }
