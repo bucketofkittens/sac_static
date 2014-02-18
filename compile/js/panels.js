@@ -373,7 +373,8 @@ var EventsPanel = Panel.extend({
     this.widgets.wx4 = new SceneInfoExtraWidget(this.app, {
       MAIN: '#sceneinfo-extra-4',
       ONCLICK: function(e){ self.widgets.sceneInfo.showText(e) }
-    })
+    });
+    $.get('/static/compile/scene/text.html', function (data) { self.widgets.wx4.setContent(data); });
 
     this.widgets.wx5 = new SceneInfoExtraWidget(this.app, {
       MAIN: '#sceneinfo-extra-5',

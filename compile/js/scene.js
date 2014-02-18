@@ -85,8 +85,8 @@ var SceneInfoWidget = function(app, panel) {
         if (e) e.preventDefault()
         that = this;
         that.elements["SCENEINFO"].addClass('hidden');
-        $('#sceneinfo-map', this.elements["MAIN"]).siblings().removeClass('current');
-        $('#sceneinfo-map', this.elements["MAIN"]).addClass('current');
+        //$('#sceneinfo-map', this.elements["MAIN"]).siblings().removeClass('current');
+        //$('#sceneinfo-map', this.elements["MAIN"]).addClass('current');
         var thisContainer = $('#sceneinfo-panel-info');
         if (thisContainer.length) {
             thisContainer.removeClass('hidden');
@@ -212,10 +212,6 @@ var SceneInfoExtraWidget = function(app, options) {
     this.elements = {
         "MAIN": $(this.CSS["MAIN"]),
         "SCENEINFO": $('.sceneinfo-extra-panel', this.CSS["MAIN"])
-    }
-
-    this.onUpdateSceneInfoExtraDispather_ = function() {
-        this.onUpdateSceneInfoExtra.dispatch(this.app);
     }
 
     this.show = function() {
