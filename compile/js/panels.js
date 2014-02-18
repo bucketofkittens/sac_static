@@ -222,6 +222,7 @@ var RegionPanel = Panel.extend({
 
 	show: function() {
     this.setBg();
+    this.app.setAppTitle('Россия')
 		this.elements["BG-IMAGE"].addClass("onShow");
 
 		if(this.currentCamera != "LEFT") {
