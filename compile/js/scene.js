@@ -69,12 +69,12 @@ var SceneInfoWidget = function(app) {
             thisContainer.siblings().addClass('hidden');
         } else {
             setTimeout(function() {
+                var thisContainer = $('<div id="sceneinfo-panel-main" class="sceneinfo-panel '+ ( hide ? 'hidden' : '' ) + ' hide-to-left">');
+                that.elements["MAIN"].append(thisContainer);
                 $.get('/static/compile/scene/info.html', {}, function (data, status, jqxhr) {
-                    var thisContainer = $('<div id="sceneinfo-panel-main" class="sceneinfo-panel '+ ( hide ? 'hidden' : '' ) + '">');
                     thisContainer.html(data);
-                    that.elements["MAIN"].append(thisContainer);
-                    thisContainer.removeClass('hidden');
                     thisContainer.siblings().addClass('hidden');
+                    thisContainer.removeClass('hidden');
                     // Page stuff
                     var menu_items = $("#scene-info-selector li");
                     menu_items.on('click', function (e) {
@@ -103,12 +103,12 @@ var SceneInfoWidget = function(app) {
             thisContainer.siblings().addClass('hidden');
         } else {
             setTimeout(function() {
+                thisContainer = $('<div id="sceneinfo-panel-map" class="sceneinfo-panel hidden hide-to-left">');
+                that.elements["MAIN"].append(thisContainer);
                 $.get('/static/compile/scene/map.html', {}, function (data, status, jqxhr) {
-                    thisContainer = $('<div id="sceneinfo-panel-map" class="sceneinfo-panel">');
                     thisContainer.html(data);
-                    that.elements["MAIN"].append(thisContainer);
-                    thisContainer.removeClass('hidden');
                     thisContainer.siblings().addClass('hidden');
+                    thisContainer.removeClass('hidden');
                     // Map stuff
                     // TODO: Map scripts
                 });
@@ -119,16 +119,16 @@ var SceneInfoWidget = function(app) {
     this.showSimpleContent = function(options){
       var that = this;
       that.elements["SCENEINFO"].addClass('hidden')
-      var thisContainer = $(options.id);
+      var thisContainer = $('#'+options.id);
       if (thisContainer.length) {
         thisContainer.removeClass('hidden');
         thisContainer.siblings().addClass('hidden');
       } else {
-        thisContainer = $('<div id="'+ options.id +'" class="sceneinfo-panel">');
-        thisContainer.html(options.content);
+        thisContainer = $('<div id="'+ options.id +'" class="sceneinfo-panel hidden hide-to-right">');
         that.elements["MAIN"].append(thisContainer);
-        thisContainer.removeClass('hidden');
+        thisContainer.html(options.content);
         thisContainer.siblings().addClass('hidden');
+        thisContainer.removeClass('hidden');
       }
     }
 
@@ -145,12 +145,12 @@ var SceneInfoWidget = function(app) {
             thisContainer.siblings().addClass('hidden');
         } else {
             setTimeout(function() {
+                thisContainer = $('<div id="sceneinfo-text" class="sceneinfo-panel hidden hide-to-right">');
+                that.elements["MAIN"].append(thisContainer);
                 $.get('/static/compile/scene/text.html', {}, function (data, status, jqxhr) {
-                    thisContainer = $('<div id="sceneinfo-text" class="sceneinfo-panel">');
                     thisContainer.html(data);
-                    that.elements["MAIN"].append(thisContainer);
-                    thisContainer.removeClass('hidden');
                     thisContainer.siblings().addClass('hidden');
+                    thisContainer.removeClass('hidden');
                     // Map stuff
                     // TODO: Map scripts
                 });
