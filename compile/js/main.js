@@ -23,6 +23,7 @@ var VideoPlayer = function() {
 		if(e.currentTarget.duration - e.currentTarget.currentTime < 0.2) {
 			e.currentTarget.pause();
 			this.endedCallback();
+      this.video.off('playing');
 		}
 	}
 
@@ -38,6 +39,7 @@ var VideoPlayer = function() {
 		if(config && config.onEndedCallback) {
 			this.endedCallback = config.onEndedCallback;
 		}
+	  this.video.on('playing', function(){if (config.map) {config.map.setBgImage()}});
 		
 		this.video[0].load();
 		this.video[0].play();
@@ -45,7 +47,7 @@ var VideoPlayer = function() {
 	}
 
 	this.hide = function() {
-		$(this.elements["BG"]).fadeOut();
+		$(this.elements["BG"]).hide();
 	}
 }
 
@@ -236,6 +238,7 @@ var Application = function() {
 
 	this.onCacheLoaded_ = function() {
 		this.loadingState.clearText();
+		this.loadingState.stop();
 
 		this.videoPlayer = new VideoPlayer();
 		
@@ -274,7 +277,6 @@ var Application = function() {
 
     // открываем первую панель
     this.footerNavWidget.elements['MAIN'].find('a').first().click()
-    this.panels["EVENTS"].show();
 	}
 
 	this.setAppTitle = function(title) {

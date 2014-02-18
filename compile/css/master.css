@@ -393,7 +393,7 @@ header h1
   transform:translatez(0);
 }
 #bg-event-image {
-  background: url("../../images/events.jpg");
+  /*background: url("../../images/events.jpg");*/
 }
 #bg-regions-image
 {

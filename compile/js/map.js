@@ -73,8 +73,14 @@ _.extend(Map.prototype, {
 		this.app.regionsManagerLocal.getRegions($.proxy(this.setRootRegions, this));
 		
 		this.setBgImage();
-		if (this.panel.widgets.mapColor) this.panel.widgets.mapColor.updateParams();
+		this.removeBlur();
+		if(this.currentZoom != 1) {
+			this.miniMap.opacityShow();
+		}
 		this.SVGWriter.load(this.app.configManager.getSvgById(this.currentRegion));
+		this.SVGWriter.show();
+
+		if (this.panel.widgets.mapColor) this.panel.widgets.mapColor.updateParams();
 		if (this.panel.widgets.parametrs) this.panel.widgets.parametrs.getParamsByRegionAndYeage(this.currentRegion);
 	},
 

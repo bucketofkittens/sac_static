@@ -187,7 +187,8 @@ var OnEventsChangeState = function(app, map, video_id, currentRegion) {
 		video_id,
 		{
 			onEndedCallback: $.proxy(this.onAfterEvent_, this),
-			poster: this.map.bgImage	
+			poster: this.map.bgImage,
+      map: self.map	
 		}
 	);
 }

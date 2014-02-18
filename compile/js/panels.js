@@ -74,7 +74,7 @@ var DistrictsPanel = Panel.extend({
   },
 
 	show: function() {
-		this.map.removeBlur();
+		this.map.show();
 		if(this.map.currentZoom != 1) {
 			this.map.miniMap.opacityShow();	
 		}
@@ -221,6 +221,7 @@ var RegionPanel = Panel.extend({
 	},
 
 	show: function() {
+    this.setBg();
 		this.elements["BG-IMAGE"].addClass("onShow");
 
 		if(this.currentCamera != "LEFT") {
@@ -231,7 +232,6 @@ var RegionPanel = Panel.extend({
 		}
 		this.svgWriter.show();
 		this.svgWriter.load(this.getSVGCurrentCamera());
-		this.setBg();
 
 		this.widgets.regionsParametrs.fullShow();
 		this.widgets.regionsMapColor.updateParams();
@@ -277,11 +277,12 @@ var RegionPanel = Panel.extend({
 			endState = "CENTER";
 		}
 
+    var poster =  (this.bgImage || '/static/images/map/all-regions-center.jpg')
 		this.app.videoPlayer.play(
 			this.app.getResByPath(this.getVideoName(startState, endState)) ,
 			{
 				onEndedCallback: $.proxy(this.onVideoPlayEnd_, this),
-				poster: this.bgImage	
+				poster: poster
 			}
 		);
 		
@@ -325,11 +326,12 @@ var RegionPanel = Panel.extend({
 			startState = "LEFT";
 			endState = "CENTER";
 		}
+    var poster =  (this.bgImage || '/static/images/map/all-regions-center.jpg')
 		this.app.videoPlayer.play(
 			this.app.getResByPath(this.getVideoName(startState, endState)) ,
 			{
 				onEndedCallback: $.proxy(this.onVideoPlayEnd_, this),
-				poster: this.bgImage	
+				poster: poster
 			}
 		);
 	},
@@ -392,17 +394,11 @@ var EventsPanel = Panel.extend({
 
 	show: function() {
 		this.elements["CONTAINER"].removeClass("onHidden");
-		this.map.removeBlur();
-		if(this.map.currentZoom != 1) {
-			this.map.miniMap.opacityShow();
-		}
+    this.map.show()
     if (Number(this.map.currentZoom) == 3 && Number(this.map.currentRegion) == 72) {
       this.widgets.alarm.show()
     }
-		var region = (this.map.currentRegion || this.currentRegion)
-		this.map.SVGWriter.load(this.app.configManager.getSvgById(region));
-		this.map.SVGWriter.show();
-		this.app.pageTitleWidget.show();
+		//this.app.pageTitleWidget.show();
 	},
 
 	hide: function() {
