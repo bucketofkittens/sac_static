@@ -18,7 +18,13 @@ var SceneInfoWidget = function(app, panel) {
 
     this.show = function() {
         this.elements["MAIN"].removeClass('hidden');
-        this.showLoad();
+        if (this.panel.alertShown) {
+          this.panel.widgets.wx1.show()
+          this.showExtraWidgets()
+          this.showInfo()
+        } else {
+          this.showLoad();
+        }
     }
 
     this.hide = function() {
@@ -40,59 +46,27 @@ var SceneInfoWidget = function(app, panel) {
       var self = this
       $('#sampleMovie').on('ended', function(){
         $('#sampleMovie')[0].pause();
+        self.showExtraWidgets()
+        self.elements["SCENEINFO"].addClass('onHidden')
+        self.showInfo()
+      })
+    }
+
+    this.showExtraWidgets = function(){
+        var self = this;
         setTimeout(function(){ self.panel.widgets['wx2'].show() },  300);
         setTimeout(function(){ self.panel.widgets['wx3'].show() },  600);
         setTimeout(function(){ self.panel.widgets['wx4'].show() }, 1200);
         setTimeout(function(){ self.panel.widgets['wx5'].show() }, 1500);
         setTimeout(function(){ self.panel.widgets['wx6'].show() }, 1800);
         setTimeout(function(){ self.panel.widgets['mgmtTopRight'].show() },    2000);
-        setTimeout(function(){ self.panel.widgets['mgmtBottomRight'].show() }, 2000);
-        self.elements["SCENEINFO"].addClass('onHidden')
-        self.showInfo()
-      })
+        setTimeout(function(){ self.panel.widgets['mgmtBottomRight'].show(); self.panel.alertShown = true; }, 2000);
     }
-
-    /*this.showVideo = function (hide) {
-        if (!_.isBoolean(hide)){
-          hide.preventDefault()
-        }
-        that = this;
-        if (hide) $('.sceneinfo-panel', that.elements["SCENEINFO"]).addClass('hidden');
-        $('#sceneinfo-main', this.elements["MAIN"]).siblings().removeClass('current');
-        $('#sceneinfo-main', this.elements["MAIN"]).addClass('current');
-        var thisContainer = $('#sceneinfo-panel-main');
-        if (thisContainer.length) {
-            thisContainer.removeClass('hidden');
-            thisContainer.siblings().addClass('hidden');
-        } else {
-            setTimeout(function() {
-                var thisContainer = $('<div id="sceneinfo-panel-main" class="sceneinfo-panel '+ ( hide ? 'hidden' : '' ) + ' hide-to-left">');
-                that.elements["MAIN"].append(thisContainer);
-                $.get('/static/compile/scene/video.html', {}, function (data, status, jqxhr) {
-                    thisContainer.html(data);
-                    thisContainer.siblings().addClass('hidden');
-                    thisContainer.removeClass('hidden');
-                    var video = thisContainer.find('video');
-                    video[0].play()
-                    video.on('ended', function(){
-                      $('#video-text-1').removeClass('hidden')
-                      setTimeout(function(){
-                        _.each(['wx1', 'wx4', 'wx2', 'wx5', 'wx3', 'wx6'], function(w){that.panel.widgets[w].show()})
-                        $('#video-text-1').removeClass('onHidde')
-                        that.showInfo()
-                      }, 2000)
-                  })
-                });
-            }, (hide ? 400 : 0));
-        }
-      }*/
 
     this.showInfo = function (e) {
         if (e) e.preventDefault()
         that = this;
         that.elements["SCENEINFO"].addClass('hidden');
-        //$('#sceneinfo-map', this.elements["MAIN"]).siblings().removeClass('current');
-        //$('#sceneinfo-map', this.elements["MAIN"]).addClass('current');
         var thisContainer = $('#sceneinfo-panel-info');
         if (thisContainer.length) {
             thisContainer.removeClass('hidden');
@@ -114,8 +88,6 @@ var SceneInfoWidget = function(app, panel) {
         e.preventDefault()
         that = this;
         that.elements["SCENEINFO"].addClass('hidden');
-        $('#sceneinfo-map', this.elements["MAIN"]).siblings().removeClass('current');
-        $('#sceneinfo-map', this.elements["MAIN"]).addClass('current');
         var thisContainer = $('#sceneinfo-panel-map');
         if (thisContainer.length) {
             thisContainer.removeClass('hidden');
@@ -128,8 +100,6 @@ var SceneInfoWidget = function(app, panel) {
                     thisContainer.html(data);
                     thisContainer.siblings().addClass('hidden');
                     thisContainer.removeClass('hidden');
-                    // Map stuff
-                    // TODO: Map scripts
                 });
             }, 400);
         }
@@ -151,32 +121,6 @@ var SceneInfoWidget = function(app, panel) {
       }
     }
 
-    this.showText = function (e) {
-        e.preventDefault()
-        that = this;
-        that.elements["SCENEINFO"].addClass('hidden')
-        $('#sceneinfo-text', this.elements["MAIN"]).siblings().removeClass('current');
-        $('#sceneinfo-text', this.elements["MAIN"]).addClass('current');
-        // Load data to its container unless it's already there
-        var thisContainer = $('#sceneinfo-text');
-        if (thisContainer.length) {
-            thisContainer.removeClass('hidden');
-            thisContainer.siblings().addClass('hidden');
-        } else {
-            setTimeout(function() {
-                thisContainer = $('<div id="sceneinfo-text" class="sceneinfo-panel hidden hide-to-right">');
-                that.elements["MAIN"].append(thisContainer);
-                $.get('/static/compile/scene/text.html', {}, function (data, status, jqxhr) {
-                    thisContainer.html(data);
-                    thisContainer.siblings().addClass('hidden');
-                    thisContainer.removeClass('hidden');
-                    // Map stuff
-                    // TODO: Map scripts
-                });
-            }, 400);
-        }
-    } 
-
     this.showGraph = function (e) {
         e.preventDefault()
         this.showSimpleContent({
@@ -193,11 +137,38 @@ var SceneInfoWidget = function(app, panel) {
         })
     }
 
+    this.showHtml = function(page) {
+        that = this;
+        that.elements["SCENEINFO"].addClass('hidden')
+        // Load data to its container unless it's already there
+        var thisContainer = $('#sceneinfo-' + page);
+        if (thisContainer.length) {
+            thisContainer.removeClass('hidden');
+            thisContainer.siblings().addClass('hidden');
+        } else {
+            setTimeout(function() {
+                thisContainer = $('<div id="sceneinfo-' + page + '" class="sceneinfo-panel hidden hide-to-right">');
+                that.elements["MAIN"].append(thisContainer);
+                $.get('/static/compile/scene/'+ page +'.html', {}, function (data, status, jqxhr) {
+                    thisContainer.html(data);
+                    thisContainer.siblings().addClass('hidden');
+                    thisContainer.removeClass('hidden');
+                });
+            }, 400);
+        }
+    }
+
+    this.showText  = function(e) { this.showHtml('text') }
+    this.showTrack = function(e) { this.showHtml('track') }
+    this.showEmail = function(e) { this.showHtml('email') }
+    this.showPhone = function(e) { this.showHtml('phone') }
+    this.showProperties = function(e) { this.showHtml('properties') }
+
 
     // Bind events to main menu
-    $('#sceneinfo-main   a', this.elements["MAIN"]).on('click', $.proxy(this.showInfo, this));
+    /*$('#sceneinfo-main   a', this.elements["MAIN"]).on('click', $.proxy(this.showInfo, this));
     $('#sceneinfo-map    a', this.elements["MAIN"]).on('click', $.proxy(this.showMap, this));
-    $('#sceneinfo-forces a', this.elements["MAIN"]).on('click', $.proxy(this.showForces, this));
+    $('#sceneinfo-forces a', this.elements["MAIN"]).on('click', $.proxy(this.showForces, this));*/
 
 }
 
@@ -239,8 +210,8 @@ var SceneInfoExtraWidget = function(app, options) {
 }
 
 
-var SceneInfoExtraMgmtWidget = function(app, options) {
-    this.app = app;
+var SceneInfoExtraMgmtWidget = function(panel, options) {
+    this.panel = panel;
     this.options = jQuery.extend({
         "ONSHOW": function() {},
         "ONHIDE": function() {},
@@ -269,6 +240,7 @@ var SceneInfoExtraMgmtWidget = function(app, options) {
 
     // TODO: Надо как-то дёргать методы ONSHOW и ONHIDE виджетов
     this.elements["MAIN"].on('click', $.proxy(function (){
+        var self = this;
         var direction = this.options.direction;
         var side = this.options.side;
         var opposite = direction == 'top' ? 'bottom' : 'top';
@@ -278,11 +250,18 @@ var SceneInfoExtraMgmtWidget = function(app, options) {
             var that = $('.sceneinfo-extras.'+side+'.'+direction);
             var middle = $('.sceneinfo-extras.'+side+'.middle');
             var distant = $('.sceneinfo-extras.'+side+'.'+opposite);
+
             that.addClass('hidden '+hideClass).removeClass(direction);
+            var num_hide = that.attr('id').match(/sceneinfo-extra-(\d+)/)[1];
+            self.panel.widgets['wx' + num_hide].hide();
+
             middle.removeClass('middle').addClass(direction);
             distant.removeClass(opposite).addClass('middle');
+
             var toShow = direction == 'top' ? hidden.first() : hidden.last();
             toShow.removeClass('hidden hide-to-'+opposite).addClass(opposite);
+            var num_show = toShow.attr('id').match(/sceneinfo-extra-(\d+)/)[1];
+            self.panel.widgets['wx' + num_show].show();
         }
     }, this));
 
