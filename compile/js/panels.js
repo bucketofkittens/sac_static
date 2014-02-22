@@ -388,6 +388,46 @@ var EventsPanel = Panel.extend({
       ONSHOW: function(e) { $('#sceneinfo-extra-6').html('<img src="/static/images/scene/mini-diagram.png">')}
     })
 
+    this.widgets.wx7 = new SceneInfoExtraWidget(this.app, {
+      MAIN: '#sceneinfo-extra-7',
+      ONSHOW: function() { $('#waveform').addClass('waveform-playback');}
+      // TODO: Show detailed info in main window on click
+      // ONCLICK: function(e){ self.widgets.sceneInfo.showPhoneTalks(e) },
+    });
+    $.get('/static/compile/scene/extra-7.html', function (data) {
+        self.widgets.wx7.setContent(data);
+        // TODO: Следующая строчка - грязный хак
+        setTimeout(function() { $('#waveform').addClass('waveform-playback');}, 5000);
+    });
+
+    // TODO: Запилить электропочту в этом ухе
+    this.widgets.wx8 = new SceneInfoExtraWidget(this.app, {
+      MAIN: '#sceneinfo-extra-8',
+      //ONCLICK: function(e){ self.widgets.sceneInfo.showEmail(e) },
+    });
+
+    // TODO: Запилить трекинг местоположения в это ухо
+    this.widgets.wx9 = new SceneInfoExtraWidget(this.app, {
+      MAIN: '#sceneinfo-extra-9',
+      //ONCLICK: function(e){ self.widgets.sceneInfo.showTrack(e) },
+    });
+
+    // Запилить информацию об имуществе в это ухо
+    this.widgets.wx10 = new SceneInfoExtraWidget(this.app, {
+      MAIN: '#sceneinfo-extra-10',
+      //ONCLICK: function(e){ self.widgets.sceneInfo.showProperties(e) },
+    });
+
+    // Management panels
+    this.widgets.mgmtTopRight = new SceneInfoExtraMgmtWidget(this.app, {
+        direction: 'top',
+        side: 'right'
+    });
+    this.widgets.mgmtBottomRight = new SceneInfoExtraMgmtWidget(this.app, {
+        direction: 'bottom',
+        side: 'right'
+    });
+
     this.widgets.alarm = new EventsAlarmWidget(this);
 
 	  //this.OnEvensMapChangeState = new signals.Signal();

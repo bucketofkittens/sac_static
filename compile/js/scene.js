@@ -40,7 +40,13 @@ var SceneInfoWidget = function(app, panel) {
       var self = this
       $('#sampleMovie').on('ended', function(){
         $('#sampleMovie')[0].pause();
-         _.each(['wx2', 'wx3', 'wx4', 'wx5', 'wx6'], function(w){self.panel.widgets[w].show()})
+        setTimeout(function(){ self.panel.widgets['wx2'].show() },  300);
+        setTimeout(function(){ self.panel.widgets['wx3'].show() },  600);
+        setTimeout(function(){ self.panel.widgets['wx4'].show() }, 1200);
+        setTimeout(function(){ self.panel.widgets['wx5'].show() }, 1500);
+        setTimeout(function(){ self.panel.widgets['wx6'].show() }, 1800);
+        setTimeout(function(){ self.panel.widgets['mgmtTopRight'].show() },    2000);
+        setTimeout(function(){ self.panel.widgets['mgmtBottomRight'].show() }, 2000);
         self.elements["SCENEINFO"].addClass('onHidden')
         self.showInfo()
       })
@@ -229,5 +235,55 @@ var SceneInfoExtraWidget = function(app, options) {
     }
 
     this.elements["MAIN"].on('click', $.proxy(this.CSS["ONCLICK"], this));
+
+}
+
+
+var SceneInfoExtraMgmtWidget = function(app, options) {
+    this.app = app;
+    this.options = jQuery.extend({
+        "ONSHOW": function() {},
+        "ONHIDE": function() {},
+        "ONCLICK": function() {}
+    }, options);
+
+    this.elements = {
+        "MAIN": $(".sceneinfo-extras-mgmt."+this.options.side+"."+this.options.direction)
+    };
+
+    this.show = function() {
+        this.elements["MAIN"].removeClass('hidden');
+        this.options["ONSHOW"]();
+    };
+
+    this.hide = function() {
+        this.elements["MAIN"].addClass('hidden');
+        this.options["ONHIDE"]();
+    };
+
+    this.setContent = function (content) {
+        this.elements["SCENEINFO"].html(content);
+    };
+
+    this.elements["MAIN"].on('click', $.proxy(this.options["ONCLICK"], this));
+
+    // TODO: Надо как-то дёргать методы ONSHOW и ONHIDE виджетов
+    this.elements["MAIN"].on('click', $.proxy(function (){
+        var direction = this.options.direction;
+        var side = this.options.side;
+        var opposite = direction == 'top' ? 'bottom' : 'top';
+        var hideClass = direction == 'top' ? 'hide-to-top' : 'hide-to-bottom';
+        var hidden = $('.sceneinfo-extras.'+side+'.hidden.hide-to-'+opposite);
+        if (hidden.length) {
+            var that = $('.sceneinfo-extras.'+side+'.'+direction);
+            var middle = $('.sceneinfo-extras.'+side+'.middle');
+            var distant = $('.sceneinfo-extras.'+side+'.'+opposite);
+            that.addClass('hidden '+hideClass).removeClass(direction);
+            middle.removeClass('middle').addClass(direction);
+            distant.removeClass(opposite).addClass('middle');
+            var toShow = direction == 'top' ? hidden.first() : hidden.last();
+            toShow.removeClass('hidden hide-to-'+opposite).addClass(opposite);
+        }
+    }, this));
 
 }

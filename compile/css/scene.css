@@ -29,32 +29,12 @@
     top: 1200px !important;
 }
 
-#sceneinfo-content, .sceneinfo-extras
+#sceneinfo-content, .sceneinfo-extras, .sceneinfo-extras-mgmt
 {
     -moz-transition:all 0.5s ease-in-out;
     -o-transition:all 0.5s ease-in-out;
     -webkit-transition:all 0.5s ease-in-out;
     transition: all 0.5s ease-out;
-}
-
-#sceneinfo-extra-2 {
-  transition-delay: 0.3s;
-}
-
-#sceneinfo-extra-3 {
-  transition-delay: 0.6s;
-}
-
-#sceneinfo-extra-4 {
-  transition-delay: 1.2s;
-}
-
-#sceneinfo-extra-5 {
-  transition-delay: 1.5s;
-}
-
-#sceneinfo-extra-6 {
-  transition-delay: 1.8s;
 }
 
 .sceneinfo-extras .left-outer-text {
@@ -342,15 +322,41 @@
     text-align: center;
 }
 
-#content #sceneinfo-extra-1, #content #sceneinfo-extra-4 {
+#content .sceneinfo-extras.top {
     top: 210px;
 }
-#content #sceneinfo-extra-2, #content #sceneinfo-extra-5{
+#content .sceneinfo-extras.middle {
     top: 460px;
 }
-#content #sceneinfo-extra-3, #content #sceneinfo-extra-6 {
+#content .sceneinfo-extras.bottom {
     top: 710px;
 }
+
+#content .sceneinfo-extras.hidden.hide-to-top {
+    top: -250px !important;
+}
+
+#content .sceneinfo-extras.hidden.hide-to-bottom {
+    top: 1100px !important;
+}
+
+#content .sceneinfo-extras-mgmt {
+    position:absolute;
+    /* TODO: Make and change background */
+    background:url('/static/images/scene/scene-info-extra.png') center center no-repeat;
+    width:308px;
+    overflow: hidden;
+    cursor: pointer;
+    height:      25px;
+    z-index:    201;
+}
+
+#content .sceneinfo-extras-mgmt.top    { top:  150px; content: '▲'; }
+#content .sceneinfo-extras-mgmt.bottom { top:  950px; content: '▼'; }
+#content .sceneinfo-extras-mgmt.left   { left:  50px; }
+#content .sceneinfo-extras-mgmt.right  { right: 50px; }
+#content .sceneinfo-extras-mgmt.left.hidden   { left:  -350px !important; }
+#content .sceneinfo-extras-mgmt.right.hidden  { right: -350px !important; }
 
 #events-alarm {
     position:absolute;
@@ -597,4 +603,24 @@
 
 #sceneinfo-extra-4 #sceneinfo-text-container h3 {
   margin-top: 10px;
+}
+
+#waveform-obscure {
+   position: absolute;
+   height: 197px;
+   width: 282px;
+   overflow: hidden;
+}
+
+#waveform {
+   position: absolute;
+   background: url('/static/images/scene/waveform-2.png') repeat 0 0;
+   height: 197px;
+   width: 62830px;
+   left: 0;
+}
+
+#waveform.waveform-playback {
+   transition: all 2700s linear;
+   left: -62548px;
 }
