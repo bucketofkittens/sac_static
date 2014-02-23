@@ -107,7 +107,7 @@
     right: 0;
     opacity: 1;
     width: 1130px;
-    height: 640px;
+    height: 670px;
     margin: 90px auto;
     overflow: hidden;
     transition: all 0.5s ease-in-out;
@@ -658,36 +658,80 @@
 }
 
 #sceneinfo-content h3.period {
-  margin-left: 50px;
+  margin-top: 25px;
   color: #69c1f5;
 }
+
 
 #sceneinfo-content h3.period span {
   color: #fff;
 }
 
 .point {
-  margin: 30px 50px;
+  font-size: 0.9em;
+  position: relative;
+  margin: 20px 0;
+  min-height: 120px;
 }
 
 .point b {
-  display: inline-block;
+  display: block;
+  float: left;
   width: 100px;
   font-weight: normal;
   color: #0779bd;
+}
+
+.point p span {
+  display: block;
+  margin-left: 100px;
+  overflow: hidden;
 }
 
 .point p {
   margin-bottom: 5px;
 }
 
+.point .point-text {
+  width: 700px;
+  margin-left: 200px;
+}
+
+.point .point-photo {
+  position: absolute;
+  top:-10px;
+  left: 0;
+  height: 110px;
+  width: 150px;
+  overflow: hidden;
+  padding: 5px;
+  border: 1px solid #077fc2;
+  border-radius: 4px;
+  box-shadow: 3px 3px 10px #043558;
+  background: #075286;
+  text-align: center;
+}
+.point .point-photo img {
+  height: 110px;
+  /*padding: 5px;
+  border: 1px solid #077fc2;
+  border-radius: 4px;
+  box-shadow: 3px 3px 10px #043558;
+  background: #075286;*/
+}
+
 #sceneinfo-email #email-left {
   float: left;
-  width: 500px;
+  width: 550px;
 }
 
 #sceneinfo-email #email-right {
-  margin-left: 550px;
+  position: relative;
+  margin-left: 580px;
+}
+
+#sceneinfo-email #email-right .point {
+  font-size: 1em;
 }
 
 #sceneinfo-email h2{
@@ -705,21 +749,20 @@
   margin-bottom: 30px;
 }
 
-
-
 #sceneinfo-email table {
   width:100%;
   margin: 0 0 30px 0;
   border-collapse: collapse;
   text-align: left;
   font-family: Arial;
+  font-size: 0.9em;
 }
 
 #sceneinfo-email table tbody tr {
-    -moz-transition:all 0.3s ease-in;
-    -o-transition:all 0.3s ease-in;
-    -webkit-transition:all 0.3s ease-in;
-    transition: all 0.3s ease-in;
+    -moz-transition:all 0.1s ease-in;
+    -o-transition:all 0.1s ease-in;
+    -webkit-transition:all 0.1s ease-in;
+    transition: all 0.1s ease-in;
 }
 
 #sceneinfo-email table tbody tr:nth-child(odd) {
@@ -727,12 +770,12 @@
 }
 
 
-#sceneinfo-email table tbody tr:hover {
+#sceneinfo-email table tbody tr:hover, #sceneinfo-email table tbody tr.active {
   background: #588aad;
 }
 
 #sceneinfo-email table tr td {
-  padding: 10px;
+  padding: 5px;
   cursor: pointer;
 }
 
@@ -751,14 +794,31 @@
   color: #0877b8;
 }
 
+.email {
+    position: absolute;
+    left: 0;
+    top:0;
+    opacity: 90%;
+    -moz-transition:all 0.5s ease-in;
+    -o-transition:all 0.5s ease-in;
+    -webkit-transition:all 0.5s ease-in;
+    transition: all 0.5s ease-in;
+
+}
+
+.email.hidden {
+  opacity: 0;
+}
+
 .email-wrap {
   padding: 20px;
-  margin-top: 30px;
+  margin-top: 15px;
   border: 1px solid #077fc2;
   border-radius: 4px;
   box-shadow: 3px 3px 10px #043558;
   background: #075286;
   font-family: Arial;
+  font-size: 0.9em;
 }
 
 .email-wrap .point {

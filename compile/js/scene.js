@@ -158,6 +158,16 @@ var SceneInfoWidget = function(app, panel) {
                         $('#sceneinfo-phone .waveform').addClass('waveform-playback');
                       },400)
                     }
+                    if (page == 'email') {
+                      $('#email-left table td').on('click', function(e){
+                        e.stopPropagation()
+                        var tr = $(e.target).closest('tr')
+                        $('#email-right .email').addClass('hidden');
+                        $('#email-right .' + $(tr).attr('id')).removeClass('hidden')
+                        $('#email-left table tbody tr').removeClass('active')
+                        $(tr).addClass('active')
+                      })
+                    }
                 });
             }, 400);
         }
