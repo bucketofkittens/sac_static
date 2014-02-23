@@ -154,7 +154,9 @@ var SceneInfoWidget = function(app, panel) {
                     thisContainer.siblings().addClass('hidden');
                     thisContainer.removeClass('hidden');
                     if (page == 'phone') {
-                      $('#sceneinfo-phone .waveform').addClass('waveform-playback');
+                      setTimeout(function(){
+                        $('#sceneinfo-phone .waveform').addClass('waveform-playback');
+                      },400)
                     }
                 });
             }, 400);
@@ -241,7 +243,6 @@ var SceneInfoExtraMgmtWidget = function(panel, options) {
 
     this.elements["MAIN"].on('click', $.proxy(this.options["ONCLICK"], this));
 
-    // TODO: Надо как-то дёргать методы ONSHOW и ONHIDE виджетов
     this.elements["MAIN"].on('click', $.proxy(function (){
         var self = this;
         var direction = this.options.direction;
