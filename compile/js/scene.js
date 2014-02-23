@@ -153,6 +153,9 @@ var SceneInfoWidget = function(app, panel) {
                     thisContainer.html(data);
                     thisContainer.siblings().addClass('hidden');
                     thisContainer.removeClass('hidden');
+                    if (page == 'phone') {
+                      $('#sceneinfo-phone .waveform').addClass('waveform-playback');
+                    }
                 });
             }, 400);
         }
@@ -161,7 +164,7 @@ var SceneInfoWidget = function(app, panel) {
     this.showText  = function(e) { this.showHtml('text') }
     this.showTrack = function(e) { this.showHtml('track') }
     this.showEmail = function(e) { this.showHtml('email') }
-    this.showPhone = function(e) { this.showHtml('phone') }
+    this.showPhone = function(e) { this.showHtml('phone'); }
     this.showProperties = function(e) { this.showHtml('properties') }
 
 
