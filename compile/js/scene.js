@@ -44,10 +44,10 @@ var SceneInfoWidget = function(app, panel) {
                                       '</div>')
       this.panel.widgets.wx1.show()
       var self = this
-      $('#sampleMovie').on('ended', function(){
+      $('#sampleMovie').one('ended', function(){
         $('#sampleMovie')[0].pause();
+        self.elements["SCENEINFO"].addClass('hidden')
         self.showExtraWidgets()
-        self.elements["SCENEINFO"].addClass('onHidden')
         self.showInfo()
       })
     }
