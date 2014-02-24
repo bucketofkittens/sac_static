@@ -494,7 +494,14 @@
 
 .scene-map .placemark.police {
     border-color: blue;
+}
+
+.scene-map .placemark.police.patrolcar {
     background-image: url('/static/images/scene/icon-patrolcar.png');
+}
+
+.scene-map .placemark.police.patrol {
+    background-image: url('/static/images/scene/icon-patrol.png');
 }
 
 .scene-map .placemark.criminal {

@@ -7,50 +7,51 @@
     var patrols = [
         {
             index: 0,
-            type: 'pps',
+            type: 'patrolcar',
             current: {top: 478, left: 180, msecs: 0},
             startedAt: null,
             finished: false,
             route: [
                 {top: 478, left: 180, msecs:      0, status: 'Отправляем данные...'},
-                {top: 478, left: 180, msecs:  10000, status: 'Приказ принят'},
-                {top: 292, left: 287, msecs:  90000},
-                {top: 307, left: 322, msecs: 110000},
-                {top: 284, left: 388, msecs: 130000, status: 'Готовы'},
-                {top: 274, left: 383, msecs: 135000, status: 'Приступили'},
-                {top: 274, left: 383, msecs: 150000, status: 'Преступник обезврежен'}
+                {top: 478, left: 180, msecs:   5000, status: 'Приказ принят'},
+                {top: 454, left: 190, msecs:  10000},
+                {top: 292, left: 287, msecs:  80000},
+                {top: 307, left: 322, msecs: 100000},
+                {top: 284, left: 388, msecs: 120000, status: 'Готовы'},
+                {top: 274, left: 383, msecs: 125000, status: 'Приступили'},
+                {top: 274, left: 383, msecs: 140000, status: 'Преступник обезврежен'}
             ]
         },
         {
             index: 1,
-            type: 'pps',
+            type: 'patrol',
             current: {top: 216, left: 103, msecs: 0},
             startedAt: null,
             finished: false,
             route: [
                 {top: 216, left: 103, msecs:      0, status: 'Отправляем данные...'},
-                {top: 216, left: 103, msecs:  10000, status: 'Приказ принят'},
-                {top: 223, left:  99, msecs:  15000},
-                {top: 229, left: 278, msecs:  75000},
-                {top: 258, left: 284, msecs:  90000},
-                {top: 271, left: 350, msecs: 105000},
-                {top: 257, left: 367, msecs: 115000},
-                {top: 270, left: 388, msecs: 125000, status: 'Готовы'},
-                {top: 274, left: 383, msecs: 130000, status: 'Приступили'},
-                {top: 274, left: 383, msecs: 140000, status: 'Преступник обезврежен'}
+                {top: 216, left: 103, msecs:   5000, status: 'Приказ принят'},
+                {top: 223, left:  99, msecs:  10000},
+                {top: 229, left: 278, msecs:  70000},
+                {top: 258, left: 284, msecs:  85000},
+                {top: 271, left: 350, msecs: 100000},
+                {top: 257, left: 367, msecs: 110000},
+                {top: 270, left: 388, msecs: 120000, status: 'Готовы'},
+                {top: 274, left: 383, msecs: 125000, status: 'Приступили'},
+                {top: 274, left: 383, msecs: 135000, status: 'Преступник обезврежен'}
             ]
         },
         {
             index: 2,
-            type: 'pps',
+            type: 'patrolcar',
             current: {top: 115, left: 475, msecs: 0},
             startedAt: null,
             finished: false,
             route: [
                 {top: 115, left: 475, msecs:      0, status: 'Отправляем данные...'},
-                {top: 115, left: 475, msecs:  10000, status: 'Приказ принят'},
-                {top: 118, left: 462, msecs:  15000},
-                {top: 107, left: 440, msecs:  20000},
+                {top: 115, left: 475, msecs:   5000, status: 'Приказ принят'},
+                {top: 118, left: 462, msecs:  10000},
+                {top: 107, left: 440, msecs:  15000},
                 {top: 257, left: 367, msecs:  60000},
                 {top: 270, left: 388, msecs:  80000, status: 'Готовы'},
                 {top: 274, left: 383, msecs:  85000, status: 'Приступили'},
@@ -102,6 +103,7 @@
         _.each(patrols, function (patrol, index) {
             var patrolMark = $('<div class="placemark police">');
             patrolMark.attr('data-index', index);
+            patrolMark.addClass(patrol.type);
             patrolMark.css({left: patrol.current.left, top: patrol.current.top});
             mapTag.append(patrolMark);
         });
