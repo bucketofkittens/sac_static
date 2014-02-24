@@ -83,11 +83,9 @@ var SceneInfoWidget = function(app, panel) {
                 });
             }, 400);
         }
-        if (page != 'phone') {
-          setTimeout(function(){
-            $('#sceneinfo-extra-7 .waveform').addClass('waveform-playback');
-          },400)
-        }
+        setTimeout(function(){
+          $('#sceneinfo-extra-7 .waveform').addClass('waveform-playback');
+        },400)
     }
 
     this.showMap = function (e) {
@@ -109,11 +107,7 @@ var SceneInfoWidget = function(app, panel) {
                 });
             }, 400);
         }
-        if (page != 'phone') {
-          setTimeout(function(){
-            $('#sceneinfo-extra-7 .waveform').addClass('waveform-playback');
-          },400)
-        }
+        setTimeout(function(){ $('#sceneinfo-extra-7 .waveform').addClass('waveform-playback'); },400)
     }
 
     this.showSimpleContent = function(options){
@@ -170,16 +164,6 @@ var SceneInfoWidget = function(app, panel) {
                         $('#sceneinfo-phone .waveform').addClass('waveform-playback');
                       },400)
                     }
-                    if (page == 'email') {
-                      $('#email-left table td').on('click', function(e){
-                        e.stopPropagation()
-                        var tr = $(e.target).closest('tr')
-                        $('#email-right .email').addClass('hidden');
-                        $('#email-right .' + $(tr).attr('id')).removeClass('hidden')
-                        $('#email-left table tbody tr').removeClass('active')
-                        $(tr).addClass('active')
-                      })
-                    }
                     if (page == 'track') {
                       var t = new Date(new Date() - 5 * 60 * 1000)
                       var d = t.getDate() < 10 ? '0' + t.getDate() : t.getDate()
@@ -191,6 +175,7 @@ var SceneInfoWidget = function(app, panel) {
                       $('.alarmDate').text(alarmDate);
                       $('.alarmTime').text(alarmTime);
                     }
+                    if (page == 'email') { that.bindEmailEvents(); }
                 });
             }, 400);
         }
@@ -201,6 +186,17 @@ var SceneInfoWidget = function(app, panel) {
         }
     }
 
+    this.bindEmailEvents = function() {
+      $('#email-left table td').on('click', function(e){
+        e.stopPropagation()
+        var tr = $(e.target).closest('tr')
+        $('#email-right .email').addClass('hidden');
+        $('#email-right .' + $(tr).attr('id')).removeClass('hidden')
+        $('#email-left table tbody tr').removeClass('active')
+        $(tr).addClass('active')
+      })
+
+    }
     this.showText  = function(e) { this.showHtml('text') }
     this.showTrack = function(e) { this.showHtml('track') }
     this.showEmail = function(e) { this.showHtml('email') }
