@@ -168,6 +168,17 @@ var SceneInfoWidget = function(app, panel) {
                         $(tr).addClass('active')
                       })
                     }
+                    if (page == 'track') {
+                      var t = new Date(new Date() - 5 * 60 * 1000)
+                      var d = t.getDate() < 10 ? '0' + t.getDate() : t.getDate()
+                      var month = t.getMonth() + 1 < 10 ? '0' + (t.getMonth() + 1) : (t.getMonth() + 1)
+                      var hours = t.getHours() < 10 ? '0' + t.getHours() : t.getHours()
+                      var minutes = t.getMinutes() < 10 ? '0' + t.getMinutes() : t.getMinutes()
+                      var alarmDate = d + '.' + month + '.' + t.getFullYear();
+                      var alarmTime = hours + ':' + minutes;
+                      $('.alarmDate').text(alarmDate);
+                      $('.alarmTime').text(alarmTime);
+                    }
                 });
             }, 400);
         }
