@@ -379,7 +379,7 @@ var EventsPanel = Panel.extend({
     this.widgets.wx4 = new SceneInfoExtraWidget(this.app, {
       MAIN: '#sceneinfo-extra-4',
       ONCLICK: function(e){ self.widgets.sceneInfo.showText(e) },
-      ONHIDE: function() { $('#sceneinfo-extra-4').attr({class: 'right hidden top sceneinfo-extras'});}
+      ONRESET: function() { $('#sceneinfo-extra-4').attr({class: 'right hidden top sceneinfo-extras'});}
     });
     $.get('/static/compile/scene/text.html', function (data) { self.widgets.wx4.setContent(data); });
 
@@ -387,14 +387,14 @@ var EventsPanel = Panel.extend({
       MAIN: '#sceneinfo-extra-5',
       ONCLICK: function(e){ self.widgets.sceneInfo.showGraph(e) },
       ONSHOW: function(e) { $('#sceneinfo-extra-5').html('<img src="/static/images/scene/mini-graph.png">')},
-      ONHIDE: function() { $('#sceneinfo-extra-5').attr({class: 'right hidden middle sceneinfo-extras'});}
+      ONRESET: function() { $('#sceneinfo-extra-5').attr({class: 'right hidden middle sceneinfo-extras'});}
     })
 
     this.widgets.wx6 = new SceneInfoExtraWidget(this.app, {
       MAIN: '#sceneinfo-extra-6',
       ONCLICK: function(e){ self.widgets.sceneInfo.showDiagram(e) },
       ONSHOW: function(e) { $('#sceneinfo-extra-6').html('<img src="/static/images/scene/mini-diagram.png">')},
-      ONHIDE: function() { $('#sceneinfo-extra-6').attr({class: 'right hidden bottom sceneinfo-extras'});}
+      ONRESET: function() { $('#sceneinfo-extra-6').attr({class: 'right hidden bottom sceneinfo-extras'});}
     })
 
     this.widgets.wx7 = new SceneInfoExtraWidget(this.app, {
@@ -402,7 +402,7 @@ var EventsPanel = Panel.extend({
       ONSHOW: function() { $('.waveform').addClass('waveform-playback');},
       // TODO: Show detailed info in main window on click
       ONCLICK: function(e){ self.widgets.sceneInfo.showPhone(e) },
-      ONHIDE: function() { $('#sceneinfo-extra-7').attr({class: 'hidden right hide-to-bottom sceneinfo-extras'});}
+      ONRESET: function() { $('#sceneinfo-extra-7').attr({class: 'hidden right hide-to-bottom sceneinfo-extras'});}
     });
     $.get('/static/compile/scene/extra-7.html', function (data) {
         self.widgets.wx7.setContent(data);
@@ -412,21 +412,21 @@ var EventsPanel = Panel.extend({
       MAIN: '#sceneinfo-extra-8',
       ONCLICK: function(e){ self.widgets.sceneInfo.showEmail(e) },
       ONSHOW: function(e) { $('#sceneinfo-extra-8').html('<img src="/static/images/scene/mini-email.png">')},
-      ONHIDE: function() { $('#sceneinfo-extra-8').attr({class: 'hidden right hide-to-bottom sceneinfo-extras'});}
+      ONRESET: function() { $('#sceneinfo-extra-8').attr({class: 'hidden right hide-to-bottom sceneinfo-extras'});}
     });
 
     this.widgets.wx9 = new SceneInfoExtraWidget(this.app, {
       MAIN: '#sceneinfo-extra-9',
       ONCLICK: function(e){ self.widgets.sceneInfo.showTrack(e) },
       ONSHOW: function(e) { $('#sceneinfo-extra-9').html('<img src="/static/images/scene/mini-track.png">')},
-      ONHIDE: function() { $('#sceneinfo-extra-9').attr({class: 'hidden right hide-to-bottom sceneinfo-extras'});}
+      ONRESET: function() { $('#sceneinfo-extra-9').attr({class: 'hidden right hide-to-bottom sceneinfo-extras'});}
     });
 
     this.widgets.wx10 = new SceneInfoExtraWidget(this.app, {
       MAIN: '#sceneinfo-extra-10',
       ONCLICK: function(e){ self.widgets.sceneInfo.showProperties(e) },
       ONSHOW: function(e) { $('#sceneinfo-extra-10').html('<img src="/static/images/scene/mini-properties.png">');},
-      ONHIDE: function() { $('#sceneinfo-extra-10').attr({class: 'hidden right hide-to-bottom sceneinfo-extras'});}
+      ONRESET: function() { $('#sceneinfo-extra-10').attr({class: 'hidden right hide-to-bottom sceneinfo-extras'});}
     });
 
     // Management panels

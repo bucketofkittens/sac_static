@@ -54,6 +54,7 @@ var SceneInfoWidget = function(app, panel) {
 
     this.showExtraWidgets = function(){
         var self = this;
+        _.each(self.panel.widgets, function(wdgt) { wdgt.reset && wdgt.reset(); });
         setTimeout(function(){ self.panel.widgets['wx2'].show() },  300);
         setTimeout(function(){ self.panel.widgets['wx3'].show() },  600);
         setTimeout(function(){ self.panel.widgets['wx4'].show() }, 1200);
@@ -225,6 +226,7 @@ var SceneInfoExtraWidget = function(app, options) {
         "LOAD": "#load",
         "ONSHOW": function() {},
         "ONHIDE": function() {},
+        "ONRESET": function() {},
         "ONCLICK": function() {}
     }, options);
 
@@ -241,6 +243,11 @@ var SceneInfoExtraWidget = function(app, options) {
     this.hide = function() {
         this.elements["MAIN"].addClass('hidden');
         this.CSS["ONHIDE"]();
+    }
+
+    this.reset = function() {
+        this.CSS["ONRESET"]();
+        return this;
     }
 
     this.setContent = function (content) {
@@ -285,22 +292,24 @@ var SceneInfoExtraMgmtWidget = function(panel, options) {
         var direction = this.options.direction;
         var side = this.options.side;
         var opposite = direction == 'top' ? 'bottom' : 'top';
-        var hideClass = direction == 'top' ? 'hide-to-top' : 'hide-to-bottom';
+        var hideToDirClass   = 'hide-to-'+direction;
+        var showFromDirClass = 'hide-to-'+opposite;
         var hidden = $('.sceneinfo-extras.'+side+'.hidden.hide-to-'+opposite);
         if (hidden.length) {
             var that = $('.sceneinfo-extras.'+side+'.'+direction);
             var middle = $('.sceneinfo-extras.'+side+'.middle');
             var distant = $('.sceneinfo-extras.'+side+'.'+opposite);
-
-            that.addClass('hidden '+hideClass).removeClass(direction);
+            // Hide that (nearest to button)
+            that.addClass(hideToDirClass).addClass('hidden').removeClass(direction);
             var num_hide = that.attr('id').match(/sceneinfo-extra-(\d+)/)[1];
             self.panel.widgets['wx' + num_hide].hide();
-
+            // Move middle to that's place
             middle.removeClass('middle').addClass(direction);
+            // Move distant to middle's place
             distant.removeClass(opposite).addClass('middle');
-
+            // Move first hidden to distant's place
             var toShow = direction == 'top' ? hidden.first() : hidden.last();
-            toShow.removeClass('hidden hide-to-'+opposite).addClass(opposite);
+            toShow.removeClass(showFromDirClass).removeClass('hidden').addClass(opposite);
             var num_show = toShow.attr('id').match(/sceneinfo-extra-(\d+)/)[1];
             self.panel.widgets['wx' + num_show].show();
         }
