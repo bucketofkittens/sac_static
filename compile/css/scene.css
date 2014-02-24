@@ -832,4 +832,8 @@
 #sceneinfo-phone .waveform-obscure {
   width: 1000px;
   margin-top: 120px;
-} 
+}
+
+#sceneinfo-phone .date {
+  color: #0877b8;
+}

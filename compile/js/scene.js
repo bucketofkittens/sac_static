@@ -82,6 +82,11 @@ var SceneInfoWidget = function(app, panel) {
                 });
             }, 400);
         }
+        if (page != 'phone') {
+          setTimeout(function(){
+            $('#sceneinfo-extra-7 .waveform').addClass('waveform-playback');
+          },400)
+        }
     }
 
     this.showMap = function (e) {
@@ -103,6 +108,11 @@ var SceneInfoWidget = function(app, panel) {
                 });
             }, 400);
         }
+        if (page != 'phone') {
+          setTimeout(function(){
+            $('#sceneinfo-extra-7 .waveform').addClass('waveform-playback');
+          },400)
+        }
     }
 
     this.showSimpleContent = function(options){
@@ -119,6 +129,7 @@ var SceneInfoWidget = function(app, panel) {
         thisContainer.siblings().addClass('hidden');
         thisContainer.removeClass('hidden');
       }
+      setTimeout(function(){ $('#sceneinfo-extra-7 .waveform').addClass('waveform-playback'); },400)
     }
 
     this.showGraph = function (e) {
@@ -181,6 +192,11 @@ var SceneInfoWidget = function(app, panel) {
                     }
                 });
             }, 400);
+        }
+        if (page != 'phone') {
+          setTimeout(function(){ $('#sceneinfo-extra-7 .waveform').addClass('waveform-playback'); },400)
+        } else {
+          setTimeout(function(){ $('#sceneinfo-extra-7 .waveform').removeClass('waveform-playback'); },400)
         }
     }
 
