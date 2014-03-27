@@ -7,29 +7,21 @@ var ConfigApp = {
 	},
 	"API-HOST": window.location.origin, /* window.location.origin works only in webkit */
 	"FOOTER-NAV": {
-		"EVENTS": {
-			"title": "События"
-		},
-		"REGIONS": {
-			"title": "Регионы"
-		},
-		"DISTRICTS": {
-			"title": "Округа",
-			"coming": true
-		},
-		"FORMATS": {
-			"title": "Форматы",
-			"coming": true
-		},
-		"GRAPHS": {
-			"title": "Графики",
-			"coming": true
-		}, 
-		"REPORTS": {
-			"title": "Отчеты",
-			"coming": true
-		}
-	},
+        "EVENTS": {
+            "title": "События"
+        },
+        "TARIFFS": {
+            "title": "Тарифы"
+        },
+        "SVPS": {
+            "title": "СВП",
+            coming: true
+        },
+        "SINS": {
+            "title": "СИН",
+            coming: true
+        }
+    },
 	"REGIONS": {
 		"LEFT": {
 			"MAP": "/static/images/map/all-regions-left.jpg",
