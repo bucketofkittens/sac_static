@@ -30,3 +30,27 @@ src: url("../fonts/NeoSansPro-Light.ttf");
     font-stretch: normal;
     unicode-range: U+0020-2122;
 }
+
+@font-face {
+    font-family:'Open Sans';
+    src: url('../fonts/OpenSans-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-stretch: normal;
+}
+
+@font-face {
+    font-family:'Open Sans';
+    src: url('../fonts/OpenSans-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-stretch: normal;
+}
+
+@font-face {
+    font-family:'Open Sans';
+    src: url('../fonts/OpenSans-Light.ttf') format('truetype');
+    font-weight: 200;
+    font-style: normal;
+    font-stretch: normal;
+}
