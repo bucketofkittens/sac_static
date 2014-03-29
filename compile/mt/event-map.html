@@ -1,0 +1,80 @@
+<div id="events-map-container">
+    <div id="events-map" class="events-map"></div>
+    <div id="events-map-toner" class="events-map-toner"></div>
+</div>
+<script type="text/javascript">
+
+    var trucks = [
+        {
+            index: 0,
+            type: 'good',
+            position: {top: 460, left: 840},
+            toolTipDir: 'bottom',
+            time: '18.02 15:32',
+            number: 'О 777 НО 62',
+            status: 'Оплачено',
+        },
+        {
+            index: 1,
+            type: 'bad',
+            position: {top: 320, left: 475},
+            toolTipDir: 'top',
+            time: '18.02 15:32',
+            number: 'Е 111 КХ 95',
+            status: 'Несоответствие НЗ',
+        },
+        {
+            index: 2,
+            type: 'good',
+            position: {top: 392, left: 750},
+            toolTipDir: 'bottom',
+            time: '23.02 15:32',
+            number: 'A 807 ЕК 28',
+            status: 'Оплачено',
+        },
+    ];
+
+    var mapTag;
+
+
+    $(function () {
+
+        mapTag = $('#events-map');
+        // Add trucks to the map
+        _.each(trucks, function (truck) {
+            var truckMark = $('<div class="placemark truck">');
+            truckMark.attr('data-index', truck.index);
+            truckMark.addClass(truck.type);
+            truckMark.css({left: truck.position.left, top: truck.position.top});
+            mapTag.append(truckMark);
+        });
+        mapTag.on('click', '.truck.placemark', truckMenu );
+
+    });
+
+    function truckMenu (e) {
+        var index = parseInt(this.getAttribute('data-index'));
+        var truck = trucks[index];
+        if (truck.tooltip) {
+            truck.tooltip.toggle();
+        } else {
+            console.log('Truck menu is invoked on', this);
+            var menu = new EventMapTruckMenuWidget({
+                container: $('#events-map'),
+                index: truck.index,
+                target: this,
+                class: 'event-truck-menu',
+                side: truck.toolTipDir,
+                color: (truck.type == 'bad') ? 'red' : 'blue',
+            }, application.panels.EVENTS);
+            menu.setContent('<div class="center">' +
+                '<p class="time">'+truck.time+'</p>' +
+                '<p class="gosnumber">'+truck.number+'</p>' +
+                '<p class="truck-status">'+truck.status+'</p>' +
+            '</div>');
+            menu.show();
+            truck.tooltip = menu;
+        }
+    }
+
+</script>

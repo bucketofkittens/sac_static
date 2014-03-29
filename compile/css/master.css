@@ -1369,3 +1369,7 @@ label {
 #reports-disc-selector .data ul.first {
   margin-left: 0px !important;
 }
+
+.center {
+    text-align: center;
+}

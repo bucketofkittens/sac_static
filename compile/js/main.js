@@ -263,6 +263,6 @@ var Application = function() {
 }
 
 $(document).ready(function() {
-	var application = new Application();
-	application.run();
+	window.application = new Application();
+    window.application.run();
 })
