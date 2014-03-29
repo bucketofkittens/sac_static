@@ -28,6 +28,10 @@
     font-size: 14pt;
 }
 
+.widget.widget-sidebar.tab-ramps {
+    background-image: url('/static/images/formats/widget-sidebar-2-2.png');
+}
+
 .widget > .widget-obscure {
     position: absolute;
     left: 30px;
@@ -62,6 +66,19 @@
 .widget.widget-xl.hidden
 {
     top: 1200px !important;
+}
+
+.widget-sidebar menu {
+    list-style-type: none;
+    padding: 0.5em 1em;
+}
+
+.widget-sidebar menu li {
+    float: left;
+    width: 50%;
+    box-sizing: border-box;
+    text-align: center;
+    cursor: pointer;
 }
 
 .widget {
@@ -112,6 +129,16 @@
     color: #d4dee8;
     margin: 0.25em 0.5em 0em;
 }
+
+.widget h2 {
+    font-size: 20px;
+    font-weight: 200;
+    color: #d4dee8;
+    margin: 1em 0 0.25em;
+}
+
+.widget h2:first-child { margin-top: 0; }
+
 .widget dl { overflow: hidden; }
 .widget dt {
     float: left;
@@ -133,6 +160,21 @@
     padding: 0.5em;
     margin: 0.5em;
     overflow: hidden;
+}
+
+.widget .well table {
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+}
+
+.widget .well table tr {
+    border-bottom: 2px solid #88b1ce;
+}
+
+.widget .well table td {
+    padding: 0.25em;
+    vertical-align: middle;
 }
 
 #events-map {
@@ -209,6 +251,7 @@
     font-size: 14pt;
     -webkit-transition: opacity 0.3s ease-in-out;
     transition: opacity 0.3s ease-out;
+    cursor: pointer;
 }
 
 .tooltip.hidden {
@@ -243,7 +286,7 @@
     bottom: 10px;
 }
 
-.event-truck-menu .gosnumber {
+.tooltip .gosnumber {
     border: 1px solid silver;
     border-radius: 3px;
     background: rgba(127,127,127,0.5);
@@ -251,6 +294,7 @@
     width: 8em;
     margin: 0.5em 1em;
     padding: 0.2em;
+    float: none;
     clear: both;
 }
 
@@ -258,10 +302,10 @@
     display: none;
 }
 
-.truck-entry {
+.sidebar-entry {
     padding: 0.5em;
     margin:  1em 0.5em;
-    border-bottom: 2px solid darkcyan;
+    border-bottom: 2px solid #8fb7d3;
 }
 
 .truck-photo {
@@ -291,6 +335,10 @@
     font-size 120%;
 }
 
+td > .gosnumber { margin: 1px; }
+td > .gosnumber, td.time { float: none; }
+td.time { color: #7dc2e3; }
+
 .truck-status {
     margin-top: 0.5em;
     clear: both;
@@ -308,4 +356,35 @@
     position: absolute;
     top: 0;
     right: 0.35em;
+}
+
+.tooltip .close-button {
+    font-size: 100%;
+    top: 10px;
+    right: 10px;
+}
+
+.ramp {
+    width: 30px;
+    height: 7px;
+    background: #003471;
+    position: absolute;
+}
+
+.status-chevron {
+    -webkit-transform:skew(-40deg,0);
+    box-shadow: 0 0 5px 0px rgba(90, 192, 253, 0.45);
+    width: 15px;
+    margin: 0 15px;
+}
+
+.status-chevron.red   { background: red;   }
+.status-chevron.green { background: green; }
+
+
+.ramp-frame {
+    box-sizing: border-box;
+    padding: 0.5em;
+    display: block;
+    width: 100%;
 }

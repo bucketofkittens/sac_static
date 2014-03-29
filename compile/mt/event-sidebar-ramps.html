@@ -1,0 +1,61 @@
+<div id="event-ramp-menu">
+</div>
+
+<script defer>
+
+    var menuRamps = [
+        {
+            index: 0,
+            number: '447854441345',
+            positionName: '40-й км трассы А105',
+            positionCoords: '55°48’36   37°26’33',
+        },
+        {
+            index: 1,
+            number: '345425464345',
+            positionName: '81-й км трассы А105',
+            positionCoords: '55°48’36   37°26’33',
+        },
+        {
+            index: 2,
+            number: '2456456453645',
+            positionName: '42-й км трассы А105',
+            positionCoords: '55°48’36   37°26’33',
+        },
+        {
+            index: 3,
+            number: '447854441345',
+            positionName: '50-й км трассы А105',
+            positionCoords: '55°48’36   37°26’33',
+        },
+        {
+            index: 4,
+            number: '456357564563',
+            positionName: '40-й км трассы А105',
+            positionCoords: '55°48’36   37°26’33',
+        },
+        {
+            index: 5,
+            number: '1315246546',
+            positionName: '40-й км трассы А105',
+            positionCoords: '55°48’36   37°26’33',
+        },
+    ];
+
+    jQuery(document).ready(function() {
+        var rampMenu = jQuery('#event-ramp-menu');
+        _.each(menuRamps, function (ramp) {
+            var rampEntry = jQuery(
+                '<div class="ramp-entry sidebar-entry" data-index="'+ramp.index+'">' +
+                    '<p class="gosnumber">' + ramp.number + '</p>' +
+                    '<p class="position-name">' + ramp.positionName + '</p>' +
+                    '<p class="position">' + ramp.positionCoords + '</p>' +
+                '</div>');
+            rampMenu.append(rampEntry);
+        });
+
+        jQuery("#event-ramp-menu").on('click', '.ramp-entry', function(e) {
+            window.application.panels.EVENTS.widgets.mainWidget.showRampInfo(e, menuRamps[this.dataset.index]);
+        });
+    });
+</script>

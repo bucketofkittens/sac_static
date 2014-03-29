@@ -1,0 +1,63 @@
+<div class="close-button">×</div>
+<div id="events-ramp-info">
+    <section class="left">
+        <h1>Рамка</h1>
+        <div class="well" style="height: 300px;">
+            <h2>Номер</h2>
+            <p class="number">12235432</p>
+            <h2>Местонахождение</h2>
+            <p class="position">40-й км трассы А105<br/>55°48’36   37°26’33</p>
+        </div>
+    </section>
+
+    <section class="right">
+        <h1>Видео с дорожной камеры</h1>
+        <div class="well" style="height: 300px;">
+            <img class="ramp-frame" src="/static/images/mt/ramp-frame.jpg">
+        </div>
+    </section>
+
+    <section>
+        <h1>Журнал</h1>
+        <div class="well">
+            <table class="event-ramp-trucks">
+                <tr>
+                    <td class="time">18.02 14:20</td>
+                    <td><div class="status-chevron red">&nbsp;</div></td>
+                    <td class="state">Несоответствие номерного знака и бортового устройства</td>
+                    <td><p class="gosnumber">Е 145 ХХ 98</p></td>
+                </tr>
+                <tr>
+                    <td class="time">18.02 14:20</td>
+                    <td><div class="status-chevron green">&nbsp;</div></td>
+                    <td class="state">Норма</td>
+                    <td><p class="gosnumber">А 487 КХ 05</p></td>
+                </tr>
+                <tr>
+                    <td class="time">18.02 14:20</td>
+                    <td><div class="status-chevron red">&nbsp;</div></td>
+                    <td class="state">Несоответствие бортового устройства</td>
+                    <td><p class="gosnumber">А 047 АА 50</p></td>
+                </tr>
+                <tr>
+                    <td class="time">18.02 14:20</td>
+                    <td><div class="status-chevron red">&nbsp;</div></td>
+                    <td class="state">Несоответствие номерного знака и бортового устройства</td>
+                    <td><p class="gosnumber">К 293 ХК 62</p></td>
+                </tr>
+                <tr>
+                    <td class="time">18.02 14:20</td>
+                    <td><div class="status-chevron green">&nbsp;</div></td>
+                    <td class="state">Норма</td>
+                    <td><p class="gosnumber">А 299 КХ 16</p></td>
+                </tr>
+            </table>
+        </div>
+    </section>
+</div>
+<script defer>
+    jQuery('#events-ramp-info').on('click', '.event-ramp-trucks tr', function (e) {
+        console.log(this);
+        application.panels.EVENTS.widgets.mainWidget.showTruckInfo(this, e);
+    });
+</script>
