@@ -241,13 +241,12 @@ var EventSidebarWidget = function(panel, options) {
     this.element.addClass('widget widget-sidebar');
     jQuery(this.options.container).append(this.element);
 
-    self = this;
     this.menuElement.on('click', 'li', function(e) {
-       var val = this.dataset.side;
-       self.element[0].className = self.element[0].className.replace(/tab-\w*/g, '');
-       self.element.addClass('tab-'+val);
-       self['show'+val[0].toUpperCase() + val.slice(1)]();
-    });
+       var val = e.currentTarget.dataset.side;
+       this.element[0].className = this.element[0].className.replace(/tab-\w*/g, '');
+       this.element.addClass('tab-'+val);
+       this['show'+val[0].toUpperCase() + val.slice(1)]();
+    }.bind(this));
 
     this.show = function() {
         this.element.removeClass('hidden');
