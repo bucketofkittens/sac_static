@@ -4,10 +4,10 @@ var EventMainWidget = function(panel, options) {
     this.panel = panel;
     this.options = jQuery.extend({
         id: 'event-map',
-        container: jQuery('body', document),
+        container: jQuery('#app', document),
     }, (options || {}));
 
-    this.element = jQuery('<div id="'+this.options.id+'"></div>');
+    this.element = jQuery('<div id="'+this.options.id+'" class="hidden"></div>');
     this.innerElement = jQuery('<div class="widget-obscure"></div>');
     this.element.append(this.innerElement);
     this.element.addClass('widget widget-xl');
@@ -106,7 +106,7 @@ var EventMainWidget = function(panel, options) {
 
 var EventMapTruckMenuWidget = function(options, panel) {
     this.options = jQuery.extend({
-        container: jQuery('body', document),
+        container: jQuery('#app', document),
     }, (options || {}));
 
     this.scrollApi = null;
@@ -175,7 +175,7 @@ var EventMapTruckMenuWidget = function(options, panel) {
 
 var EventMapRampMenuWidget = function(options, ramp, panel) {
     this.options = jQuery.extend({
-        container: jQuery('body', document),
+        container: jQuery('#app', document),
     }, (options || {}));
     this.ramp = ramp;
     this.panel = panel;
@@ -230,10 +230,10 @@ var EventSidebarWidget = function(panel, options) {
 
     this.options = jQuery.extend({
         id: 'event-sidebar',
-        container: jQuery('body', document),
+        container: jQuery('#app', document),
     }, (options || {}));
 
-    this.element = jQuery('<div id="'+this.options.id+'"></div>');
+    this.element = jQuery('<div id="'+this.options.id+'" class="hidden"></div>');
     this.innerElement = jQuery('<div class="widget-obscure"></div>');
     this.element.append(this.innerElement);
     this.menuElement = jQuery('<menu><li data-side="trucks">ТС</li><li data-side="ramps">Рамки</li></menu>');

@@ -372,3 +372,32 @@ var EventsPanel = Panel.extend({
 		this.map.miniMap.opacityHidden();
 	}
 });
+
+var TariffsPanel = Panel.extend({
+
+    initialize: function(){
+        this.CSS = { "CONTAINER": "#bg-tariff-image" };
+        this.elements = { "CONTAINER": $(this.CSS["CONTAINER"]) };
+
+        this.widgets.mainWidget = new TariffMainWidget(this);
+        this.widgets.mainWidget.showMap();
+
+        this.widgets.sidebarWidget = new TariffSidebarWidget(this);
+        this.widgets.sidebarWidget.showTariffs();
+
+        this.map = new EventsMapStateManager(this.app, this);
+    },
+
+    show: function() {
+        this.elements["CONTAINER"].removeClass("hidden");
+        this.map.show();
+        _.each(this.widgets, function(w){ w.show(); });
+        this.app.pageTitleWidget.show();
+    },
+
+    hide: function() {
+        this.elements["CONTAINER"].addClass("hidden");
+        _.each(this.widgets, function(w){ w.hide(); });
+        this.map.miniMap.opacityHidden();
+    }
+});

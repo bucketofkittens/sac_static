@@ -241,7 +241,7 @@ var Application = function() {
 
     this.panels = {
       'EVENTS':     new EventsPanel(this),
-      'REGIONS':    new RegionPanel(this),
+      'TARIFFS':    new TariffsPanel(this),
       /*'DISTRICTS':  new DistrictsPanel(this),
       'FORMATS':    new FormatsPanel(this),
       'GRAPHS':     new GraphPanel(this),

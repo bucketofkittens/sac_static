@@ -1,0 +1,171 @@
+<table id="event-tariff-menu">
+    <thead>
+        <tr>
+            <th>Тариф</th>
+            <th>Цена <small>руб/км</small></th>
+            <th>Загрузка <small>%</small></th>
+        </tr>
+    </thead>
+    <tbody data-cost="2.25">
+        <tr>
+            <td colspan="3"><div class="tariff-bar" style="background: green;"></div></td>
+        </tr>
+        <tr>
+            <td>
+                <p>Ночь <small>(00:00—07:00)</small></p>
+                <p>День <small>(07:00—00:00)</small></p>
+            </td>
+            <td>
+                <p>
+                    <a href="#" class="decrease">◂</a>
+                    <input type="number" value="1.5">
+                    <a href="#" class="increase">▸</a>
+                </p>
+                <p>
+                    <a href="#" class="decrease">◂</a>
+                    <input type="number" value="3.5">
+                    <a href="#" class="increase">▸</a>
+                </p>
+            </td>
+            <td class="road-load">
+                90
+            </td>
+        </tr>
+    </tbody>
+    <tbody data-cost="4">
+        <tr>
+            <td colspan="3"><div class="tariff-bar" style="background: blue;"></div></td>
+        </tr>
+        <tr>
+            <td>
+                <p>Ночь <small>(00:00—07:00)</small></p>
+                <p>День <small>(07:00—00:00)</small></p>
+            </td>
+            <td>
+                <p>
+                    <a href="#" class="decrease">◂</a>
+                    <input type="number" value="3">
+                    <a href="#" class="increase">▸</a>
+                </p>
+                <p>
+                    <a href="#" class="decrease">◂</a>
+                    <input type="number" value="5">
+                    <a href="#" class="increase">▸</a>
+                </p>
+            </td>
+            <td class="road-load">
+                100
+            </td>
+        </tr>
+    </tbody>
+    <tbody data-cost="4.16">
+        <tr>
+            <td colspan="3"><div class="tariff-bar" style="background: yellow;"></div></td>
+        </tr>
+        <tr>
+            <td>
+                <p>Ночь <small>(00:00—07:00)</small></p>
+                <p>День <small>(07:00—00:00)</small></p>
+            </td>
+            <td>
+                <p>
+                    <a href="#" class="decrease">◂</a>
+                    <input type="number" value="6">
+                    <a href="#" class="increase">▸</a>
+                </p>
+                <p>
+                    <a href="#" class="decrease">◂</a>
+                    <input type="number" value="10">
+                    <a href="#" class="increase">▸</a>
+                </p>
+            </td>
+            <td class="road-load">
+                52
+            </td>
+        </tr>
+    </tbody>
+    <tbody data-cost="3.7">
+        <tr>
+            <td colspan="3"><div class="tariff-bar" style="background: orange;"></div></td>
+        </tr>
+        <tr>
+            <td>
+                <p>Ночь <small>(00:00—07:00)</small></p>
+                <p>День <small>(07:00—00:00)</small></p>
+            </td>
+            <td>
+                <p>
+                    <a href="#" class="decrease">◂</a>
+                    <input type="number" value="8">
+                    <a href="#" class="increase">▸</a>
+                </p>
+                <p>
+                    <a href="#" class="decrease">◂</a>
+                    <input type="number" value="12">
+                    <a href="#" class="increase">▸</a>
+                </p>
+            </td>
+            <td class="road-load">
+                37
+            </td>
+        </tr>
+    </tbody>
+    <tbody data-cost="1.8">
+        <tr>
+            <td colspan="3"><div class="tariff-bar" style="background: red;"></div></td>
+        </tr>
+        <tr>
+            <td>
+                <p>Ночь <small>(00:00—07:00)</small></p>
+                <p>День <small>(07:00—00:00)</small></p>
+            </td>
+            <td>
+                <p>
+                    <a href="#" class="decrease">◂</a>
+                    <input type="number" value="10">
+                    <a href="#" class="increase">▸</a>
+                </p>
+                <p>
+                    <a href="#" class="decrease">◂</a>
+                    <input type="number" value="14">
+                    <a href="#" class="increase">▸</a>
+                </p>
+            </td>
+            <td class="road-load">
+                15
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<script defer>
+    jQuery(window).load(function () {
+        var sidebar = jQuery("#event-tariff-menu");
+        sidebar.on('click', '.decrease', function(e) {
+            e.preventDefault();
+            var input = $(this).parent().find('input');
+            var val = parseFloat(input.val());
+            val -= 0.5;
+            if (val >= 0) {
+                input.val(val);
+                input.trigger('change');
+            }
+        });
+        sidebar.on('click', '.increase', function(e) {
+            e.preventDefault();
+            var input = $(this).parent().find('input');
+            var val = parseFloat(input.val());
+            input.val(val+0.5);
+            input.trigger('change');
+        });
+        sidebar.on('change', 'input[type=number]', function() {
+           var groupTag = $(this).closest('tbody');
+           var base  = parseFloat(groupTag[0].dataset.cost);
+           var day   = parseFloat(groupTag.find('input').first().val());
+           var night = parseFloat(groupTag.find('input').last().val());
+           var avg   = (day+night)/2;
+           var load  = base/avg;
+           groupTag.find('tr:last td:last').text(Math.round(load*100));
+        });
+    });
+</script>

@@ -13,6 +13,21 @@
     font-size: 14pt;
 }
 
+.widget.widget-l
+{
+    position:absolute;
+    background:url('/static/images/formats/widget-l.png') center center no-repeat;
+    height:741px;
+    width:1053px;
+    left:175px;
+    top:175px;
+    z-index:200;
+    overflow: hidden;
+    color: #DDFFFF;
+    font-family: 'Open Sans',sans-serif;
+    font-size: 14pt;
+}
+
 .widget.widget-sidebar
 {
     position:absolute;
@@ -26,6 +41,18 @@
     color: #DDFFFF;
     font-family: 'Open Sans',sans-serif;
     font-size: 14pt;
+}
+
+.widget.hidden {
+    top: 1100px !important;
+}
+
+.widget.widget-sidebar-l {
+    background:url('/static/images/formats/widget-sidebar-l.png') center center no-repeat;
+    height:756px;
+    width:536px;
+    left:1300px;
+    top:150px;
 }
 
 .widget.widget-sidebar.tab-ramps {
@@ -74,11 +101,15 @@
 }
 
 .widget-sidebar menu li {
-    float: left;
-    width: 50%;
+    display: block;
     box-sizing: border-box;
     text-align: center;
     cursor: pointer;
+}
+
+#event-sidebar menu li {
+    float: left;
+    width: 50%;
 }
 
 .widget {
@@ -162,19 +193,40 @@
     overflow: hidden;
 }
 
-.widget .well table {
+.widget table {
     width: 100%;
     border-collapse: collapse;
     border: none;
 }
 
-.widget .well table tr {
+.widget table tr {
     border-bottom: 2px solid #88b1ce;
 }
 
-.widget .well table td {
+.widget table td, .widget table th {
     padding: 0.25em;
     vertical-align: middle;
+}
+
+#tariffs-map {
+    background: url('/static/images/mt/tariff-map.jpg') top left no-repeat;
+    width: 980px;
+    height: 662px;
+    top: 5px;
+    left: 5px;
+    position: absolute;
+    overflow: hidden;
+}
+
+#tariffs-map-toner {
+    background: url('/static/images/mt/tariff-map-toner.png');
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    height: 861px;
+    position: absolute;
+    pointer-events: none;
 }
 
 #events-map {
@@ -387,4 +439,51 @@ td.time { color: #7dc2e3; }
     padding: 0.5em;
     display: block;
     width: 100%;
+}
+
+.widget-sidebar table th small {
+    display: block;
+    margin: 0.25em 0 0;
+}
+
+.widget-sidebar table tr {
+    border-bottom: none;
+}
+
+.widget-sidebar table td {
+    line-height: 140%;
+}
+
+.widget-sidebar table tbody, .widget-sidebar table thead {
+    border-bottom: 2px solid #88b1ce
+}
+
+.widget-sidebar table thead {
+    border-top: 2px solid #88b1ce
+}
+
+.widget a:link, .widget a:visited {
+    color: white;
+    text-decoration: none;
+}
+
+.widget input[type=number] {
+    background: transparent;
+    color: white;
+    border: none;
+    width: 3em;
+    font-size: 80%;
+}
+
+.tariff-bar {
+    height: 8px;
+    box-shadow: inset 0px 0px 2px 1px rgba(0,0,0,0.5);
+}
+
+#tariff-sidebar table tr:first-child td {
+    padding-top: 2em;
+}
+
+#tariff-sidebar td:last-child {
+    text-align: right;
 }
