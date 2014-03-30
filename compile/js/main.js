@@ -181,7 +181,8 @@ var Application = function() {
 		this.regionsManagerLocal = new RegionsManagerLocal(this);
 		this.dictionaryManager = new DictionaryManager(this);
 
-		this.initResource_();
+		// TODO: Enable caching, when needed: this.initResource_();
+        this.onCacheLoaded_();
 	}
 
 	// Загружаем ресурсы, используя родной applicationCache
