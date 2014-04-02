@@ -243,8 +243,11 @@ var Application = function() {
 
     this.panels = {
       'EVENTS':     new EventsPanel(this),
-      'TARIFFS':    new TariffsPanel(this),
-      /*'DISTRICTS':  new DistrictsPanel(this),
+      'REGIONS':    new RegionPanel(this),
+      'SVP':        new SvpPanel(this),
+      'REFBOOKS':   new TariffsPanel(this)
+      /*'TARIFFS':    new TariffsPanel(this),
+      'DISTRICTS':  new DistrictsPanel(this),
       'FORMATS':    new FormatsPanel(this),
       'GRAPHS':     new GraphPanel(this),
       'REPORTS':    new ReportsPanel(this)*/
@@ -262,9 +265,9 @@ var Application = function() {
 	}
 
 	this.init();
-}
+};
 
 $(document).ready(function() {
 	window.application = new Application();
-    window.application.run();
-})
+  window.application.run();
+});

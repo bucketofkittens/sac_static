@@ -10,16 +10,14 @@ var ConfigApp = {
         "EVENTS": {
             "title": "События"
         },
-        "TARIFFS": {
-            "title": "Тарифы"
+        "REGIONS": {
+            "title": "Регионы"
         },
-        "SVPS": {
-            "title": "СВП",
-            coming: true
+        "SVP": {
+            "title": "СВП"
         },
-        "SINS": {
-            "title": "СИН",
-            coming: true
+        "REFBOOKS": {
+            "title": "Справочники"
         }
     },
 	"REGIONS": {

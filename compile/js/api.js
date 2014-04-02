@@ -2695,4 +2695,4 @@ var EventsDrawWidget = function(app) {
 	this.hidden = function() {
 		this.elements["MAIN"].addClass(this.CSS["HIDDEN"]);
 	}
-}
+};

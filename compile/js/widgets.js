@@ -72,11 +72,18 @@ var PageTitleWidget = function(app) {
 
 	this.hidden = function() {
 		this.elements["CONTAINER"].addClass("onHidden");
+    return this;
 	}
 
 	this.show = function() {
 		this.elements["CONTAINER"].removeClass("onHidden");
+    return this;
 	}
+
+  this.set = function(text) {
+		this.elements["CONTAINER"].text(text);
+    return this;
+  }
 }
 
 /**
@@ -106,6 +113,9 @@ var FooterNavWidget = function(app) {
 		if(element["coming"]) {
 			$(newLink).addClass("coming");
 		}
+    if(index == "REFBOOKS") {
+      $(newLink).addClass('wide');
+    }
 		/*if(index == "DISTRICTS") {
 			$(newLink).addClass("active");
 		}*/

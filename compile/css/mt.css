@@ -378,6 +378,7 @@
     border: 1px solid #5488ab;
     border-radius: 3px;
     background: #056fa7;
+    box-shadow: 2px 3px 9px 0px rgba(0, 0, 0, 0.33);
     color: white;
     width: 8em;
     margin: 0 0.5em 1em;
@@ -385,6 +386,11 @@
     float: right;
     text-align: center;
     font-size 120%;
+    cursor: pointer;
+}
+
+.gosnumber:hover {
+  box-shadow: 2px 3px 9px 0px rgba(90, 90, 90, 0.33);
 }
 
 td > .gosnumber { margin: 1px; }

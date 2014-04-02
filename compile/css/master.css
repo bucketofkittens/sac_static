@@ -210,28 +210,29 @@ header h1
   display:block;
   bottom:0;
   left:260px;
-  text-align:center;
+  text-indent:330px;
   position:absolute;
   z-index:130;
 }
 
 #content .nav a
 {
-  width:100px;
-  height:30px;
+  width:190px;
+  height:60px;
   font-family:EuropeExt;
   font-size:19px;
   color:#BBDDFF;
   text-decoration:none;
+  text-indent: initial;
+  text-align: center;
   display:inline-block;
-  line-height: 30px;
-  /*text-transform:lowercase;*/
+  line-height: 75px;
   cursor:pointer;
   -moz-transition:all .7s linear;
   -o-transition:all .7s linear;
   -webkit-transition:all .7s linear;
   transition:all .7s linear;
-  margin:25px 30px 0 30px;
+
 }
 
 #content .nav a:first-child
@@ -256,6 +257,10 @@ header h1
   -ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
   filter:alpha(opacity=50);
   opacity:0.4;
+}
+
+#content .nav a.wide {
+  width: 250px;
 }
 
 #content .legend
