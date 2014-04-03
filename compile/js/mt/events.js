@@ -71,7 +71,26 @@ var EventMainWidget = function(panel, options) {
         }
     };
 
-    this.showRampInfo = function (e, ramp) {
+    this.useWebcam = function() {
+        var video = document.querySelector("#rampVideo");
+ 
+        navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
+         
+        if (navigator.getUserMedia) {       
+            navigator.getUserMedia({video: true}, handleVideo, videoError);
+        }
+         
+        function handleVideo(stream) {
+            video.src = window.URL.createObjectURL(stream);
+        }
+
+        function videoError(e) {
+            // do something
+        }
+    }
+
+    this.showRampInfo = function (e, ramp, webcam) {
+        var self = this;
         if (e && 'preventDefault' in e) e.preventDefault();
         else if (e && !ramp) ramp = e;
         this.ramp = ramp;
@@ -94,6 +113,10 @@ var EventMainWidget = function(panel, options) {
                 thisContainer.siblings().addClass('hidden');
                 thisContainer.removeClass('hidden');
                 updateInfo();
+
+                if(webcam) {
+                    self.useWebcam();
+                }
             });
         }
     };
