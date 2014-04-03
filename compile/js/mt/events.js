@@ -122,7 +122,7 @@ var EventMainWidget = function(panel, options) {
                 if(ramp.webcam) {
                     self.useWebcam();
                 } else {
-                    this.noiseVideo();
+                    self.noiseVideo(); 
                 }
             });
         }
