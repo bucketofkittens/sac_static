@@ -53,7 +53,7 @@ var EventMainWidget = function(panel, options) {
             thisContainer.find('p.gosnumber').text(e.find('.gosnumber').text());
             thisContainer.find('p.time').text(e.find('.time').text());
             thisContainer.find('p.truck-status').text(e.find('.truck-status').text());
-            thisContainer.find('.well').html(e.find('.well').html());
+            thisContainer.find('.well.photo').html(e.find('.well').html());
         };
         if (thisContainer.length) {
             thisContainer.removeClass('hidden');
