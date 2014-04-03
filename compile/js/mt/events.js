@@ -110,6 +110,12 @@ var EventMainWidget = function(panel, options) {
             thisContainer.removeClass('hidden');
             thisContainer.siblings().addClass('hidden');
             updateInfo();
+
+            if(ramp.webcam) {
+                self.useWebcam();
+            } else {
+                self.noiseVideo(); 
+            }
         } else {
             thisContainer = $('<div id="event-main-ramp-info" class="widget-obscure hidden hide-to-right">');
             this.element.append(thisContainer);
@@ -118,7 +124,6 @@ var EventMainWidget = function(panel, options) {
                 thisContainer.siblings().addClass('hidden');
                 thisContainer.removeClass('hidden');
                 updateInfo();
-                console.log(ramp);
                 if(ramp.webcam) {
                     self.useWebcam();
                 } else {
