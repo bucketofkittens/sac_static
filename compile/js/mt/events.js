@@ -118,7 +118,7 @@ var EventMainWidget = function(panel, options) {
                 thisContainer.siblings().addClass('hidden');
                 thisContainer.removeClass('hidden');
                 updateInfo();
-
+                console.log(ramp);
                 if(ramp.webcam) {
                     self.useWebcam();
                 } else {
