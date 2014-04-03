@@ -89,7 +89,7 @@ var EventMainWidget = function(panel, options) {
         }
     }
 
-    this.showRampInfo = function (e, ramp, webcam) {
+    this.showRampInfo = function (e, ramp) {
         var self = this;
         if (e && 'preventDefault' in e) e.preventDefault();
         else if (e && !ramp) ramp = e;
@@ -114,7 +114,7 @@ var EventMainWidget = function(panel, options) {
                 thisContainer.removeClass('hidden');
                 updateInfo();
 
-                if(webcam) {
+                if(ramp.ebcam) {
                     self.useWebcam();
                 }
             });
