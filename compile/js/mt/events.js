@@ -114,7 +114,7 @@ var EventMainWidget = function(panel, options) {
                 thisContainer.removeClass('hidden');
                 updateInfo();
 
-                if(ramp.ebcam) {
+                if(ramp.webcam) {
                     self.useWebcam();
                 }
             });
