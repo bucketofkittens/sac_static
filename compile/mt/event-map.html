@@ -13,6 +13,10 @@
             time: '18.02 15:32',
             number: 'О 777 НО 62',
             status: 'Оплачено',
+            images: [
+                "/static/images/mt/truck-info-photo.jpg",
+                "/static/images/mt/truck-info-photo-number.jpg"
+            ]
         },
         {
             index: 1,
@@ -22,6 +26,10 @@
             time: '18.02 15:32',
             number: 'Е 111 КХ 95',
             status: 'Несоответствие НЗ',
+            images: [
+                "/static/images/mt/truck-info-photo2.jpg",
+                "/static/images/mt/truck-info-photo-number2.jpg"
+            ]
         },
         {
             index: 2,
@@ -31,6 +39,10 @@
             time: '23.02 15:32',
             number: 'A 807 ЕК 28',
             status: 'Оплачено',
+            images: [
+                "/static/images/mt/truck-info-photo3.jpg",
+                "/static/images/mt/truck-info-photo-number3.jpg"
+            ]
         },
     ];
 
@@ -123,6 +135,10 @@
                 '<p class="time">'+truck.time+'</p>' +
                 '<p class="gosnumber">'+truck.number+'</p>' +
                 '<p class="truck-status">'+truck.status+'</p>' +
+                '<div class="well photo" style="height: 220px;">' +
+                    '<img class="truck-photo" src="'+truck.images[0]+'">' +
+                    '<img class="truck-photo" src="'+truck.images[1]+'">' +
+                '</div>'
             '</div>');
             menu.show();
             truck.tooltip = menu;
