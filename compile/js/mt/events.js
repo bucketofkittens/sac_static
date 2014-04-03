@@ -89,6 +89,11 @@ var EventMainWidget = function(panel, options) {
         }
     }
 
+    this.noiseVideo = function() {
+        var video = document.querySelector("#rampVideo");
+        video.src = "/static/images/scene/noise.mp4";
+    }
+
     this.showRampInfo = function (e, ramp) {
         var self = this;
         if (e && 'preventDefault' in e) e.preventDefault();
@@ -116,6 +121,8 @@ var EventMainWidget = function(panel, options) {
 
                 if(ramp.webcam) {
                     self.useWebcam();
+                } else {
+                    this.noiseVideo();
                 }
             });
         }
