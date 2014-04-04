@@ -15,6 +15,7 @@ var TariffMainWidget = function(panel, options) {
 
     this.show = function() {
         this.element.removeClass('hidden');
+        this.showMap();
     };
 
     this.hide = function() {
@@ -47,7 +48,7 @@ var TariffMainWidget = function(panel, options) {
 
 };
 
-var TariffSidebarWidget = function(panel, options) {
+var TariffListWidget = function(panel, options) {
     this.panel = panel;
 
     this.options = jQuery.extend({
@@ -73,6 +74,7 @@ var TariffSidebarWidget = function(panel, options) {
 
     this.show = function() {
         this.element.removeClass('hidden');
+        this.showTariffs();
     };
 
     this.hide = function() {
@@ -100,5 +102,137 @@ var TariffSidebarWidget = function(panel, options) {
                 thisContainer.removeClass('hidden');
             });
         }
+    };
+
+    $("body").on('click', '.decrease', function(e) {
+        e.preventDefault();
+        var input = $(this).parent().find('input');
+        var val = parseFloat(input.val());
+        val -= 0.5;
+        if (val >= 0) {
+            input.val(val);
+            input.trigger('change');
+        }
+    });
+    $("body").on('click', '.increase', function(e) {
+        e.preventDefault();
+        var input = $(this).parent().find('input');
+        var val = parseFloat(input.val());
+        input.val(val+0.5);
+        input.trigger('change');
+    });
+    $("body").on('change', 'input[type=number]', function() {
+       var groupTag = $(this).closest('tbody');
+       var base  = parseFloat(groupTag[0].dataset.cost);
+       var day   = parseFloat(groupTag.find('input').first().val());
+       var night = parseFloat(groupTag.find('input').last().val());
+       var avg   = (day+night)/2;
+       var load  = base/avg;
+       groupTag.find('tr:last td:last').text(Math.round(load*100));
+    });
+};
+
+var TariffNavWidget = function(panel, options) {
+    this.panel = panel;
+    this.options = options;
+
+    this.appId = "#app";
+    this.navId = "#reference-nav";
+
+    var self = this;
+
+    this.show = function() {
+        var self = this;
+        $.get('/static/compile/mt/nav.html', {}, function (data, status, jqxhr) {
+            $(self.appId).append(data);
+        });
+    };
+
+    this.hide = function() {    
+        $(this.navId).remove();
+    };
+
+    this.onNavClick_ = function() {
+        console.log(self);
+        self.panel.changeState($(this).attr("state"));
+    }
+
+    $("body").on("click", this.navId+" a", this.onNavClick_);
+};
+
+
+var TariffCamersListWidget = function(panel, options) {
+    this.panel = panel;
+    this.options = options;
+
+    this.appId = "#app";
+    this.navId = "#camers-list";
+
+    this.show = function() {
+        var self = this;
+        $.get('/static/compile/mt/camers-list.html', {}, function (data, status, jqxhr) {
+            $(self.appId).append(data);
+        });
+    };
+
+    this.hide = function() {    
+        $(this.navId).remove();
+    };
+};
+
+var TariffCamersMainWidget = function(panel, options) {
+    this.panel = panel;
+    this.options = options;
+
+    this.appId = "#app";
+    this.navId = "#camers-main";
+
+    this.show = function() {
+        var self = this;
+        $.get('/static/compile/mt/camers-main.html', {}, function (data, status, jqxhr) {
+            $(self.appId).append(data);
+        });
+    };
+
+    this.hide = function() {    
+        $(this.navId).remove();
+    };
+};
+
+var TariffRamkListWidget = function(panel, options) {
+    this.panel = panel;
+    this.options = options;
+
+    this.appId = "#app";
+    this.navId = "#ramks-main";
+
+    this.show = function() {
+        var self = this;
+        $.get('/static/compile/mt/ramks-list.html', {}, function (data, status, jqxhr) {
+            $(self.appId).append(data);
+        });
+    };
+
+    this.hide = function() {    
+        $(this.navId).remove();
+    };
+};
+
+var TariffRamkMainWidget = function(panel, options) {
+    this.panel = panel;
+    this.options = options;
+
+    this.appId = "#app";
+    this.navId = "#ramks-main";
+
+    this.show = function() {
+        var self = this;
+        $.get('/static/compile/mt/ramks-main.html', {}, function (data, status, jqxhr) {
+            $(self.appId).append(data);
+        });
+    };
+
+    this.hide = function() {    
+        $(this.navId).remove();
     };
 };

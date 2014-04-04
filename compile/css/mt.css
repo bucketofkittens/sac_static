@@ -19,7 +19,7 @@
     background:url('/static/images/formats/widget-l.png') center center no-repeat;
     height:741px;
     width:1053px;
-    left:175px;
+    left:195px;
     top:175px;
     z-index:200;
     overflow: hidden;
@@ -493,3 +493,29 @@ td.time { color: #7dc2e3; }
 #tariff-sidebar td:last-child {
     text-align: right;
 }
+
+#reference-nav {
+    position: absolute;
+    left: 0px;
+    top: 380px;
+    z-index: 250;
+
+    background: url('/static/images/menu_left.png') center center no-repeat;
+    width: 320px;
+    height: 299px;
+}
+
+#camers-list, #ramks-list {
+    position: absolute;
+    background: url('/static/images/formats/widget-sidebar.png') center center no-repeat;
+    height: 756px;
+    width: 443px;
+    left: 1400px;
+    top: 150px;
+    z-index: 200;
+    overflow: hidden;
+    color: #DDFFFF;
+    font-family: 'Open Sans',sans-serif;
+    font-size: 14pt;
+}
+

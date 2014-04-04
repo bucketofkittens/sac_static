@@ -360,7 +360,15 @@ var EventsPanel = Panel.extend({
           if ($('#sampleMovie')[0].currentTime < 9) { $('#sampleMovie')[0].play(); }
         }
       },
-      ONHIDE: function(e) { if ( $('#sampleMovie')[0] && $('#sampleMovie')[0].currentTime < 9 ) { $('#sampleMovie')[0].pause(); $('#sampleMovie')[0].currentTime = 0 } }
+      ONHIDE: function(e) { 
+      	if ($('#sampleMovie')[0] && $('#sampleMovie')[0].currentTime < 9 ) { 
+      		$('#sampleMovie')[0].pause();
+
+      		if($('#sampleMovie')[0].currentTime) {
+      			$('#sampleMovie')[0].currentTime = 0;	
+      		}
+      	} 
+      }
     });
     $.get('/static/compile/scene/extra-1.html', function (data) { self.widgets.wx1.setContent(data); });
 
@@ -499,25 +507,58 @@ var TariffsPanel = Panel.extend({
         this.CSS = { "CONTAINER": "#bg-tariff-image" };
         this.elements = { "CONTAINER": $(this.CSS["CONTAINER"]) };
 
-        this.widgets.mainWidget = new TariffMainWidget(this);
-        this.widgets.mainWidget.showMap();
+        this.stateWidgets = {
+        	cameras: {},
+        	tariffs: {},
+        	ramks: {}
+        }
+        
+        this.widgets.navWidget = new TariffNavWidget(this);
 
-        this.widgets.sidebarWidget = new TariffSidebarWidget(this);
-        this.widgets.sidebarWidget.showTariffs();
+        this.stateWidgets.cameras.list = new TariffCamersListWidget(this);
+        this.stateWidgets.cameras.main = new TariffCamersMainWidget(this);
 
+        this.stateWidgets.tariffs.list = new TariffListWidget(this);
+        this.stateWidgets.tariffs.main = new TariffMainWidget(this);
+
+        this.stateWidgets.ramks.list = new TariffRamkListWidget(this);
+        this.stateWidgets.ramks.main = new TariffRamkMainWidget(this);
+        
         this.map = new EventsMapStateManager(this.app, this);
+    },
+
+    changeState: function(state) {
+    	this.hideAllState();
+    	this.showState(state);
     },
 
     show: function() {
         this.elements["CONTAINER"].removeClass("hidden");
-        this.map.show();
         _.each(this.widgets, function(w){ w.show(); });
         this.app.pageTitleWidget.set('Тарифы').show();
+        this.changeState("cameras");
+    },
+
+    showState: function(state) {
+    	_.each(this.stateWidgets[state], function(w){ 
+        	w.show();
+        });
+    },
+
+    hideAllState: function() {
+    	_.each(this.stateWidgets, function(w){ 
+        	_.each(w, function(w2){
+        		w2.hide();
+        	});
+        });
     },
 
     hide: function() {
         this.elements["CONTAINER"].addClass("hidden");
-        _.each(this.widgets, function(w){ w.hide(); });
+        _.each(this.widgets, function(w){ 
+        	w.hide();
+        });
+        this.hideAllState();
         this.map.miniMap.opacityHidden();
     }
 });

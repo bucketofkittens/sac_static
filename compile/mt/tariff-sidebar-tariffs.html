@@ -137,35 +137,3 @@
         </tr>
     </tbody>
 </table>
-
-<script defer>
-    jQuery(window).load(function () {
-        var sidebar = jQuery("#event-tariff-menu");
-        sidebar.on('click', '.decrease', function(e) {
-            e.preventDefault();
-            var input = $(this).parent().find('input');
-            var val = parseFloat(input.val());
-            val -= 0.5;
-            if (val >= 0) {
-                input.val(val);
-                input.trigger('change');
-            }
-        });
-        sidebar.on('click', '.increase', function(e) {
-            e.preventDefault();
-            var input = $(this).parent().find('input');
-            var val = parseFloat(input.val());
-            input.val(val+0.5);
-            input.trigger('change');
-        });
-        sidebar.on('change', 'input[type=number]', function() {
-           var groupTag = $(this).closest('tbody');
-           var base  = parseFloat(groupTag[0].dataset.cost);
-           var day   = parseFloat(groupTag.find('input').first().val());
-           var night = parseFloat(groupTag.find('input').last().val());
-           var avg   = (day+night)/2;
-           var load  = base/avg;
-           groupTag.find('tr:last td:last').text(Math.round(load*100));
-        });
-    });
-</script>
