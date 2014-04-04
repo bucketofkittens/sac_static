@@ -511,7 +511,7 @@ td.time { color: #7dc2e3; }
     padding-right: 20px !important;
 }
 #reference-nav ul li {
-    line-height: 72px;
+    line-height: 70px;
     cursor: pointer;
 }
 #reference-nav ul li.current {
