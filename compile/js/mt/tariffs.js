@@ -141,15 +141,16 @@ var TariffNavWidget = function(panel, options) {
 
     var self = this;
 
+    $.get('/static/compile/mt/nav.html', {}, function (data, status, jqxhr) {
+        $(self.appId).append(data);
+    });
+
     this.show = function() {
-        var self = this;
-        $.get('/static/compile/mt/nav.html', {}, function (data, status, jqxhr) {
-            $(self.appId).append(data);
-        });
+        $(this.navId).removeClass('hidden');
     };
 
     this.hide = function() {    
-        $(this.navId).remove();
+        $(this.navId).addClass('hidden');
     };
 
     this.onNavClick_ = function() {
@@ -170,15 +171,18 @@ var TariffCamersListWidget = function(panel, options) {
     this.appId = "#app";
     this.navId = "#camers-list";
 
+    var self = this;
+
+    $.get('/static/compile/mt/camers-list.html', {}, function (data, status, jqxhr) {
+        $(self.appId).append(data);
+    });
+
     this.show = function() {
-        var self = this;
-        $.get('/static/compile/mt/camers-list.html', {}, function (data, status, jqxhr) {
-            $(self.appId).append(data);
-        });
+        $(this.navId).removeClass('hidden');
     };
 
     this.hide = function() {    
-        $(this.navId).remove();
+        $(this.navId).addClass('hidden');
     };
 };
 
@@ -189,15 +193,18 @@ var TariffCamersMainWidget = function(panel, options) {
     this.appId = "#app";
     this.navId = "#camers-main";
 
+    var self = this;
+
+    $.get('/static/compile/mt/camers-main.html', {}, function (data, status, jqxhr) {
+        $(self.appId).append(data);
+    });
+
     this.show = function() {
-        var self = this;
-        $.get('/static/compile/mt/camers-main.html', {}, function (data, status, jqxhr) {
-            $(self.appId).append(data);
-        });
+        $(this.navId).removeClass('hidden');
     };
 
     this.hide = function() {    
-        $(this.navId).remove();
+        $(this.navId).addClass('hidden');
     };
 };
 
@@ -206,17 +213,19 @@ var TariffRamkListWidget = function(panel, options) {
     this.options = options;
 
     this.appId = "#app";
-    this.navId = "#ramks-main";
+    this.navId = "#ramks-list";
+
+    var self = this;
+    $.get('/static/compile/mt/ramks-list.html', {}, function (data, status, jqxhr) {
+        $(self.appId).append(data);
+    });
 
     this.show = function() {
-        var self = this;
-        $.get('/static/compile/mt/ramks-list.html', {}, function (data, status, jqxhr) {
-            $(self.appId).append(data);
-        });
+        $(this.navId).removeClass('hidden');
     };
 
     this.hide = function() {    
-        $(this.navId).remove();
+        $(this.navId).addClass('hidden');
     };
 };
 
@@ -227,14 +236,17 @@ var TariffRamkMainWidget = function(panel, options) {
     this.appId = "#app";
     this.navId = "#ramks-main";
 
+    var self = this;
+    $.get('/static/compile/mt/ramks-main.html', {}, function (data, status, jqxhr) {
+        $(self.appId).append(data);
+    });
+
     this.show = function() {
-        var self = this;
-        $.get('/static/compile/mt/ramks-main.html', {}, function (data, status, jqxhr) {
-            $(self.appId).append(data);
-        });
+        console.log($(this.navId));
+        $(this.navId).removeClass('hidden');
     };
 
-    this.hide = function() {    
-        $(this.navId).remove();
+    this.hide = function() {
+        $(this.navId).addClass('hidden');
     };
 };
