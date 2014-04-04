@@ -538,3 +538,26 @@ td.time { color: #7dc2e3; }
     font-family: 'Open Sans',sans-serif;
     font-size: 14pt;
 }
+#camers-main .scene-map {
+background: url('/static/images/scene/blue-map.jpg') top left no-repeat;
+background-size: 100% 100%;
+width: 1050px;
+height: 660px;
+position: relative;
+overflow: hidden;
+top: 40px;
+left: 55px;
+}
+#ramks-main #events-map-toner {
+    top: 40px;
+    left: 50px;
+    width: 1050px;
+    height: 655px;
+}
+#ramks-main #events-map {
+    width: 1050px;
+    height: 655px;
+    top: 40px;
+    left: 50px;
+    background-size: 100% 100%;
+}
