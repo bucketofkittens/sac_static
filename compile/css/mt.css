@@ -19,7 +19,7 @@
     background:url('/static/images/formats/widget-l.png') center center no-repeat;
     height:741px;
     width:1053px;
-    left:195px;
+    left:300px;
     top:175px;
     z-index:200;
     overflow: hidden;
@@ -51,7 +51,7 @@
     background:url('/static/images/formats/widget-sidebar-l.png') center center no-repeat;
     height:756px;
     width:536px;
-    left:1300px;
+    left:1380px;
     top:150px;
 }
 
