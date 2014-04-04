@@ -153,8 +153,8 @@ var TariffNavWidget = function(panel, options) {
     };
 
     this.onNavClick_ = function() {
-        $(this.navId+" a").removeClass("current");
-        $(this).addClass("current");
+        $(this.navId+" li").removeClass("current");
+        $(this).parent().addClass("current");
         
         self.panel.changeState($(this).attr("state"));
     }
