@@ -576,7 +576,7 @@ td.time { color: #7dc2e3; }
     left: -100px;
     position: absolute;
     overflow: hidden;
-    z-index: 99
+    z-index: 99;
 }
 #camers-list #event-ramp-menu, #ramks-list #event-ramp-menu {
     position: relative;
@@ -597,6 +597,8 @@ td.time { color: #7dc2e3; }
     left: 50%;
     margin-left: -200px;
     overflow: hidden;
+    z-index: 199;
+    display: none;
 }
 .addbox h3 {
     text-align: center;

@@ -245,16 +245,29 @@ TariffRamkMainWidget.afterCreate_ = function() {
 
 TariffRamkMainWidget.frameClick_ = function(event) {
     var index = $(event.target).attr("data-index");
+
+    if(!this.isTooltip(index)) {
+        this.addTooltip_(index);    
+    }
 }
+
+TariffRamkMainWidget.isTooltip = function(index) {
+    return $(this.navId + " " + this.eventMapId + " .event-ramp-menu[data-index='"+index+"']").size();
+}
+
 
 TariffRamkMainWidget.addTooltip_ = function(index) {
     var frame = this.getFrameByIndex_(index);
-    var html = $('<div class="tooltip bottom blue event-ramp-menu" data-index="'+frame.index+'"> <div class="tooltip-obscure"><div class="center"><p class="gosnumber">'+frame.number+'</p><p>'+frame.positionName+'</p></div></div></div>');
-    $(this.navId + " " + this.html).append(html);
+    var html = $('<div class="tooltip bottom blue event-ramp-menu" data-index="'+frame.index+'"><span class="close"></span> <div class="tooltip-obscure"><div class="center"><p class="gosnumber">'+frame.number+'</p><p>'+frame.positionName+'</p></div></div></div>');
+    
+    $(html).css("left", (frame.position.left+15)+"px");
+    $(html).css("top", (frame.position.top+15)+"px");
+
+    $(this.navId + " " + this.eventMapId).append(html);
 }
 
 TariffRamkMainWidget.getFrameByIndex_ = function(index) {
-    return positiveArr = arr.filter(function(item) {
+    return positiveArr = window.AppData.frames.filter(function(item) {
         if(item.index == index) { return item; }
     })[0];
 
@@ -274,6 +287,7 @@ TariffRamkMainWidget.createFrame = function(frame) {
         "OTransform":"rotate("+frame.angle+"deg)",
         "transform":"rotate("+frame.angle+"deg)"
     });
+    $(el1).attr("data-index", frame.index);
 
     $(el1).click($.proxy(this.frameClick_, this));
 
