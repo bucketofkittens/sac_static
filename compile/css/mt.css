@@ -654,8 +654,8 @@ td.time { color: #7dc2e3; }
     width: 25px;
     height: 25px;
     cursor: pointer;
-}
-#current_frame {
+    z-index: 99;
+}#current_frame {
     position: relative;
     top: 40px;
     width: 1130px;

@@ -241,13 +241,14 @@ TariffRamkListWidget.onAddClick_ = function(event) {
     this.panel.stateWidgets.ramks.main.showAdd();
 }
 TariffRamkListWidget.onItemClick_ = function(event) {
-    var index = $(event.target).attr("data-index");
+    /*var index = $(event.target).attr("data-index");
     if(!index) {
         index = $(event.target).parents(".ramp-entry").attr("data-index");
     }
 
     this.panel.stateWidgets.ramks.main.closeCurrentFrame_();
     this.panel.stateWidgets.ramks.main.showCurrentFrame_(index);
+    */
 }
 TariffRamkListWidget.init = function(data) {
     $("body").on("click", "#ramks-list .add", $.proxy(this.onAddClick_, this));
@@ -286,7 +287,13 @@ TariffRamkMainWidget.onTooltipClick_ = function(event) {
     this.showCurrentFrame_(index);
 }
 
+TariffRamkMainWidget.onTooltipCloseClick_ = function(event) {
+    console.log($(event.target).parents(".tooltip"));
+    $(event.target).parents(".tooltip").remove();
+}
+
 TariffRamkMainWidget.showCurrentFrame_ = function(index) {
+    /*
     $(this.navId + " " + this.eventMapsId).hide();
 
     TariffRamkMainWidget.currentFrameWidget = CurrentFrameWidget;
@@ -294,6 +301,7 @@ TariffRamkMainWidget.showCurrentFrame_ = function(index) {
     TariffRamkMainWidget.currentFrameWidget.frame = this.getFrameByIndex_(index);
     TariffRamkMainWidget.currentFrameWidget.init();
     TariffRamkMainWidget.currentFrameWidget.create();
+    */
 }
 
 TariffRamkMainWidget.closeCurrentFrame_ = function(index) {
@@ -311,8 +319,10 @@ TariffRamkMainWidget.addTooltip_ = function(index) {
     $(html).css("left", (frame.position.left+15)+"px");
     $(html).css("top", (frame.position.top+15)+"px");
 
-    $(html).click($.proxy(this.onTooltipClick_, this));
-
+    $(html).find(".gosnumber").on("click", $.proxy(this.onTooltipClick_, this));
+    
+    console.log($(html).find(".close"));
+    
     $(this.navId + " " + this.eventMapId).append(html);
 }
 
@@ -349,6 +359,7 @@ TariffRamkMainWidget.init = function() {
     $("body").on("click", this.navId + " " + this.closeAddClass, $.proxy(this.closeAdd, this));
     $("body").on("click", this.navId + " " + this.addButtonClass, $.proxy(this.addFrame_, this));
     $("body").on("click", this.navId + " " + this.closeClass, $.proxy(this.closeCurrentFrame_, this));
+    $("body").on("click", this.navId + " " + ".close", $.proxy(this.onTooltipCloseClick_, this));
 }
 
 TariffRamkMainWidget.createFrame = function(frame) {
