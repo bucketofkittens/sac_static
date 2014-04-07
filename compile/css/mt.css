@@ -576,3 +576,12 @@ left: 55px;
     left: 323px;
     cursor: pointer;
 }
+#camers-list #event-ramp-menu, #ramks-list #event-ramp-menu {
+    position: relative;
+    top: 40px;
+    border-top: 3px solid #8fb7d3;
+    margin: 10px !important;
+}
+#camers-list #event-ramp-menu .sidebar-entry, #ramks-list #event-ramp-menu .sidebar-entry {
+    margin: 0px 10px !important;
+}
