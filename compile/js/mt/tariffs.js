@@ -231,8 +231,35 @@ TariffCamersListWidget.beforeCreate_ = function(data) {
 var TariffCamersMainWidget = Object.create(ExWidget);
 TariffCamersMainWidget.navId = "#camers-main";
 
+TariffCamersMainWidget.afterCreate_ = function() {
+    this.drawFrames();
+}
+
+TariffCamersMainWidget.createCamera = function(camera) {
+    var el1 = document.createElement("div");
+
+    el1.className = "camera";
+    el1.style.left = camera.position.left+"px";
+    el1.style.top = camera.position.top+"px";
+
+    $(el1).attr("data-index", camera.index);
+
+    //$(el1).click($.proxy(this.frameClick_, this));
+
+    $(this.navId + " " + this.eventMapId).append(el1);
+}
+
+TariffCamersMainWidget.drawFrames = function() {
+    var self = this;
+    _.each(window.AppData.frames, function(value, key) {
+        self.createFrame(value);
+    });
+}
+
 var TariffRamkListWidget = Object.create(ExWidget);
 TariffRamkListWidget.navId = "#ramks-list";
+TariffRamkListWidget.mapId = ".scene-info-map";
+
 
 TariffRamkListWidget.beforeCreate_ = function(data) {
     return _.template(data, { frames : window.AppData.frames});
