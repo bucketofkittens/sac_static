@@ -588,3 +588,45 @@ left: 55px;
 #camers-list #event-ramp-menu .sidebar-entry, #ramks-list #event-ramp-menu .sidebar-entry {
     margin: 0px 10px !important;
 }
+.addbox {
+    width: 400px;
+    height: 300px;
+    background: url('/static/images/mt/addbox.png') top left no-repeat;
+    background-size: 100% 100%;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    margin-left: -200px;
+    overflow: hidden;
+}
+.addbox h3 {
+    text-align: center;
+    padding-top: 20px;
+}
+.addbox input {
+    display: block;
+    margin: 20px auto;
+    width: 300px;
+    border: none;
+    border-bottom: 1px solid #8fb7d3;
+    background: none;
+    color: #ffffff;
+    font-size: 14px;
+}
+.addbox button {
+    display: inline-block;
+    float: left;
+    margin: 10px 0px 0px 50px;
+    width: 130px;
+    border: none;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 5px;
+    padding: 2px 0px 5px 0px;
+    color: #216b9f;
+    font-size: 14px;
+}
+.addbox button:last-child {
+    float: right;
+    margin-left: 0px;
+    margin: 10px 50px 0px 0px;
+}
