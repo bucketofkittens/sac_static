@@ -551,7 +551,6 @@ var TariffsPanel = Panel.extend({
     show: function() {
         this.elements["CONTAINER"].removeClass("hidden");
         _.each(this.widgets, function(w){ 
-        	console.log(w);
         	w.show(); 
        	});
         this.app.pageTitleWidget.set('Тарифы').show();

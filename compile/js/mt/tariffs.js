@@ -164,6 +164,10 @@ var ExWidget = {
         }
     },
 
+    destroy: function(){
+        $(this.navId).remove();
+    },
+
     beforeCreate_: function(data) {
         return data;
     },
@@ -208,6 +212,15 @@ TariffNavWidget.init = function() {
     $("body").on("click", this.navId+" li", $.proxy(this.onNavClick_, this));
 }
 
+var CurrentFrameWidget = Object.create(ExWidget);
+CurrentFrameWidget.appId = "#current_frame";
+CurrentFrameWidget.navId = "#event-main-ramp-info";
+CurrentFrameWidget.frame = null;
+
+CurrentFrameWidget.beforeCreate_ = function(data) {
+    return _.template(data, { frame : this.frame});
+}
+
 var TariffCamersListWidget = Object.create(ExWidget);
 TariffCamersListWidget.navId = "#camers-list";
 
@@ -225,22 +238,35 @@ TariffRamkListWidget.beforeCreate_ = function(data) {
     return _.template(data, { frames : window.AppData.frames});
 }
 TariffRamkListWidget.onAddClick_ = function(event) {
+    this.panel.stateWidgets.ramks.main.showAdd();
+}
+TariffRamkListWidget.onItemClick_ = function(event) {
+    var index = $(event.target).attr("data-index");
+    if(!index) {
+        index = $(event.target).parents(".ramp-entry").attr("data-index");
+    }
 
+    this.panel.stateWidgets.ramks.main.closeCurrentFrame_();
+    this.panel.stateWidgets.ramks.main.showCurrentFrame_(index);
 }
 TariffRamkListWidget.init = function(data) {
     $("body").on("click", "#ramks-list .add", $.proxy(this.onAddClick_, this));
+    $("body").on("click", "#ramks-list .ramp-entry", $.proxy(this.onItemClick_, this));
 }
-
-
 
 var TariffRamkMainWidget = Object.create(ExWidget);
 TariffRamkMainWidget.navId = "#ramks-main";
 TariffRamkMainWidget.eventMapId = "#map-fake";
+TariffRamkMainWidget.addBoxClass = ".addbox";
+TariffRamkMainWidget.closeAddClass = ".close-add";
+TariffRamkMainWidget.addButtonClass = ".add-button";
+TariffRamkMainWidget.currentFrameId = "#event-main-ramp-info";
+TariffRamkMainWidget.eventMapsId = "#event-main-map";
+TariffRamkMainWidget.closeClass = ".close-button";
+TariffRamkMainWidget.currentFrameWidget = null;
 
 TariffRamkMainWidget.afterCreate_ = function() {
     this.drawFrames();
-
-    //
 }
 
 TariffRamkMainWidget.frameClick_ = function(event) {
@@ -255,6 +281,28 @@ TariffRamkMainWidget.isTooltip = function(index) {
     return $(this.navId + " " + this.eventMapId + " .event-ramp-menu[data-index='"+index+"']").size();
 }
 
+TariffRamkMainWidget.onTooltipClick_ = function(event) {
+    var index = $(event.target).parents(".event-ramp-menu").attr("data-index");
+    this.showCurrentFrame_(index);
+}
+
+TariffRamkMainWidget.showCurrentFrame_ = function(index) {
+    $(this.navId + " " + this.eventMapsId).hide();
+
+    TariffRamkMainWidget.currentFrameWidget = CurrentFrameWidget;
+    TariffRamkMainWidget.currentFrameWidget.panel = this;
+    TariffRamkMainWidget.currentFrameWidget.frame = this.getFrameByIndex_(index);
+    TariffRamkMainWidget.currentFrameWidget.init();
+    TariffRamkMainWidget.currentFrameWidget.create();
+}
+
+TariffRamkMainWidget.closeCurrentFrame_ = function(index) {
+    $(this.navId + " " + this.eventMapsId).show();
+
+    if(TariffRamkMainWidget.currentFrameWidget) {
+        TariffRamkMainWidget.currentFrameWidget.destroy();    
+    }
+}
 
 TariffRamkMainWidget.addTooltip_ = function(index) {
     var frame = this.getFrameByIndex_(index);
@@ -263,6 +311,8 @@ TariffRamkMainWidget.addTooltip_ = function(index) {
     $(html).css("left", (frame.position.left+15)+"px");
     $(html).css("top", (frame.position.top+15)+"px");
 
+    $(html).click($.proxy(this.onTooltipClick_, this));
+
     $(this.navId + " " + this.eventMapId).append(html);
 }
 
@@ -270,7 +320,35 @@ TariffRamkMainWidget.getFrameByIndex_ = function(index) {
     return positiveArr = window.AppData.frames.filter(function(item) {
         if(item.index == index) { return item; }
     })[0];
+}
 
+TariffRamkMainWidget.addFrame_ = function(event) {
+    var newFrame = {
+        index: window.AppData.frames.length + 1,
+        position: {top: 385, left: 610},
+        angle: 0,
+        number: $("#new_frame_index").val(),
+        positionName: $("#new_frame_adress").val(),
+        positionСoords: $("#new_frame_coords").val(),
+        webcam: false
+    };
+    window.AppData.frames.push(newFrame);
+    this.createFrame(newFrame);
+    this.closeAdd();
+}
+
+TariffRamkMainWidget.showAdd = function() {
+    $(this.navId + " " + this.addBoxClass).show();
+}
+
+TariffRamkMainWidget.closeAdd = function() {
+    $(this.navId + " " + this.addBoxClass).hide();
+}
+
+TariffRamkMainWidget.init = function() {
+    $("body").on("click", this.navId + " " + this.closeAddClass, $.proxy(this.closeAdd, this));
+    $("body").on("click", this.navId + " " + this.addButtonClass, $.proxy(this.addFrame_, this));
+    $("body").on("click", this.navId + " " + this.closeClass, $.proxy(this.closeCurrentFrame_, this));
 }
 
 TariffRamkMainWidget.createFrame = function(frame) {
