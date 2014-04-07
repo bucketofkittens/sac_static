@@ -538,12 +538,20 @@ td.time { color: #7dc2e3; }
     font-family: 'Open Sans',sans-serif;
     font-size: 14pt;
 }
+#ramks-list {
+    background: url('/static/images/formats/widget-sidebar-d.png') center center no-repeat;
+    background-size: 100% 100%;
+    width: 360px;
+}
 #camers-list h2, #ramks-list h2 {
     font-size: 20px;
     font-weight: 500;
     position: absolute;
     top: 10px;
     left: 185px;
+}
+#ramks-list h2 {
+    left: 130px;
 }
 #camers-main .scene-map {
 background: url('/static/images/scene/blue-map.jpg') top left no-repeat;
@@ -567,4 +575,12 @@ left: 55px;
     top: 40px;
     left: 50px;
     background-size: 100% 100%;
+}
+.add {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    top: 7px;
+    left: 260px;
+    cursor: pointer;
 }
