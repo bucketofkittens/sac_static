@@ -532,7 +532,6 @@ var TariffsPanel = Panel.extend({
     },
 
     changeState: function(state) {
-    	console.log(state);
     	this.hideAllState();
     	this.showState(state);
     },
@@ -580,5 +579,7 @@ var TariffsPanel = Panel.extend({
         });
         this.hideAllState();
         this.map.miniMap.opacityHidden();
+
+        this.widgets.navWidget.clear();
     }
 });

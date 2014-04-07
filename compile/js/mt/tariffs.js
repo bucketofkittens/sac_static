@@ -188,11 +188,20 @@ var TariffNavWidget = Object.create(ExWidget);
 TariffNavWidget.navId = "#reference-nav";
 
 TariffNavWidget.onNavClick_ = function(event) {
-    if(!$(event.target).hasClass("current")) {
-        $(this.navId+" li").removeClass("current");
-        $(event.target).addClass("current");
-        this.panel.changeState($(event.target).attr("state"));    
+    var elm = $(event.target);
+    if(event.target.tagName == "A") {
+        elm = $(event.target).parent();
     }
+    if(!elm.hasClass("current")) {
+        $(this.navId+" li").removeClass("current");
+        elm.addClass("current");
+        this.panel.changeState(elm.attr("state"));    
+    }
+}
+
+TariffNavWidget.clear = function() {
+    $(this.navId + " li.current").removeClass("current");
+    $(this.navId + " li:first-child").addClass("current");
 }
 
 TariffNavWidget.init = function() {
