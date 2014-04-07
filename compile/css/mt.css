@@ -636,8 +636,6 @@ td.time { color: #7dc2e3; }
     color: #216b9f;
     font-size: 14px;
     cursor: pointer;
-    position: relative;
-    top: 40px;
 }
 .addbox button:last-child {
     float: right;
