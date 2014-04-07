@@ -161,16 +161,26 @@ var ExWidget = {
     appId: "#app",
     navId: "",
     panel: null,
+    template: null,
 
     create: function() {
         if(this.navId) {
             var self = this;
             $.get('/static/compile/mt/'+this.navId.replace("#", "")+'.html', {}, function(data, status, jqxhr) {
-                data = self.beforeCreate_(data);
+                self.template = data;
+                data = self.beforeCreate_(self.template);
                 $(self.appId).append(data);
                 self.afterCreate_();
             });
         }
+    },
+
+    refresh: function() {
+        this.destroy();
+        data = this.beforeCreate_(this.template);
+        $(this.appId).append(data);
+        this.afterCreate_();
+        this.show();
     },
 
     destroy: function(){
@@ -301,13 +311,16 @@ TariffCamersMainWidget.addCamera_ = function(event) {
         position: {top: 385, left: 610},
         angle: 0,
         number: $("#new_camers_index").val(),
-        positionName: $("#new_camers_adress").val(),
+        adress: $("#new_camers_adress").val(),
         positionСoords: $("#new_camers_coords").val(),
         ip: $("#new_camers_ip").val(),
     };
+
     window.AppData.camers.push(newCamera);
     this.createCamera(newCamera);
     this.closeAdd();
+
+    this.panel.stateWidgets.cameras.list.refresh();
 }
 
 TariffCamersMainWidget.closeAdd = function() {
@@ -486,6 +499,8 @@ TariffRamkMainWidget.createFrame = function(frame) {
     var draggie = new Draggabilly(el1, {});
     draggie.on('dragEnd', $.proxy(this.onDragEnd, this));
     draggie.on('dragStart', $.proxy(this.dragStart, this));
+
+    this.panel.stateWidgets.ramks.list.refresh();
 
     $(this.navId + " " + this.eventMapId).append(el1);
 }
