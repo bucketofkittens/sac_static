@@ -271,23 +271,28 @@ TariffCamersMainWidget.drawCamers = function() {
     });
 }
 
-TariffCamersMainWidget.addCamers_ = function(event) {
+TariffCamersMainWidget.addCamera_ = function(event) {
     var newCamera = {
         index: window.AppData.frames.length + 1,
         position: {top: 385, left: 610},
         angle: 0,
-        number: $("#new_frame_index").val(),
-        positionName: $("#new_frame_adress").val(),
-        positionСoords: $("#new_frame_coords").val(),
-        webcam: false
+        number: $("#new_camers_index").val(),
+        positionName: $("#new_camers_adress").val(),
+        positionСoords: $("#new_camers_coords").val(),
+        ip: $("#new_camers_ip").val(),
     };
     window.AppData.camers.push(newCamera);
-    this.createFrame(newCamera);
+    this.createCamera(newCamera);
     this.closeAdd();
 }
 
 TariffCamersMainWidget.closeAdd = function() {
     $(this.navId + " " + this.addBoxClass).hide();
+}
+
+TariffCamersMainWidget.init = function(data) {
+    $("body").on("click", this.navId + " " + this.closeAddClass, $.proxy(this.closeAdd, this));
+    $("body").on("click", this.navId + " " + this.addButtonClass, $.proxy(this.addCamera_, this));
 }
 
 var TariffRamkListWidget = Object.create(ExWidget);
