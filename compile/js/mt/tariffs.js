@@ -157,13 +157,22 @@ var ExWidget = {
         if(this.navId) {
             var self = this;
             $.get('/static/compile/mt/'+this.navId.replace("#", "")+'.html', {}, function(data, status, jqxhr) {
+                data = self.beforeCreate_(data);
                 $(self.appId).append(data);
+                self.afterCreate_();
             });
         }
     },
 
+    beforeCreate_: function(data) {
+        return data;
+    },
+
+    afterCreate_: function() {
+
+    },
+
     show: function() {
-        console.log($(this.navId).size());
         $(this.navId).removeClass('hidden');
     },
 
@@ -191,7 +200,6 @@ TariffNavWidget.init = function() {
 }
 
 var TariffCamersListWidget = Object.create(ExWidget);
-
 TariffCamersListWidget.navId = "#camers-list";
 
 var TariffCamersMainWidget = Object.create(ExWidget);
@@ -199,6 +207,9 @@ TariffCamersMainWidget.navId = "#camers-main";
 
 var TariffRamkListWidget = Object.create(ExWidget);
 TariffRamkListWidget.navId = "#ramks-list";
+TariffRamkListWidget.beforeCreate_ = function(data) {
+    return _.template(data ,{ frames : window.AppData.frames});
+}
 
 var TariffRamkMainWidget = Object.create(ExWidget);
 TariffRamkMainWidget.navId = "#ramks-main";

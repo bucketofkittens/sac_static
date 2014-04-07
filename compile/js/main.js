@@ -1,3 +1,47 @@
+window.AppData = {};
+window.AppData.frames = [
+    {
+        index: 0,
+        position: {top: 485, left: 810},
+        number: 'M9-001',
+        positionName: '41-й км трассы M9',
+        positionСoords: '55°48’36   37°26’33',
+        webcam: true
+    },
+    {
+        index: 1,
+        position: {top: 500, left: 775},
+        number: 'M9-002',
+        positionName: '43-й км трассы M9',
+        positionСoords: '55°48’36   37°26’33',
+        webcam: false
+    },
+    {
+        index: 2,
+        position: {top: 460, left: 765},
+        number: 'M9-003',
+        positionName: '46-й км трассы M9',
+        positionСoords: '55°48’36   37°26’33',
+        webcam: false
+    },
+    {
+        index: 3,
+        position: {top: 375, left: 550},
+        number: 'M9-004',
+        positionName: '84-й км трассы M9',
+        positionСoords: '55°48’36   37°26’33',
+        webcam: false
+    },
+    {
+        index: 4,
+        position: {top: 365, left: 515},
+        number: 'M9-005',
+        positionName: '87-й км трассы M9',
+        positionСoords: '55°48’36   37°26’33',
+        webcam: false
+    },
+];
+
 /**
  * [ description]
  * @return {[type]} [description]
