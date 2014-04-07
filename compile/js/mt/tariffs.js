@@ -404,7 +404,7 @@ TariffRamkMainWidget.addTooltip_ = function(index) {
     var html = $('<div class="tooltip bottom blue event-ramp-menu" data-index="'+frame.index+'"><span class="close"></span> <div class="tooltip-obscure"><div class="center"><p class="gosnumber">'+frame.number+'</p><p>'+frame.positionName+'</p></div></div></div>');
     
     $(html).css("left", (frame.position.left+15)+"px");
-    $(html).css("top", (frame.position.top+15)+"px");
+    $(html).css("top", (frame.position.top+35)+"px");
 
     $(html).find(".gosnumber").on("click", $.proxy(this.onTooltipClick_, this));
     
@@ -447,10 +447,22 @@ TariffRamkMainWidget.init = function() {
     $("body").on("click", this.navId + " " + ".close", $.proxy(this.onTooltipCloseClick_, this));
 }
 
-TariffRamkMainWidget.onDragMove = function(instance, event, pointer) {
+TariffRamkMainWidget.onDragEnd = function(instance, event, pointer) {
     var frame = this.getFrameByIndex_($(instance.element).attr("data-index"));
     frame.position.left = instance.position.x;
-    frame.position.top = instance.position.x;
+    frame.position.top = instance.position.y;
+
+    $(instance.element).css({
+        "webkitTransform":"rotate("+frame.angle+"deg)",
+        "MozTransform":"rotate("+frame.angle+"deg)",
+        "msTransform":"rotate("+frame.angle+"deg)",
+        "OTransform":"rotate("+frame.angle+"deg)",
+        "transform":"rotate("+frame.angle+"deg)"
+    });
+}
+
+TariffRamkMainWidget.dragStart = function(instance, event, pointer) {
+    $(this.navId + " " + this.eventMapId + " .event-ramp-menu[data-index='"+$(instance.element).attr("data-index")+"']").remove();
 }
 
 TariffRamkMainWidget.createFrame = function(frame) {
@@ -472,7 +484,8 @@ TariffRamkMainWidget.createFrame = function(frame) {
     $(el1).click($.proxy(this.frameClick_, this));
 
     var draggie = new Draggabilly(el1, {});
-    draggie.on('dragMove', $.proxy(this.onDragMove, this));
+    draggie.on('dragEnd', $.proxy(this.onDragEnd, this));
+    draggie.on('dragStart', $.proxy(this.dragStart, this));
 
     $(this.navId + " " + this.eventMapId).append(el1);
 }
