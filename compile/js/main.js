@@ -58,7 +58,7 @@ window.AppData.camers = [
     },
     {
         index: 101,
-        position: {top: 485, left: 810},
+        position: {top: 585, left: 310},
         number: 'Камера 2',
         adress: 'Адресс 2',
         positionСoords: '55°48’36   37°26’33',

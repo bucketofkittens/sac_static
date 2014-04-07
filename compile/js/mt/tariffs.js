@@ -228,11 +228,22 @@ TariffCamersListWidget.beforeCreate_ = function(data) {
     return _.template(data, { camers : window.AppData.camers});
 }
 
+TariffCamersListWidget.onAddClick_ = function(event) {
+    this.panel.stateWidgets.cameras.main.showAdd();
+}
+TariffCamersListWidget.init = function(data) {
+    $("body").on("click", this.navId + " .add", $.proxy(this.onAddClick_, this));
+}
+
 var TariffCamersMainWidget = Object.create(ExWidget);
 TariffCamersMainWidget.navId = "#camers-main";
+TariffCamersMainWidget.mapId = "#scene-info-map";
+TariffCamersMainWidget.addBoxClass = ".addbox";
+TariffCamersMainWidget.closeAddClass = ".close-add";
+TariffCamersMainWidget.addButtonClass = ".add-button";
 
 TariffCamersMainWidget.afterCreate_ = function() {
-    this.drawFrames();
+    this.drawCamers();
 }
 
 TariffCamersMainWidget.createCamera = function(camera) {
@@ -246,20 +257,41 @@ TariffCamersMainWidget.createCamera = function(camera) {
 
     //$(el1).click($.proxy(this.frameClick_, this));
 
-    $(this.navId + " " + this.eventMapId).append(el1);
+    $(this.navId + " " + this.mapId).append(el1);
 }
 
-TariffCamersMainWidget.drawFrames = function() {
+TariffCamersMainWidget.showAdd = function() {
+    $(this.navId + " " + this.addBoxClass).show();
+}
+
+TariffCamersMainWidget.drawCamers = function() {
     var self = this;
-    _.each(window.AppData.frames, function(value, key) {
-        self.createFrame(value);
+    _.each(window.AppData.camers, function(value, key) {
+        self.createCamera(value);
     });
+}
+
+TariffCamersMainWidget.addCamers_ = function(event) {
+    var newCamera = {
+        index: window.AppData.frames.length + 1,
+        position: {top: 385, left: 610},
+        angle: 0,
+        number: $("#new_frame_index").val(),
+        positionName: $("#new_frame_adress").val(),
+        positionСoords: $("#new_frame_coords").val(),
+        webcam: false
+    };
+    window.AppData.camers.push(newCamera);
+    this.createFrame(newCamera);
+    this.closeAdd();
+}
+
+TariffCamersMainWidget.closeAdd = function() {
+    $(this.navId + " " + this.addBoxClass).hide();
 }
 
 var TariffRamkListWidget = Object.create(ExWidget);
 TariffRamkListWidget.navId = "#ramks-list";
-TariffRamkListWidget.mapId = ".scene-info-map";
-
 
 TariffRamkListWidget.beforeCreate_ = function(data) {
     return _.template(data, { frames : window.AppData.frames});
