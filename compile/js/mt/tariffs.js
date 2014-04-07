@@ -13,6 +13,14 @@ var TariffMainWidget = function(panel, options) {
     this.element.addClass('widget widget-l');
     jQuery(this.options.container).append(this.element);
 
+    this.init = function() {
+
+    };
+
+    this.create = function() {
+
+    };  
+
     this.show = function() {
         this.element.removeClass('hidden');
         this.showMap();
@@ -72,6 +80,14 @@ var TariffListWidget = function(panel, options) {
        self['show'+val[0].toUpperCase() + val.slice(1)]();
     });
 
+    this.init = function() {
+
+    };
+
+    this.create = function() {
+
+    };
+    
     this.show = function() {
         this.element.removeClass('hidden');
         this.showTariffs();
@@ -132,121 +148,57 @@ var TariffListWidget = function(panel, options) {
     });
 };
 
-var TariffNavWidget = function(panel, options) {
-    this.panel = panel;
-    this.options = options;
+var ExWidget = {
+    appId: "#app",
+    navId: "",
+    panel: null,
 
-    this.appId = "#app";
-    this.navId = "#reference-nav";
+    create: function() {
+        if(this.navId) {
+            var self = this;
+            $.get('/static/compile/mt/'+this.navId.replace("#", "")+'.html', {}, function(data, status, jqxhr) {
+                $(self.appId).append(data);
+            });
+        }
+    },
 
-    var self = this;
-
-    $.get('/static/compile/mt/nav.html', {}, function (data, status, jqxhr) {
-        $(self.appId).append(data);
-    });
-
-    this.show = function() {
+    show: function() {
+        console.log($(this.navId).size());
         $(this.navId).removeClass('hidden');
-    };
+    },
 
-    this.hide = function() {    
+    hide: function() {    
         $(this.navId).addClass('hidden');
-    };
+    },
 
-    this.onNavClick_ = function() {
-        $(self.navId+" li").removeClass("current");
-        $(this).addClass("current");
-        
-        self.panel.changeState($(this).attr("state"));
+    init: function() { }
+}
+
+var TariffNavWidget = Object.create(ExWidget);
+
+TariffNavWidget.navId = "#reference-nav";
+
+TariffNavWidget.onNavClick_ = function(event) {
+    if(!$(event.target).hasClass("current")) {
+        $(this.navId+" li").removeClass("current");
+        $(event.target).addClass("current");
+        this.panel.changeState($(event.target).attr("state"));    
     }
+}
 
-    $("body").on("click", this.navId+" li", this.onNavClick_);
-};
+TariffNavWidget.init = function() {
+    $("body").on("click", this.navId+" li", $.proxy(this.onNavClick_, this));
+}
 
+var TariffCamersListWidget = Object.create(ExWidget);
 
-var TariffCamersListWidget = function(panel, options) {
-    this.panel = panel;
-    this.options = options;
+TariffCamersListWidget.navId = "#camers-list";
 
-    this.appId = "#app";
-    this.navId = "#camers-list";
+var TariffCamersMainWidget = Object.create(ExWidget);
+TariffCamersMainWidget.navId = "#camers-main";
 
-    var self = this;
+var TariffRamkListWidget = Object.create(ExWidget);
+TariffRamkListWidget.navId = "#ramks-list";
 
-    $.get('/static/compile/mt/camers-list.html', {}, function (data, status, jqxhr) {
-        $(self.appId).append(data);
-    });
-
-    this.show = function() {
-        $(this.navId).removeClass('hidden');
-    };
-
-    this.hide = function() {    
-        $(this.navId).addClass('hidden');
-    };
-};
-
-var TariffCamersMainWidget = function(panel, options) {
-    this.panel = panel;
-    this.options = options;
-
-    this.appId = "#app";
-    this.navId = "#camers-main";
-
-    var self = this;
-
-    $.get('/static/compile/mt/camers-main.html', {}, function (data, status, jqxhr) {
-        $(self.appId).append(data);
-    });
-
-    this.show = function() {
-        $(this.navId).removeClass('hidden');
-    };
-
-    this.hide = function() {    
-        $(this.navId).addClass('hidden');
-    };
-};
-
-var TariffRamkListWidget = function(panel, options) {
-    this.panel = panel;
-    this.options = options;
-
-    this.appId = "#app";
-    this.navId = "#ramks-list";
-
-    var self = this;
-    $.get('/static/compile/mt/ramks-list.html', {}, function (data, status, jqxhr) {
-        $(self.appId).append(data);
-    });
-
-    this.show = function() {
-        $(this.navId).removeClass('hidden');
-    };
-
-    this.hide = function() {    
-        $(this.navId).addClass('hidden');
-    };
-};
-
-var TariffRamkMainWidget = function(panel, options) {
-    this.panel = panel;
-    this.options = options;
-
-    this.appId = "#app";
-    this.navId = "#ramks-main";
-
-    var self = this;
-    $.get('/static/compile/mt/ramks-main.html', {}, function (data, status, jqxhr) {
-        $(self.appId).append(data);
-    });
-
-    this.show = function() {
-        console.log($(this.navId));
-        $(this.navId).removeClass('hidden');
-    };
-
-    this.hide = function() {
-        $(this.navId).addClass('hidden');
-    };
-};
+var TariffRamkMainWidget = Object.create(ExWidget);
+TariffRamkMainWidget.navId = "#ramks-main";

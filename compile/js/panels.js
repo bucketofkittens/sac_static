@@ -513,28 +513,48 @@ var TariffsPanel = Panel.extend({
         	ramks: {}
         }
         
-        this.widgets.navWidget = new TariffNavWidget(this);
+        this.widgets.navWidget = TariffNavWidget;
+        this.widgets.navWidget.panel = this;
+        this.widgets.navWidget.init();
+        this.widgets.navWidget.create();
 
-        this.stateWidgets.cameras.list = new TariffCamersListWidget(this);
-        this.stateWidgets.cameras.main = new TariffCamersMainWidget(this);
+        this.stateWidgets.cameras.list = TariffCamersListWidget;
+        this.stateWidgets.cameras.main = TariffCamersMainWidget;
 
         this.stateWidgets.tariffs.list = new TariffListWidget(this);
         this.stateWidgets.tariffs.main = new TariffMainWidget(this);
 
-        this.stateWidgets.ramks.list = new TariffRamkListWidget(this);
-        this.stateWidgets.ramks.main = new TariffRamkMainWidget(this);
+        this.stateWidgets.ramks.list = TariffRamkListWidget;
+        this.stateWidgets.ramks.main = TariffRamkMainWidget;
         
         this.map = new EventsMapStateManager(this.app, this);
+        this.createAllWidgets();
     },
 
     changeState: function(state) {
+    	console.log(state);
     	this.hideAllState();
     	this.showState(state);
     },
 
+    createAllWidgets: function(state) {
+    	console.log(this);
+    	var self = this;
+    	_.each(this.stateWidgets, function(w){ 
+        	_.each(w, function(w2) {
+        		w2.panel = self;
+		        w2.init();
+		        w2.create();
+        	});
+        });
+    },
+
     show: function() {
         this.elements["CONTAINER"].removeClass("hidden");
-        _.each(this.widgets, function(w){ w.show(); });
+        _.each(this.widgets, function(w){ 
+        	console.log(w);
+        	w.show(); 
+       	});
         this.app.pageTitleWidget.set('Тарифы').show();
         this.changeState("cameras");
     },
