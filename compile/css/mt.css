@@ -624,6 +624,7 @@ left: 55px;
     padding: 2px 0px 5px 0px;
     color: #216b9f;
     font-size: 14px;
+    cursor: pointer;
 }
 .addbox button:last-child {
     float: right;
