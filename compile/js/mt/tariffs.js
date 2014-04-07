@@ -235,3 +235,54 @@ TariffRamkListWidget.init = function(data) {
 
 var TariffRamkMainWidget = Object.create(ExWidget);
 TariffRamkMainWidget.navId = "#ramks-main";
+TariffRamkMainWidget.eventMapId = "#map-fake";
+
+TariffRamkMainWidget.afterCreate_ = function() {
+    this.drawFrames();
+
+    //
+}
+
+TariffRamkMainWidget.frameClick_ = function(event) {
+    var index = $(event.target).attr("data-index");
+}
+
+TariffRamkMainWidget.addTooltip_ = function(index) {
+    var frame = this.getFrameByIndex_(index);
+    var html = $('<div class="tooltip bottom blue event-ramp-menu" data-index="'+frame.index+'"> <div class="tooltip-obscure"><div class="center"><p class="gosnumber">'+frame.number+'</p><p>'+frame.positionName+'</p></div></div></div>');
+    $(this.navId + " " + this.html).append(html);
+}
+
+TariffRamkMainWidget.getFrameByIndex_ = function(index) {
+    return positiveArr = arr.filter(function(item) {
+        if(item.index == index) { return item; }
+    })[0];
+
+}
+
+TariffRamkMainWidget.createFrame = function(frame) {
+    var el1 = document.createElement("div");
+
+    el1.className = "ramp";
+    el1.style.left = frame.position.left+"px";
+    el1.style.top = frame.position.top+"px";
+
+    $(el1).css({
+        "webkitTransform":"rotate("+frame.angle+"deg)",
+        "MozTransform":"rotate("+frame.angle+"deg)",
+        "msTransform":"rotate("+frame.angle+"deg)",
+        "OTransform":"rotate("+frame.angle+"deg)",
+        "transform":"rotate("+frame.angle+"deg)"
+    });
+
+    $(el1).click($.proxy(this.frameClick_, this));
+
+    $(this.navId + " " + this.eventMapId).append(el1);
+}
+
+TariffRamkMainWidget.drawFrames = function() {
+    var self = this;
+    _.each(window.AppData.frames, function(value, key) {
+        self.createFrame(value);
+    });
+}
