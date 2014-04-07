@@ -158,7 +158,7 @@
     font-size: 20px;
     font-weight: 200;
     color: #d4dee8;
-    margin: 0.25em 0.5em 0em;
+    margin: 0.25em 0.5em 1em 0.5em;
 }
 
 .widget h2 {
@@ -652,4 +652,10 @@ td.time { color: #7dc2e3; }
     width: 25px;
     height: 25px;
     cursor: pointer;
+}
+#current_frame {
+    position: relative;
+    top: 40px;
+    width: 1130px;
+    left: 15px;
 }
