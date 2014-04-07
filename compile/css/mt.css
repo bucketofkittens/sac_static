@@ -545,6 +545,9 @@ td.time { color: #7dc2e3; }
     top: 10px;
     left: 155px;
 }
+#camers-list p, #ramks-list p {
+    line-height: 120%;
+}
 #camers-main .scene-map {
 background: url('/static/images/scene/blue-map.jpg') top left no-repeat;
 background-size: 100% 100%;
