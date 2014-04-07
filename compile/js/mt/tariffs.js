@@ -202,14 +202,27 @@ TariffNavWidget.init = function() {
 var TariffCamersListWidget = Object.create(ExWidget);
 TariffCamersListWidget.navId = "#camers-list";
 
+TariffCamersListWidget.beforeCreate_ = function(data) {
+    return _.template(data, { camers : window.AppData.camers});
+}
+
 var TariffCamersMainWidget = Object.create(ExWidget);
 TariffCamersMainWidget.navId = "#camers-main";
 
 var TariffRamkListWidget = Object.create(ExWidget);
 TariffRamkListWidget.navId = "#ramks-list";
+
 TariffRamkListWidget.beforeCreate_ = function(data) {
-    return _.template(data ,{ frames : window.AppData.frames});
+    return _.template(data, { frames : window.AppData.frames});
 }
+TariffRamkListWidget.onAddClick_ = function(event) {
+
+}
+TariffRamkListWidget.init = function(data) {
+    $("body").on("click", "#ramks-list .add", $.proxy(this.onAddClick_, this));
+}
+
+
 
 var TariffRamkMainWidget = Object.create(ExWidget);
 TariffRamkMainWidget.navId = "#ramks-main";
