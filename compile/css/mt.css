@@ -558,7 +558,16 @@ td.time { color: #7dc2e3; }
     top: 40px;
     left: 55px;
 }
-
+#camers-main span {
+    background: url('/static/images/mt/camera_icon.png') top left no-repeat;
+    background-size: 100% 100%;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    cursor: pointer;
+}
 .add {
     width: 25px;
     height: 25px;
