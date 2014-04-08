@@ -598,7 +598,7 @@ td.time { color: #7dc2e3; }
     background: url('/static/images/mt/addbox.png') top left no-repeat;
     background-size: 100% 100%;
     position: absolute;
-    top: 50px;
+    top: 30px;
     left: 50%;
     margin-left: -250px;
     overflow: hidden;
@@ -740,4 +740,7 @@ td.time { color: #7dc2e3; }
 }
 .tooltip {
     overflow: visible;
+}
+.tooltip .well {
+    display: none;
 }
