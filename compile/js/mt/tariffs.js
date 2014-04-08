@@ -702,7 +702,7 @@ TariffRamkMainWidget.drawFrames = function() {
 var VideoMainWidget = Object.create(ExWidget);
 VideoMainWidget.navId = "#video-main";
 
-VideoMainWidget.afterCreate_ = function() {
+VideoMainWidget.show = function() {
     var video = document.querySelector("#current_video");
  
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
@@ -714,5 +714,7 @@ VideoMainWidget.afterCreate_ = function() {
     function handleVideo(stream) {
         video.src = window.URL.createObjectURL(stream);
     }
+
+    $(this.navId).removeClass('hidden');
 }
 
