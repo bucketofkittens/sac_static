@@ -501,6 +501,22 @@ var SvpPanel = Panel.extend({
 	}
 });
 
+var DchPanel = Panel.extend({
+
+    initialize: function(){
+      this.CSS = { "CONTAINER": "#bg-event-image" }
+      this.elements = { "CONTAINER": $(this.CSS["CONTAINER"]) }
+    },
+
+    show: function() {
+		this.elements["CONTAINER"].removeClass("hidden");
+	},
+
+	hide: function() {
+		this.elements["CONTAINER"].addClass("hidden");
+	}
+});
+
 var TariffsPanel = Panel.extend({
 
     initialize: function(){

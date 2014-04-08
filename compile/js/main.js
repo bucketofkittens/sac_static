@@ -323,6 +323,7 @@ var Application = function() {
     */
 
     this.panels = {
+      'DCH':     new DchPanel(this),
       'EVENTS':     new EventsPanel(this),
       'REGIONS':    new RegionPanel(this),
       'SVP':        new SvpPanel(this),
