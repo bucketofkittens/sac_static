@@ -126,6 +126,7 @@ var EventMainWidget = function(panel, options) {
                 '<p class="time">'+truck.time+'</p>' +
                 '<p class="gosnumber">'+truck.number+'</p>' +
                 '<p class="truck-status">'+truck.status+'</p>' +
+                '<p class="gosnumber ьщку">Подробнее</p>' +
                 '<div class="well photo" style="height: 220px;">' +
                 '<img class="truck-photo" src="'+truck.images[0]+'">' +
                 '<img class="truck-photo" src="'+truck.images[1]+'">' +
@@ -155,6 +156,7 @@ var EventMainWidget = function(panel, options) {
                     '<div class="center">' +
                     '<p class="gosnumber">'+ramp.number+'</p>' +
                     '<p>Журнал</p>' +
+                    '<p class="gosnumber more">Подробнее</p>' +
                     '</div>');
             menu.show();
             ramp.tooltip = menu;
