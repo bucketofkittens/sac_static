@@ -272,10 +272,14 @@ TariffCamersMainWidget.getCameraByIndex_ = function(index) {
     })[0];
 }
 
-TariffCamersMainWidget.onDragMove = function(instance, event, pointer) {
+TariffCamersMainWidget.dragStart = function(instance, event, pointer) {
+    $(this.navId + " .event-ramp-menu[data-index='"+$(instance.element).attr("data-index")+"']").remove();
+}
+
+TariffCamersMainWidget.onDragEnd = function(instance, event, pointer) {
     var camera = this.getCameraByIndex_($(instance.element).attr("data-index"));
     camera.position.left = instance.position.x;
-    camera.position.top = instance.position.x;
+    camera.position.top = instance.position.y;
 }
 
 TariffCamersMainWidget.createCamera = function(camera) {
@@ -288,9 +292,10 @@ TariffCamersMainWidget.createCamera = function(camera) {
     $(el1).attr("data-index", camera.index);
 
     var draggie = new Draggabilly(el1, {});
-    draggie.on( 'dragMove', $.proxy(this.onDragMove, this));
+    draggie.on('dragEnd', $.proxy(this.onDragEnd, this));
+    draggie.on('dragStart', $.proxy(this.dragStart, this));
 
-    //$(el1).click($.proxy(this.frameClick_, this));
+    $(el1).click($.proxy(this.cameraClick_, this));
 
     $(this.navId + " " + this.mapId).append(el1);
 }
@@ -301,6 +306,7 @@ TariffCamersMainWidget.showAdd = function() {
 
 TariffCamersMainWidget.drawCamers = function() {
     var self = this;
+    $(this.navId + " " + ".camera").remove();
     _.each(window.AppData.camers, function(value, key) {
         self.createCamera(value);
     });
@@ -328,16 +334,116 @@ TariffCamersMainWidget.closeAdd = function() {
     $(this.navId + " " + this.addBoxClass).hide();
 }
 
+TariffCamersMainWidget.cameraClick_ = function(event) {
+    var index = $(event.target).attr("data-index");
+
+    if(!this.isTooltip(index)) {
+        this.addTooltip_(index);    
+    }
+}
+
+TariffCamersMainWidget.isTooltip = function(index) {
+    return $(this.navId + " " + this.eventMapId + " .event-ramp-menu[data-index='"+index+"']").size();
+}
+
+TariffCamersMainWidget.onTooltipCloseClick_ = function(event) {
+    console.log(event);
+    $(event.target).parents(".tooltip").remove();
+}
+
+TariffCamersMainWidget.addTooltip_ = function(index) {
+    var camera = this.getCameraByIndex_(index);
+    var html = $('<div class="tooltip bottom blue event-ramp-menu" data-index="'+camera.index+'"><span class="close"></span> <div class="tooltip-obscure"><div class="center"><p class="gosnumber">'+camera.number+'</p><p>'+camera.adress+'</p><p class="delete">Удалить</p></div></div></div>');
+    
+    $(html).css("left", (camera.position.left+15)+"px");
+    $(html).css("top", (camera.position.top+65)+"px");
+
+    $(html).find(".gosnumber").on("click", $.proxy(this.showEdit, this));
+    
+    $(this.navId + " " + this.mapId).append(html);
+}
+
+TariffCamersMainWidget.onTooltipCloseClick_ = function(event) {
+    $(event.target).parents(".tooltip").remove();
+}
+
+TariffCamersMainWidget.onDeleteFrame_ = function(e) {
+    var r = confirm("Вы уверены что хотите удалить камеру?");
+
+    if (r == true) {
+        var index = $(e.target).parents(".event-ramp-menu").attr("data-index");
+
+        _.each(window.AppData.camers, function(item, key) {
+            if(item.index == index) {
+                window.AppData.camers.splice(key, 1);
+            }
+        });
+
+        $(event.target).parents(".tooltip").remove();
+        this.panel.stateWidgets.cameras.list.refresh();
+        this.drawCamers();
+    }
+}
+
+TariffCamersMainWidget.showEdit = function(e) {
+    var camera = this.getCameraByIndex_($(e.target).parents(".event-ramp-menu").attr("data-index"));
+    
+    $(e.target).parents(".tooltip").remove();
+    $(this.navId + " .editbox h3").html(camera.number);
+
+    $("#edit_camers_adress").val(camera.adress);
+    $("#edit_camers_ip").val(camera.ip);
+    $("#edit_camers_index").val(camera.number);
+    $("#edit_camers_coords").val(camera.positionСoords);
+    $("#edit_camers_index_old").val(camera.index);
+    
+    $(this.navId + " .editbox").show();
+}
+
+TariffCamersMainWidget.closeEdit = function() {
+    $(this.navId + " .editbox").hide();
+}
+
+TariffCamersMainWidget.onUpdateFrame_ = function(e) {
+    var index = $("#edit_camers_index_old").val();
+
+    var keys = -1;
+
+    _.each(window.AppData.camers, function(item, key) {
+        if(item.index == index) {
+            keys = key;
+        }
+    });
+
+    window.AppData.camers[keys].number = $("#edit_camers_index").val();
+    window.AppData.camers[keys].positionName = $("#edit_camers_adress").val();
+    window.AppData.camers[keys].positionСoords = $("#edit_camers_coords").val();
+    window.AppData.camers[keys].ip = $("#edit_camers_ip").val();
+
+    $(".tooltip").remove();
+
+    this.panel.stateWidgets.cameras.list.refresh();
+    this.drawCamers();
+
+    $(this.navId + " .editbox").hide();
+}
+
 TariffCamersMainWidget.init = function(data) {
     $("body").on("click", this.navId + " " + this.closeAddClass, $.proxy(this.closeAdd, this));
     $("body").on("click", this.navId + " " + this.addButtonClass, $.proxy(this.addCamera_, this));
+
+    $("body").on("click", this.navId + " " +" .close", $.proxy(this.onTooltipCloseClick_, this));
+
+    $("body").on("click", this.navId + " .delete", $.proxy(this.onDeleteFrame_, this));
+
+    $("body").on("click", this.navId + " " + ".close-edit", $.proxy(this.closeEdit, this));
+    $("body").on("click", this.navId + " " + ".edit-button", $.proxy(this.onUpdateFrame_, this));
 }
 
 var TariffRamkListWidget = Object.create(ExWidget);
 TariffRamkListWidget.navId = "#ramks-list";
 
 TariffRamkListWidget.beforeCreate_ = function(data) {
-    console.log("frames");
     return _.template(data, { frames : window.AppData.frames});
 }
 TariffRamkListWidget.onAddClick_ = function(event) {
@@ -444,6 +550,7 @@ TariffRamkMainWidget.addFrame_ = function(event) {
 TariffRamkMainWidget.showEdit = function(e) {
     var frame = this.getFrameByIndex_($(e.target).parents(".event-ramp-menu").attr("data-index"));
 
+
     $(this.navId + " .editbox h3").html(frame.number);
 
     $("#edit_frame_adress").val(frame.positionName);
@@ -505,7 +612,7 @@ TariffRamkMainWidget.onUpdateFrame_ = function(e) {
 
     this.panel.stateWidgets.ramks.list.refresh();
     this.drawFrames();
-    
+
     $(this.navId + " .editbox").hide();
 }
 
