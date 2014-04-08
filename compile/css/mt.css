@@ -745,3 +745,11 @@ td.time { color: #7dc2e3; }
 .tooltip .well {
     display: none;
 }
+.tooltip .close {
+    top: 0px;
+    right: 0px;
+}
+.tooltip-obscure .center {
+    position: relative;
+    top: -3px;
+}
