@@ -504,16 +504,25 @@ var SvpPanel = Panel.extend({
 var DchPanel = Panel.extend({
 
     initialize: function(){
-      this.CSS = { "CONTAINER": "#bg-event-image" }
-      this.elements = { "CONTAINER": $(this.CSS["CONTAINER"]) }
+		this.CSS = { "CONTAINER": "#bg-event-image" }
+		this.elements = { "CONTAINER": $(this.CSS["CONTAINER"]) }
+
+		this.widgets.videoMain = VideoMainWidget;
+		this.widgets.videoMain.panel = this;
+		this.widgets.videoMain.init();
+		this.widgets.videoMain.create();
     },
 
     show: function() {
 		this.elements["CONTAINER"].removeClass("hidden");
+
+		_.each(this.widgets, function(w){ w.show(); });
 	},
 
 	hide: function() {
 		this.elements["CONTAINER"].addClass("hidden");
+
+		_.each(this.widgets, function(w){ w.hide(); });
 	}
 });
 

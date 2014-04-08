@@ -698,3 +698,21 @@ TariffRamkMainWidget.drawFrames = function() {
         self.createFrame(value);
     });
 }
+
+var VideoMainWidget = Object.create(ExWidget);
+VideoMainWidget.navId = "#video-main";
+
+VideoMainWidget.afterCreate_ = function() {
+    var video = document.querySelector("#current_video");
+ 
+    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
+     
+    if (navigator.getUserMedia) {       
+        navigator.getUserMedia({video: true}, handleVideo);
+    }
+     
+    function handleVideo(stream) {
+        video.src = window.URL.createObjectURL(stream);
+    }
+}
+

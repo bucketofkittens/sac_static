@@ -323,11 +323,11 @@ var Application = function() {
     */
 
     this.panels = {
-      'DCH':     new DchPanel(this),
       'EVENTS':     new EventsPanel(this),
       'REGIONS':    new RegionPanel(this),
       'SVP':        new SvpPanel(this),
-      'REFBOOKS':   new TariffsPanel(this)
+      'DCH':        new DchPanel(this),
+      'REFBOOKS':   new TariffsPanel(this) 
       /*'TARIFFS':    new TariffsPanel(this),
       'DISTRICTS':  new DistrictsPanel(this),
       'FORMATS':    new FormatsPanel(this),

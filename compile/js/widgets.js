@@ -104,6 +104,7 @@ var FooterNavWidget = function(app) {
 		$.each(this.items, $.proxy(this.drawItem_, this));
 	}
 	this.drawItem_ = function(index, element) {
+
 		var newLink = document.createElement("a");
 		var newLinkContent = document.createTextNode(element["title"]);
 
