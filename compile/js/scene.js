@@ -88,10 +88,186 @@ var SceneInfoWidget = function(app, panel) {
         },400)
     }
 
+    this.zlobinPos = {top: 274, left: 383};
+    this.patrols = [
+        {
+            index: 0,
+            type: 'patrolcar',
+            current: {top: 478, left: 180, msecs: 0},
+            startedAt: null,
+            finished: false,
+            route: [
+                {top: 478, left: 180, msecs:      0, status: 'Отправляем данные...'},
+                {top: 478, left: 180, msecs:   5000, status: 'Приказ принят'},
+                {top: 454, left: 190, msecs:  10000},
+                {top: 292, left: 287, msecs:  80000},
+                {top: 307, left: 322, msecs: 100000},
+                {top: 284, left: 388, msecs: 120000, status: 'Готовы'},
+                {top: 274, left: 383, msecs: 125000, status: 'Приступили'},
+                {top: 274, left: 383, msecs: 140000, status: 'Преступник обезврежен'}
+            ]
+        },
+        {
+            index: 1,
+            type: 'patrol',
+            current: {top: 216, left: 103, msecs: 0},
+            startedAt: null,
+            finished: false,
+            route: [
+                {top: 216, left: 103, msecs:      0, status: 'Отправляем данные...'},
+                {top: 216, left: 103, msecs:   5000, status: 'Приказ принят'},
+                {top: 223, left:  99, msecs:  10000},
+                {top: 229, left: 278, msecs:  70000},
+                {top: 258, left: 284, msecs:  85000},
+                {top: 271, left: 350, msecs: 100000},
+                {top: 257, left: 367, msecs: 110000},
+                {top: 270, left: 388, msecs: 120000, status: 'Готовы'},
+                {top: 274, left: 383, msecs: 125000, status: 'Приступили'},
+                {top: 274, left: 383, msecs: 135000, status: 'Преступник обезврежен'}
+            ]
+        },
+        {
+            index: 2,
+            type: 'patrolcar',
+            current: {top: 115, left: 475, msecs: 0},
+            startedAt: null,
+            finished: false,
+            route: [
+                {top: 115, left: 475, msecs:      0, status: 'Отправляем данные...'},
+                {top: 115, left: 475, msecs:   5000, status: 'Приказ принят'},
+                {top: 118, left: 462, msecs:  10000},
+                {top: 107, left: 440, msecs:  15000},
+                {top: 257, left: 367, msecs:  60000},
+                {top: 270, left: 388, msecs:  80000, status: 'Готовы'},
+                {top: 274, left: 383, msecs:  85000, status: 'Приступили'},
+                {top: 274, left: 383, msecs: 100000, status: 'Преступник обезврежен'}
+            ]
+        }
+    ];
+
+    this.mapTag; 
+    this.zlobin;
+    this.patrolMarks;
+    this.operationState;
+    this.operationTimer;
+
+    this.patrolMenu = function(e) {
+        var self = this;
+        if ($('#scene-patrol-menu').css('display') == 'block') {
+            $('#scene-patrol-menu').remove();
+        } else {
+            //console.log('Patrol menu is invoked on', console.log(e));
+            // HTML-содержимое контекстного меню.
+            var menuContent =
+                    '<div id="scene-patrol-menu">\
+                        <div align="center"><input type="submit" value="Отправить" /></div>\
+                    </div>';
+
+            // Размещаем контекстное меню на странице
+            $('body').append(menuContent);
+
+            // Задаем позицию меню.
+            $('#scene-patrol-menu').css({
+                left: e.clientX,
+                top: e.clientY
+            });
+
+            var that = e.target;
+            $('#scene-patrol-menu input[type="submit"]').click(function () {
+                index = parseInt(that.getAttribute('data-index'));
+                console.log('Launching patrol with index', index);
+                self.patrols[index].startedAt = new Date();
+                $('#scene-patrol-menu').remove();
+            });
+        }
+    }
+
+    this.operationProceed = function(time) {
+        var activePatrols = _.filter(this.patrols, function(patrol) {
+            return patrol.startedAt && !patrol.finished;
+        })
+        console.log('Animating', activePatrols.length, 'patrols');
+        _.each(activePatrols, function (patrol) {
+            var elapsed = time - patrol.startedAt;
+            var patrolMark = $('.police.placemark[data-index='+patrol.index+']', self.mapTag);
+            // Remove stale segments
+            var staleSegments = _.filter(patrol.route, function (segment) {
+               return segment.msecs < elapsed;
+            });
+            _.each(staleSegments, function (route) {
+                patrol.current = {top: route.top, left: route.left, msecs: elapsed};
+                var segment = patrol.route.shift();
+                if (segment.status) {
+                    patrolMark.text(segment.status);
+                } else patrolMark.text(null);
+            });
+            if (!patrol.route.length) {
+                patrol.finished = true;
+                operationState  = 'finished';
+                clearInterval(operationTimer);
+            } else {
+                // Start calculation
+                var timeRange = patrol.route[0].msecs - patrol.current.msecs;
+                var timeDiff  = elapsed - patrol.current.msecs;
+                // Latitude calculation
+                var topDiff = patrol.route[0].top - patrol.current.top;
+                var top = patrol.current.top + topDiff * ( timeDiff / timeRange );
+                // Longitude
+                var leftDiff = patrol.route[0].left - patrol.current.left;
+                var left = patrol.current.left + leftDiff * ( timeDiff / timeRange );
+                // Done
+                patrolMark.css({ top: top, left: left });
+            }
+        });
+    }
+
+    this.onCameraClick_ = function(e) {
+        var camera = window.AppData.camers[$(e.target).attr("data-index")];
+
+        $.get('/static/compile/scene/camera.html', {}, function (data, status, jqxhr) {
+            data = _.template(data, { camera : camera});
+            $("#camera-info").append(data);
+            $("#camera-info").show();
+        });
+    }
+
+
+    this.drawMapItems = function() {
+        var self = this;
+        this.mapTag = $('#scene-info-map');
+        // Add Zlobin to the map
+        this.zlobin = $('<div class="placemark criminal">');
+        this.zlobin.css(this.zlobinPos);
+        this.mapTag.append(this.zlobin);
+
+        // Add patrols to the map
+        _.each(this.patrols, function (patrol, index) {
+            var patrolMark = $('<div class="placemark police">');
+            patrolMark.attr('data-index', index);
+            patrolMark.addClass(patrol.type);
+            patrolMark.css({left: patrol.current.left, top: patrol.current.top});
+            self.mapTag.append(patrolMark);
+        });
+
+        _.each(window.AppData.camers, function (camera, index) {
+            var cameraMark = $('<div class="camera">');
+            cameraMark.attr('data-index', camera.index);
+            cameraMark.css({left: camera.position.left, top: camera.position.top});
+            self.mapTag.append(cameraMark);
+        });
+
+        this.mapTag.on('click', '.police.placemark', $.proxy(this.patrolMenu, this) );
+        this.mapTag.on('click', '.camera', $.proxy(this.onCameraClick_, this) );
+
+        // Start animation
+        this.operationTimer = setInterval(function(){ webkitRequestAnimationFrame($.proxy(self.operationProceed, self)) }, 100);
+    }
+
     this.showMap = function (e) {
         e.preventDefault()
         that = this;
         that.elements["SCENEINFO"].addClass('hidden');
+        var self = this;
         var thisContainer = $('#sceneinfo-panel-map');
         if (thisContainer.length) {
             thisContainer.removeClass('hidden');
@@ -104,6 +280,7 @@ var SceneInfoWidget = function(app, panel) {
                     thisContainer.html(data);
                     thisContainer.siblings().addClass('hidden');
                     thisContainer.removeClass('hidden');
+                    self.drawMapItems();
                 });
             }, 400);
         }
