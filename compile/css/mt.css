@@ -760,6 +760,19 @@ td.time { color: #7dc2e3; }
     left: 50px;
 }
 
+#video-main {
+    padding: 100px 0px 0px 60px;
+    margin-top: -40px;
+}
+.tablecam {
+    display: inline-block;
+    width: 270px;
+    height: 210px;
+    padding: 5px 0px;
+}
+embed.tablecam {
+    height: 200px;
+}
 #in_cam_add_ramk, #in_cam_edit_ramk {
     position: relative;
     left: 50px;
