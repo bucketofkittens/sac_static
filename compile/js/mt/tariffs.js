@@ -386,8 +386,7 @@ TariffRamkMainWidget.isTooltip = function(index) {
 }
 
 TariffRamkMainWidget.onTooltipClick_ = function(event) {
-    var index = $(event.target).parents(".event-ramp-menu").attr("data-index");
-    this.showCurrentFrame_(index);
+    
 }
 
 TariffRamkMainWidget.onTooltipCloseClick_ = function(event) {
@@ -395,15 +394,6 @@ TariffRamkMainWidget.onTooltipCloseClick_ = function(event) {
 }
 
 TariffRamkMainWidget.showCurrentFrame_ = function(index) {
-    /*
-    $(this.navId + " " + this.eventMapsId).hide();
-
-    TariffRamkMainWidget.currentFrameWidget = CurrentFrameWidget;
-    TariffRamkMainWidget.currentFrameWidget.panel = this;
-    TariffRamkMainWidget.currentFrameWidget.frame = this.getFrameByIndex_(index);
-    TariffRamkMainWidget.currentFrameWidget.init();
-    TariffRamkMainWidget.currentFrameWidget.create();
-    */
 }
 
 TariffRamkMainWidget.closeCurrentFrame_ = function(index) {
@@ -416,12 +406,12 @@ TariffRamkMainWidget.closeCurrentFrame_ = function(index) {
 
 TariffRamkMainWidget.addTooltip_ = function(index) {
     var frame = this.getFrameByIndex_(index);
-    var html = $('<div class="tooltip bottom blue event-ramp-menu" data-index="'+frame.index+'"><span class="close"></span> <div class="tooltip-obscure"><div class="center"><p class="gosnumber">'+frame.number+'</p><p>'+frame.positionName+'</p></div></div></div>');
+    var html = $('<div class="tooltip bottom blue event-ramp-menu" data-index="'+frame.index+'"><span class="close"></span> <div class="tooltip-obscure"><div class="center"><p class="gosnumber">'+frame.number+'</p><p>'+frame.positionName+'</p><p class="delete">Удалить</p></div></div></div>');
     
     $(html).css("left", (frame.position.left+15)+"px");
     $(html).css("top", (frame.position.top+35)+"px");
 
-    $(html).find(".gosnumber").on("click", $.proxy(this.onTooltipClick_, this));
+    $(html).find(".gosnumber").on("click", $.proxy(this.showEdit, this));
     
     $(this.navId + " " + this.eventMapId).append(html);
 }
@@ -440,14 +430,32 @@ TariffRamkMainWidget.addFrame_ = function(event) {
         number: $("#new_frame_index").val(),
         positionName: $("#new_frame_adress").val(),
         positionСoords: $("#new_frame_coords").val(),
+        ip: $("#new_frame_ip").val(),
         webcam: false
     };
-    console.log(newFrame);
+
     window.AppData.frames.push(newFrame);
     this.createFrame(newFrame);
     this.closeAdd();
 
     this.panel.stateWidgets.ramks.list.refresh();
+}
+
+TariffRamkMainWidget.showEdit = function(e) {
+    var frame = this.getFrameByIndex_($(e.target).parents(".event-ramp-menu").attr("data-index"));
+
+    $(this.navId + " .editbox h3").html(frame.index);
+
+    $("#edit_frame_adress").val(frame.positionName);
+    $("#edit_frame_ip").val(frame.ip);
+    $("#edit_frame_index").val(frame.index);
+    $("#edit_frame_coords").val(frame.positionСoords);
+
+    $(this.navId + " .editbox").show();
+}
+
+TariffRamkMainWidget.closeEdit = function() {
+    $(this.navId + " .editbox").hide();
 }
 
 TariffRamkMainWidget.showAdd = function() {
@@ -458,11 +466,54 @@ TariffRamkMainWidget.closeAdd = function() {
     $(this.navId + " " + this.addBoxClass).hide();
 }
 
+TariffRamkMainWidget.onDeleteFrame_ = function(e) {
+    var r = confirm("Вы уверены что хотите удалить рамку?");
+
+    if (r == true) {
+        var index = $(e.target).parents(".event-ramp-menu").attr("data-index");
+
+        _.each(window.AppData.frames, function(item, key) {
+            if(item.index == index) {
+                window.AppData.frames.splice(key, 1);
+            }
+        });
+
+        $(event.target).parents(".tooltip").remove();
+        this.panel.stateWidgets.ramks.list.refresh();
+        this.drawFrames();
+    }
+}
+
+TariffRamkMainWidget.onUpdateFrame_ = function(e) {
+    var index = $(e.target).parents(".event-ramp-menu").attr("data-index");
+
+    var keys = -1;
+
+    _.each(window.AppData.frames, function(item, key) {
+        if(item.index == index) {
+            keys = key;
+        }
+    });
+
+    window.AppData.frames[keys].number = $("#edit_frame_index").val();
+    window.AppData.frames[keys].positionName = $("#new_frame_adress").val();
+    window.AppData.frames[keys].positionСoords = $("#edit_frame_coords").val();
+    window.AppData.frames[keys].ip = $("#edit_frame_ip").val();
+
+    $(event.target).parents(".tooltip").remove();
+
+    this.panel.stateWidgets.ramks.list.refresh();
+    this.drawFrames();
+}
+
 TariffRamkMainWidget.init = function() {
     $("body").on("click", this.navId + " " + this.closeAddClass, $.proxy(this.closeAdd, this));
     $("body").on("click", this.navId + " " + this.addButtonClass, $.proxy(this.addFrame_, this));
+    $("body").on("click", this.navId + " .delete", $.proxy(this.onDeleteFrame_, this));
     $("body").on("click", this.navId + " " + this.closeClass, $.proxy(this.closeCurrentFrame_, this));
     $("body").on("click", this.navId + " " + ".close", $.proxy(this.onTooltipCloseClick_, this));
+    $("body").on("click", this.navId + " " + ".close-edit", $.proxy(this.closeEdit, this));
+    $("body").on("click", this.navId + " " + ".edit-button", $.proxy(this.onUpdateFrame_, this));
 }
 
 TariffRamkMainWidget.onDragEnd = function(instance, event, pointer) {
@@ -510,6 +561,9 @@ TariffRamkMainWidget.createFrame = function(frame) {
 
 TariffRamkMainWidget.drawFrames = function() {
     var self = this;
+
+    $(this.navId + " .ramp").remove();
+
     _.each(window.AppData.frames, function(value, key) {
         self.createFrame(value);
     });

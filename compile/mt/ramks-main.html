@@ -10,11 +10,23 @@
 				<input id="new_frame_adress" placeholder="Адрес расположения рамки"/>
 				<input id="new_frame_index" placeholder="Номер рамки"/>
 				<input id="new_frame_coords" placeholder="Координаты рамки"/>
+				<input id="new_frame_ip" placeholder="IP адрес камеры"/>
 				<video class="ramp-frame" src="/static/images/scene/noise.mp4" preload="" autoplay="" height="300" loop="true"></video>
 				<button class="add-button">Сохранить</button>
 				<button class="close-add">Отменить</button>
 			</div>
+
+			<div class="editbox">
+				<h3></h3>
+				<input id="edit_frame_adress" placeholder="Адрес расположения рамки"/>
+				<input id="edit_frame_index" placeholder="Номер рамки"/>
+				<input id="edit_frame_coords" placeholder="Координаты рамки"/>
+				<input id="edit_frame_ip" placeholder="IP адрес камеры"/>
+				<input type="hidden" id="edit_frame_index" />
+				<video class="ramp-frame" src="/static/images/scene/noise.mp4" preload="" autoplay="" height="300" loop="true"></video>
+				<button class="edit-button">Сохранить</button>
+				<button class="close-edit">Отменить</button>
+			</div>
 		</div>
 	</div>
-	<div id="current_frame"></div>
 </div>

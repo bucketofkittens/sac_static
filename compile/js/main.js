@@ -7,7 +7,8 @@ window.AppData.frames = [
         number: 'M9-001',
         positionName: '41-й км трассы M9',
         positionСoords: '55°48’36   37°26’33',
-        webcam: true
+        webcam: true,
+        ip: ""
     },
     {
         index: 1,
@@ -16,7 +17,8 @@ window.AppData.frames = [
         angle: 10,
         positionName: '43-й км трассы M9',
         positionСoords: '55°48’36   37°26’33',
-        webcam: false
+        webcam: false,
+        ip: ""
     },
     {
         index: 2,
@@ -25,7 +27,8 @@ window.AppData.frames = [
         angle: -25,
         positionName: '46-й км трассы M9',
         positionСoords: '55°48’36   37°26’33',
-        webcam: false
+        webcam: false,
+        ip: ""
     },
     {
         index: 3,
@@ -34,7 +37,8 @@ window.AppData.frames = [
         angle: -35,
         positionName: '84-й км трассы M9',
         positionСoords: '55°48’36   37°26’33',
-        webcam: false
+        webcam: false,
+        ip: ""
     },
     {
         index: 4,
@@ -43,7 +47,8 @@ window.AppData.frames = [
         angle: 65,
         positionName: '87-й км трассы M9',
         positionСoords: '55°48’36   37°26’33',
-        webcam: false
+        webcam: false,
+        ip: ""
     },
 ];
 
