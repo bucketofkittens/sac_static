@@ -244,6 +244,7 @@ var TariffCamersListWidget = Object.create(ExWidget);
 TariffCamersListWidget.navId = "#camers-list";
 
 TariffCamersListWidget.beforeCreate_ = function(data) {
+    console.log("camers");
     return _.template(data, { camers : window.AppData.camers});
 }
 
@@ -336,6 +337,7 @@ var TariffRamkListWidget = Object.create(ExWidget);
 TariffRamkListWidget.navId = "#ramks-list";
 
 TariffRamkListWidget.beforeCreate_ = function(data) {
+    console.log("frames");
     return _.template(data, { frames : window.AppData.frames});
 }
 TariffRamkListWidget.onAddClick_ = function(event) {
@@ -443,6 +445,8 @@ TariffRamkMainWidget.addFrame_ = function(event) {
     window.AppData.frames.push(newFrame);
     this.createFrame(newFrame);
     this.closeAdd();
+
+    this.panel.stateWidgets.ramks.list.refresh();
 }
 
 TariffRamkMainWidget.showAdd = function() {
@@ -499,8 +503,6 @@ TariffRamkMainWidget.createFrame = function(frame) {
     var draggie = new Draggabilly(el1, {});
     draggie.on('dragEnd', $.proxy(this.onDragEnd, this));
     draggie.on('dragStart', $.proxy(this.dragStart, this));
-
-    this.panel.stateWidgets.ramks.list.refresh();
 
     $(this.navId + " " + this.eventMapId).append(el1);
 }

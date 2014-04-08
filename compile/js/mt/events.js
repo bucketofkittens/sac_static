@@ -13,7 +13,131 @@ var EventMainWidget = function(panel, options) {
     this.element.addClass('widget widget-xl');
     jQuery(this.options.container).append(this.element);
 
+    this.trucks = [
+        {
+            index: 0,
+            type: 'good',
+            position: {top: 460, left: 840},
+            toolTipDir: 'bottom',
+            time: '18.02 15:32',
+            number: 'K 101 PA 95',
+            status: 'Оплачено',
+            images: [
+                "/static/images/mt/truck-info-photo.jpg",
+                "/static/images/mt/truck-info-photo-number.jpg"
+            ]
+        },
+        {
+            index: 1,
+            type: 'bad',
+            position: {top: 320, left: 475},
+            toolTipDir: 'top',
+            time: '18.02 15:32',
+            number: 'E 551 TT 177',
+            status: 'Несоответствие НЗ',
+            images: [
+                "/static/images/mt/truck-info-photo2.jpg",
+                "/static/images/mt/truck-info-photo-number2.jpg"
+            ]
+        },
+        {
+            index: 2,
+            type: 'good',
+            position: {top: 392, left: 750},
+            toolTipDir: 'bottom',
+            time: '23.02 15:32',
+            number: 'X 399 BX 177',
+            status: 'Оплачено',
+            images: [
+                "/static/images/mt/truck-info-photo3.jpg",
+                "/static/images/mt/truck-info-photo-number3.jpg"
+            ]
+        },
+    ];
+
+    this.truckMenu = function(e) {
+        var index = parseInt(this.getAttribute('data-index'));
+        var truck = trucks[index];
+        if (truck.tooltip) {
+            truck.tooltip.toggle();
+        } else {
+            console.log('Truck menu is invoked on', this);
+            var menu = new EventMapTruckMenuWidget({
+                container: $('#events-map'),
+                index: truck.index,
+                target: this,
+                class: 'event-truck-menu',
+                side: truck.toolTipDir,
+                color: (truck.type == 'bad') ? 'red' : 'blue',
+            }, application.panels.SVP);
+            menu.setContent('<div class="center">' +
+                '<p class="time">'+truck.time+'</p>' +
+                '<p class="gosnumber">'+truck.number+'</p>' +
+                '<p class="truck-status">'+truck.status+'</p>' +
+                '<div class="well photo" style="height: 220px;">' +
+                '<img class="truck-photo" src="'+truck.images[0]+'">' +
+                '<img class="truck-photo" src="'+truck.images[1]+'">' +
+                '</div>' +
+            '</div>');
+            menu.show();
+            truck.tooltip = menu;
+        }
+    }
+
+    this.rampMenu = function(e) {
+        var index = parseInt(this.getAttribute('data-index'));
+        var ramp = ramps[index];
+        if (ramp.tooltip) {
+            ramp.tooltip.toggle();
+        } else {
+            console.log('Ramp menu is invoked on', this);
+            var menu = new EventMapRampMenuWidget({
+                container: $('#events-map'),
+                index: ramp.index,
+                target: this,
+                class: 'event-ramp-menu',
+                side: 'bottom',
+                color: 'blue',
+            }, ramp, application.panels.SVP);
+            menu.setContent('<div class="center">' +
+                    '<p class="gosnumber">'+ramp.number+'</p>' +
+                    '<p>Журнал</p>' +
+                    '</div>');
+            menu.show();
+            ramp.tooltip = menu;
+        }
+    }
+
+    this.drawItems = function() {
+        var mapTag = $('.events-map-cvn');
+        var self = this;
+
+        $(mapTag).find(".truck").remove();
+        $(mapTag).find(".ramp").remove();
+
+        // Add trucks to the map
+        _.each(this.trucks, function (truck) {
+            var truckMark = $('<div class="placemark truck">');
+            truckMark.attr('data-index', truck.index);
+            truckMark.addClass(truck.type);
+            truckMark.css({left: truck.position.left, top: truck.position.top});
+            mapTag.append(self.truckMark);
+        });
+        mapTag.on('click', '.truck.placemark', self.truckMenu );
+
+        // Add ramps to the map
+        _.each(window.AppData.frames, function (ramp) {
+            var rampMark = $('<div class="ramp">');
+            rampMark.attr('data-index', ramp.index);
+            rampMark.css({left: ramp.position.left, top: ramp.position.top});
+            rampMark.css({transform: 'rotate('+ramp.angle+'deg)'});
+            mapTag.append(self.rampMark);
+        });
+        mapTag.on('click', '.ramp', self.rampMenu);
+    }
+
     this.show = function() {
+        this.drawItems();
         this.element.removeClass('hidden');
     };
 
@@ -31,6 +155,7 @@ var EventMainWidget = function(panel, options) {
     this.showMap = function (e) {
         if (e) e.preventDefault();
         var thisContainer = $('#event-main-map');
+        var self = this;
         if (thisContainer.length) {
             thisContainer.removeClass('hidden');
             thisContainer.siblings().addClass('hidden');
@@ -41,6 +166,7 @@ var EventMainWidget = function(panel, options) {
                 thisContainer.html(data);
                 thisContainer.siblings().addClass('hidden');
                 thisContainer.removeClass('hidden');
+                self.drawItems();
             }.bind(this));
         }
     };
@@ -285,6 +411,7 @@ var EventSidebarWidget = function(panel, options) {
     }.bind(this));
 
     this.show = function() {
+        this.drawFrames();
         this.element.removeClass('hidden');
     };
 
@@ -301,12 +428,15 @@ var EventSidebarWidget = function(panel, options) {
     this.showTrucks = function (e) {
         if (e) e.preventDefault();
         var thisContainer = $('#event-sidebar-trucks');
+
         if (thisContainer.length) {
             thisContainer.removeClass('hidden');
             thisContainer.siblings('.widget-obscure').addClass('hidden');
         } else {
             thisContainer = $('<div id="event-sidebar-trucks" class="widget-obscure hidden hide-to-left">');
+
             this.element.append(thisContainer);
+
             $.get('/static/compile/mt/event-sidebar-trucks.html', {}, function (data, status, jqxhr) {
                 thisContainer.html(data);
                 thisContainer.siblings('.widget-obscure').addClass('hidden');
@@ -315,8 +445,28 @@ var EventSidebarWidget = function(panel, options) {
         }
     };
 
+    this.drawFrames = function() {
+        var rampMenu = jQuery('#event-ramp-menu');
+        $(rampMenu).find(".ramp-entry").remove();
+
+        _.each(window.AppData.frames, function (ramp) {
+            var rampEntry = jQuery(
+                '<div class="ramp-entry sidebar-entry" data-index="'+ramp.index+'">' +
+                    '<p class="gosnumber">' + ramp.number + '</p>' +
+                    '<p class="position-name">' + ramp.positionName + '</p>' +
+                    '<p class="position">' + ramp.positionСoords + '</p>' +
+                '</div>');
+            rampMenu.append(rampEntry);
+        });
+
+        jQuery("#event-ramp-menu").on('click', '.ramp-entry', function(e) {
+            window.application.panels.SVP.widgets.mainWidget.showRampInfo(e, menuRamps[this.dataset.index]);
+        });
+    }
+
     this.showRamps = function (e, ramp) {
         if (e) e.preventDefault();
+        var self = this;
         var thisContainer = $('#event-sidebar-ramps');
         if (thisContainer.length) {
             thisContainer.removeClass('hidden');
@@ -328,6 +478,7 @@ var EventSidebarWidget = function(panel, options) {
                 thisContainer.html(data);
                 thisContainer.siblings('.widget-obscure').addClass('hidden');
                 thisContainer.removeClass('hidden');
+                self.drawFrames();
             });
         }
     };
