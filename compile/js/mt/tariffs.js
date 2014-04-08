@@ -444,13 +444,14 @@ TariffRamkMainWidget.addFrame_ = function(event) {
 TariffRamkMainWidget.showEdit = function(e) {
     var frame = this.getFrameByIndex_($(e.target).parents(".event-ramp-menu").attr("data-index"));
 
-    $(this.navId + " .editbox h3").html(frame.index);
+    $(this.navId + " .editbox h3").html(frame.number);
 
     $("#edit_frame_adress").val(frame.positionName);
     $("#edit_frame_ip").val(frame.ip);
-    $("#edit_frame_index").val(frame.index);
+    $("#edit_frame_index").val(frame.number);
     $("#edit_frame_coords").val(frame.positionСoords);
-
+    $("#edit_frame_index_old").val(frame.index);
+    
     $(this.navId + " .editbox").show();
 }
 
@@ -485,7 +486,7 @@ TariffRamkMainWidget.onDeleteFrame_ = function(e) {
 }
 
 TariffRamkMainWidget.onUpdateFrame_ = function(e) {
-    var index = $(e.target).parents(".event-ramp-menu").attr("data-index");
+    var index = $("#edit_frame_index_old").val();
 
     var keys = -1;
 
@@ -496,14 +497,16 @@ TariffRamkMainWidget.onUpdateFrame_ = function(e) {
     });
 
     window.AppData.frames[keys].number = $("#edit_frame_index").val();
-    window.AppData.frames[keys].positionName = $("#new_frame_adress").val();
+    window.AppData.frames[keys].positionName = $("#edit_frame_adress").val();
     window.AppData.frames[keys].positionСoords = $("#edit_frame_coords").val();
     window.AppData.frames[keys].ip = $("#edit_frame_ip").val();
 
-    $(event.target).parents(".tooltip").remove();
+    $(".tooltip").remove();
 
     this.panel.stateWidgets.ramks.list.refresh();
     this.drawFrames();
+    
+    $(this.navId + " .editbox").hide();
 }
 
 TariffRamkMainWidget.init = function() {

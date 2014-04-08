@@ -225,12 +225,21 @@ var SceneInfoWidget = function(app, panel) {
         var camera = window.AppData.camers[$(e.target).attr("data-index")];
 
         $.get('/static/compile/scene/camera.html', {}, function (data, status, jqxhr) {
+            console.log(camera);
             data = _.template(data, { camera : camera});
             $("#camera-info").append(data);
             $("#camera-info").show();
+            $("#camera-info").on("click", ".close", function() {
+                $("#camera-info").html("");
+                $("#camera-info").hide();
+            })
         });
     }
 
+    this.close = function() {
+        $("#camera-info").html("");
+        $("#camera-info").hide();
+    }
 
     this.drawMapItems = function() {
         var self = this;
