@@ -598,26 +598,26 @@ td.time { color: #7dc2e3; }
     margin: 0px 10px !important;
 }
 .addbox {
-    width: 400px;
-    height: 300px;
+    width: 500px;
+    height: 600px;
     background: url('/static/images/mt/addbox.png') top left no-repeat;
     background-size: 100% 100%;
     position: absolute;
-    top: 30%;
+    top: 50px;
     left: 50%;
-    margin-left: -200px;
+    margin-left: -250px;
     overflow: hidden;
     z-index: 199;
     display: none;
 }
 .addbox h3 {
     text-align: center;
-    padding-top: 20px;
+    padding-top: 30px;
 }
 .addbox input {
     display: block;
-    margin: 20px auto;
-    width: 300px;
+    margin: 22px auto;
+    width: 400px;
     border: none;
     border-bottom: 1px solid #8fb7d3;
     background: none;
@@ -653,9 +653,19 @@ td.time { color: #7dc2e3; }
     height: 25px;
     cursor: pointer;
     z-index: 99;
-}#current_frame {
+}
+#current_frame {
     position: relative;
     top: 40px;
     width: 1130px;
     left: 15px;
+}
+#camers-main .ramp-frame, #ramks-main .ramp-frame {
+    position: relative;
+    margin: 5px auto;
+    padding: 0px;
+    width: 360px;
+    height: 270px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 2px #8fb7d3;
 }
