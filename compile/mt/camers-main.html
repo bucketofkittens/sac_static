@@ -8,7 +8,10 @@
 				<input id="new_camers_index" placeholder="Номер камеры"/>
 				<input id="new_camers_coords" placeholder="Координаты камеры"/>
 				<input id="new_camers_ip" placeholder="IP адрес камеры"/>
-				<video class="ramp-frame" src="/static/images/scene/noise.mp4" preload="" autoplay="" height="300" loop="true"></video>
+				<div id="in_cam_add_camera">
+					
+				</div>
+				<video class="ramp-frame camera-add-view" src="/static/images/scene/noise.mp4" preload="" autoplay="" height="300" loop="true"></video>
 				<button class="add-button">Сохранить</button>
 				<button class="close-add">Отменить</button>
 			</div>
@@ -19,7 +22,9 @@
 				<input id="edit_camers_coords" placeholder="Координаты рамки"/>
 				<input id="edit_camers_ip" placeholder="IP адрес камеры"/>
 				<input type="hidden" id="edit_camers_index_old" />
-				<video class="ramp-frame" src="/static/images/scene/noise.mp4" preload="" autoplay="" height="300" loop="true"></video>
+				<div id="in_cam_edit_camera">
+					<embed type="application/x-vlc-plugin" pluginspage="http://www.videolan.org" version="VideoLAN.VLCPlugin.2"  width="400px"  height="300px" id="vlc" loop="yes" autoplay="yes" target="rtsp:///video.pro1"></embed>
+				</div>
 				<button class="edit-button">Сохранить</button>
 				<button class="close-edit">Отменить</button>
 			</div>

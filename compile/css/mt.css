@@ -699,7 +699,7 @@ td.time { color: #7dc2e3; }
 .camr h4 {
     margin: 10px 90px;
 }
-.camr video {
+.camr embed {
     height: 470px !important;
     padding: 20px;
     border-radius: 5px;
@@ -752,4 +752,9 @@ td.time { color: #7dc2e3; }
 .tooltip-obscure .center {
     position: relative;
     top: -3px;
+}
+
+#in_cam_add_camera, #in_cam_edit_camera {
+    position: relative;
+    left: 50px;
 }

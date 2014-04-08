@@ -254,6 +254,7 @@ TariffCamersListWidget.onAddClick_ = function(event) {
 TariffCamersListWidget.init = function(data) {
     $("body").on("click", this.navId + " .add", $.proxy(this.onAddClick_, this));
 }
+//rtsp://192.168.1.195/video.pro1
 
 var TariffCamersMainWidget = Object.create(ExWidget);
 TariffCamersMainWidget.navId = "#camers-main";
@@ -391,6 +392,8 @@ TariffCamersMainWidget.showEdit = function(e) {
     $(e.target).parents(".tooltip").remove();
     $(this.navId + " .editbox h3").html(camera.number);
 
+    $("#in_cam_edit_camera embed").attr("target", "rtsp://" + camera.ip + "/video.pro1");
+
     $("#edit_camers_adress").val(camera.adress);
     $("#edit_camers_ip").val(camera.ip);
     $("#edit_camers_index").val(camera.number);
@@ -428,6 +431,20 @@ TariffCamersMainWidget.onUpdateFrame_ = function(e) {
     $(this.navId + " .editbox").hide();
 }
 
+TariffCamersMainWidget.onCamera_ = function(e) {
+    var html = '<embed type="application/x-vlc-plugin" pluginspage="http://www.videolan.org" version="VideoLAN.VLCPlugin.2"  width="400px"  height="300px" id="vlc" loop="yes" autoplay="yes" target="rtsp://'+$(e.target).val()+'/video.pro1"></embed>';
+    $("#in_cam_add_camera").html(html);
+    $(".camera-add-view").hide();
+    //$(".camera-add-view").attr("src", "rtsp://"+$(e.target).val()+"/video.pro1");
+}
+
+TariffCamersMainWidget.onCameraEdit_ = function(e) {
+    var html = '<embed type="application/x-vlc-plugin" pluginspage="http://www.videolan.org" version="VideoLAN.VLCPlugin.2"  width="400px"  height="300px" id="vlc" loop="yes" autoplay="yes" target="rtsp://'+$(e.target).val()+'/video.pro1"></embed>';
+    $("#in_cam_edit_camera").html(html);
+    $(".camera-edit-view").hide();
+    //$(".camera-add-view").attr("src", "rtsp://"+$(e.target).val()+"/video.pro1");
+}
+
 TariffCamersMainWidget.init = function(data) {
     $("body").on("click", this.navId + " " + this.closeAddClass, $.proxy(this.closeAdd, this));
     $("body").on("click", this.navId + " " + this.addButtonClass, $.proxy(this.addCamera_, this));
@@ -438,6 +455,9 @@ TariffCamersMainWidget.init = function(data) {
 
     $("body").on("click", this.navId + " " + ".close-edit", $.proxy(this.closeEdit, this));
     $("body").on("click", this.navId + " " + ".edit-button", $.proxy(this.onUpdateFrame_, this));
+
+    $("body").on("change keyup", this.navId + " " + "#new_camers_ip", $.proxy(this.onCamera_, this));
+    $("body").on("change keyup", this.navId + " " + "#edit_camers_ip", $.proxy(this.onCameraEdit_, this));
 }
 
 var TariffRamkListWidget = Object.create(ExWidget);

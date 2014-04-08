@@ -54,7 +54,7 @@ window.AppData.camers = [
         number: 'Камера 1',
         adress: 'Адресс 1',
         positionСoords: '55°48’36   37°26’33',
-        ip: "127.0.0.1"
+        ip: "192.168.1.195"
     },
     {
         index: 101,
