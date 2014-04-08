@@ -56,16 +56,15 @@ var EventMainWidget = function(panel, options) {
     ];
 
     this.truckMenu = function(e) {
-        var index = parseInt(this.getAttribute('data-index'));
-        var truck = trucks[index];
+        var index = parseInt(e.target.getAttribute('data-index'));
+        var truck = this.trucks[index];
         if (truck.tooltip) {
             truck.tooltip.toggle();
         } else {
-            console.log('Truck menu is invoked on', this);
             var menu = new EventMapTruckMenuWidget({
                 container: $('#events-map'),
                 index: truck.index,
-                target: this,
+                target: e.target,
                 class: 'event-truck-menu',
                 side: truck.toolTipDir,
                 color: (truck.type == 'bad') ? 'red' : 'blue',
@@ -85,16 +84,16 @@ var EventMainWidget = function(panel, options) {
     }
 
     this.rampMenu = function(e) {
-        var index = parseInt(this.getAttribute('data-index'));
-        var ramp = ramps[index];
+        var index = parseInt(e.target.getAttribute('data-index'));
+        var ramp = window.AppData.frames[index];
+
         if (ramp.tooltip) {
             ramp.tooltip.toggle();
         } else {
-            console.log('Ramp menu is invoked on', this);
             var menu = new EventMapRampMenuWidget({
                 container: $('#events-map'),
                 index: ramp.index,
-                target: this,
+                target: e.target,
                 class: 'event-ramp-menu',
                 side: 'bottom',
                 color: 'blue',
@@ -121,9 +120,11 @@ var EventMainWidget = function(panel, options) {
             truckMark.attr('data-index', truck.index);
             truckMark.addClass(truck.type);
             truckMark.css({left: truck.position.left, top: truck.position.top});
-            mapTag.append(self.truckMark);
+            mapTag.append(truckMark);
         });
-        mapTag.on('click', '.truck.placemark', self.truckMenu );
+
+        mapTag.off('click', '.truck.placemark', $.proxy(self.truckMenu, self) );
+        mapTag.on('click', '.truck.placemark', $.proxy(self.truckMenu, self) );
 
         // Add ramps to the map
         _.each(window.AppData.frames, function (ramp) {
@@ -131,9 +132,18 @@ var EventMainWidget = function(panel, options) {
             rampMark.attr('data-index', ramp.index);
             rampMark.css({left: ramp.position.left, top: ramp.position.top});
             rampMark.css({transform: 'rotate('+ramp.angle+'deg)'});
-            mapTag.append(self.rampMark);
+            $(rampMark).css({
+                "webkitTransform":"rotate("+ramp.angle+"deg)",
+                "MozTransform":"rotate("+ramp.angle+"deg)",
+                "msTransform":"rotate("+ramp.angle+"deg)",
+                "OTransform":"rotate("+ramp.angle+"deg)",
+                "transform":"rotate("+ramp.angle+"deg)"
+            });
+            mapTag.append(rampMark);
         });
-        mapTag.on('click', '.ramp', self.rampMenu);
+
+        mapTag.off('click', '.ramp', $.proxy(self.rampMenu, self));
+        mapTag.on('click', '.ramp', $.proxy(self.rampMenu, self));
     }
 
     this.show = function() {
@@ -460,7 +470,7 @@ var EventSidebarWidget = function(panel, options) {
         });
 
         jQuery("#event-ramp-menu").on('click', '.ramp-entry', function(e) {
-            window.application.panels.SVP.widgets.mainWidget.showRampInfo(e, menuRamps[this.dataset.index]);
+            window.application.panels.SVP.widgets.mainWidget.showRampInfo(e, window.AppData.frames[this.dataset.index]);
         });
     }
 

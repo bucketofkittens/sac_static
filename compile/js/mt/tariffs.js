@@ -434,7 +434,7 @@ TariffRamkMainWidget.getFrameByIndex_ = function(index) {
 
 TariffRamkMainWidget.addFrame_ = function(event) {
     var newFrame = {
-        index: window.AppData.frames.length + 1,
+        index: window.AppData.frames.length,
         position: {top: 385, left: 610},
         angle: 0,
         number: $("#new_frame_index").val(),
@@ -442,6 +442,7 @@ TariffRamkMainWidget.addFrame_ = function(event) {
         positionСoords: $("#new_frame_coords").val(),
         webcam: false
     };
+    console.log(newFrame);
     window.AppData.frames.push(newFrame);
     this.createFrame(newFrame);
     this.closeAdd();
