@@ -644,6 +644,9 @@ TariffRamkMainWidget.init = function() {
     $("body").on("click", this.navId + " " + ".close", $.proxy(this.onTooltipCloseClick_, this));
     $("body").on("click", this.navId + " " + ".close-edit", $.proxy(this.closeEdit, this));
     $("body").on("click", this.navId + " " + ".edit-button", $.proxy(this.onUpdateFrame_, this));
+
+    $("body").on("change keyup", this.navId + " " + "#new_frame_ip", $.proxy(this.onCamera_, this));
+    $("body").on("change keyup", this.navId + " " + "#edit_frame_ip", $.proxy(this.onCameraEdit_, this));
 }
 
 TariffRamkMainWidget.onDragEnd = function(instance, event, pointer) {
@@ -699,6 +702,20 @@ TariffRamkMainWidget.drawFrames = function() {
     });
 }
 
+TariffRamkMainWidget.onCamera_ = function(e) {
+    var html = '<embed type="application/x-vlc-plugin" pluginspage="http://www.videolan.org" version="VideoLAN.VLCPlugin.2"  width="400px"  height="300px" id="vlc" loop="yes" autoplay="yes" target="rtsp://'+$(e.target).val()+'/video.pro1"></embed>';
+    $("#in_cam_add_ramk").html(html);
+    $(".ramk-add-view").hide();
+    //$(".camera-add-view").attr("src", "rtsp://"+$(e.target).val()+"/video.pro1");
+}
+
+TariffRamkMainWidget.onCameraEdit_ = function(e) {
+    var html = '<embed type="application/x-vlc-plugin" pluginspage="http://www.videolan.org" version="VideoLAN.VLCPlugin.2"  width="400px"  height="300px" id="vlc" loop="yes" autoplay="yes" target="rtsp://'+$(e.target).val()+'/video.pro1"></embed>';
+    $("#in_cam_edit_ramk").html(html);
+    $(".ramk-edit-view").hide();
+    //$(".camera-add-view").attr("src", "rtsp://"+$(e.target).val()+"/video.pro1");
+}
+
 var VideoMainWidget = Object.create(ExWidget);
 VideoMainWidget.navId = "#video-main";
 
@@ -717,4 +734,3 @@ VideoMainWidget.show = function() {
 
     $(this.navId).removeClass('hidden');
 }
-

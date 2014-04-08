@@ -759,3 +759,8 @@ td.time { color: #7dc2e3; }
     position: relative;
     left: 50px;
 }
+
+#in_cam_add_ramk, #in_cam_edit_ramk {
+    position: relative;
+    left: 50px;
+}
