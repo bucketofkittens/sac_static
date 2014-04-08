@@ -294,7 +294,7 @@
     position:absolute;
     background:url('') center center no-repeat;
     width:  232px;
-    height: 109px;
+    height: 130px;
     margin-left: -116px;
     z-index: 300;
     overflow: hidden;
@@ -321,11 +321,13 @@
 
 .tooltip.top.red {
     background-image: url('/static/images/formats/tooltip-top-red.png');
+    background-size: 100% 100%;
     margin-top: -109px;
 }
 
 .tooltip.bottom.blue {
     background-image: url('/static/images/formats/tooltip-bottom-blue.png');
+    background-size: 100% 100%;
 }
 
 .tooltip.top > .tooltip-obscure {
@@ -720,11 +722,15 @@ td.time { color: #7dc2e3; }
 }
 .delete {
     position: absolute;
-    bottom: -40px;
-    width: 100%;
+    bottom: -35px;
+    left: 20px;
+    width: 75%;
     text-align: center;
-    background: #005695;
-    padding: 5px 0px;
+    padding: 3px 0px;
+    border-radius: 5px;
+    border: 1px solid #4C8AB5;
+    margin: 0px auto;
+    background-color: #075286;
 }
 .tooltip-obscure .center {
     position: relative;
