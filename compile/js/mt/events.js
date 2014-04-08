@@ -53,6 +53,58 @@ var EventMainWidget = function(panel, options) {
                 "/static/images/mt/truck-info-photo-number3.jpg"
             ]
         },
+        {
+            index: 3,
+            type: 'good',
+            position: {top: 512, left: 250},
+            toolTipDir: 'bottom',
+            time: '23.02 15:32',
+            number: 'X 499 BX 177',
+            status: 'Оплачено',
+            images: [
+                "/static/images/mt/truck-info-photo3.jpg",
+                "/static/images/mt/truck-info-photo-number3.jpg"
+            ]
+        },
+        {
+            index: 4,
+            type: 'good',
+            position: {top: 292, left: 550},
+            toolTipDir: 'bottom',
+            time: '23.02 15:32',
+            number: 'X 599 BX 177',
+            status: 'Оплачено',
+            images: [
+                "/static/images/mt/truck-info-photo3.jpg",
+                "/static/images/mt/truck-info-photo-number3.jpg"
+            ]
+        },
+        {
+            index: 5,
+            type: 'good',
+            position: {top: 212, left: 750},
+            toolTipDir: 'bottom',
+            time: '23.02 15:32',
+            number: 'X 699 BX 177',
+            status: 'Оплачено',
+            images: [
+                "/static/images/mt/truck-info-photo3.jpg",
+                "/static/images/mt/truck-info-photo-number3.jpg"
+            ]
+        },
+        {
+            index: 6,
+            type: 'good',
+            position: {top: 512, left: 550},
+            toolTipDir: 'bottom',
+            time: '23.02 15:32',
+            number: 'X 799 BX 177',
+            status: 'Оплачено',
+            images: [
+                "/static/images/mt/truck-info-photo3.jpg",
+                "/static/images/mt/truck-info-photo-number3.jpg"
+            ]
+        }
     ];
 
     this.truckMenu = function(e) {
@@ -70,6 +122,7 @@ var EventMainWidget = function(panel, options) {
                 color: (truck.type == 'bad') ? 'red' : 'blue',
             }, application.panels.SVP);
             menu.setContent('<div class="center">' +
+                '<span class="close"></span>' +
                 '<p class="time">'+truck.time+'</p>' +
                 '<p class="gosnumber">'+truck.number+'</p>' +
                 '<p class="truck-status">'+truck.status+'</p>' +
@@ -99,6 +152,7 @@ var EventMainWidget = function(panel, options) {
                 color: 'blue',
             }, ramp, application.panels.SVP);
             menu.setContent('<div class="center">' +
+                    '<span class="close"></span>' +
                     '<p class="gosnumber">'+ramp.number+'</p>' +
                     '<p>Журнал</p>' +
                     '</div>');
@@ -321,6 +375,14 @@ var EventMapTruckMenuWidget = function(options, panel) {
 
     this.setContent = function (content) {
         this.innerElement.html(content);
+
+        this.element.find(".gosnumber").on('click', function (e) {
+            panel.widgets.mainWidget.showTruckInfo(this.element, e);
+        }.bind(this));
+
+        this.element.find(".close").on('click', function (e) {
+            this.hide();
+        }.bind(this));
     };
 
     this.showTruckInfo = function (e) {
@@ -339,10 +401,6 @@ var EventMapTruckMenuWidget = function(options, panel) {
             });
         }
     };
-
-    this.element.on('click', function (e) {
-       panel.widgets.mainWidget.showTruckInfo(this.element, e);
-    }.bind(this));
 };
 
 var EventMapRampMenuWidget = function(options, ramp, panel) {
@@ -390,11 +448,15 @@ var EventMapRampMenuWidget = function(options, ramp, panel) {
 
     this.setContent = function (content) {
         this.innerElement.html(content);
-    };
 
-    this.element.on('click', function (e) {
-        this.panel.widgets.mainWidget.showRampInfo(e, this.ramp);
-    }.bind(this));
+        this.element.find(".gosnumber").on('click', function (e) {
+            this.panel.widgets.mainWidget.showRampInfo(e, this.ramp);
+        }.bind(this));
+
+        this.element.find(".close").on('click', function (e) {
+            this.hide();
+        }.bind(this));
+    };
 };
 
 var EventSidebarWidget = function(panel, options) {
