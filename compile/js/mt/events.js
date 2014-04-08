@@ -121,8 +121,8 @@ var EventMainWidget = function(panel, options) {
                 side: truck.toolTipDir,
                 color: (truck.type == 'bad') ? 'red' : 'blue',
             }, application.panels.SVP);
-            menu.setContent('<div class="center">' +
-                '<span class="close"></span>' +
+            menu.setContent('<span class="close"></span>' +
+                '<div class="center">' +
                 '<p class="time">'+truck.time+'</p>' +
                 '<p class="gosnumber">'+truck.number+'</p>' +
                 '<p class="truck-status">'+truck.status+'</p>' +
@@ -151,8 +151,8 @@ var EventMainWidget = function(panel, options) {
                 side: 'bottom',
                 color: 'blue',
             }, ramp, application.panels.SVP);
-            menu.setContent('<div class="center">' +
-                    '<span class="close"></span>' +
+            menu.setContent('<span class="close"></span>' +
+                    '<div class="center">' +
                     '<p class="gosnumber">'+ramp.number+'</p>' +
                     '<p>Журнал</p>' +
                     '</div>');
