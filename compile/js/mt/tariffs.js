@@ -794,7 +794,7 @@ function showFakeCamera(camera, enterIp) {
 }
 
 function getVideoTag(ip) {
-    var html = '<embed controls="false" class="ramp-frame  ramk-edit-view" id="#in_cam_edit_ramkc" toolbar="false" type="application/x-vlc-plugin" pluginspage="http://www.videolan.org" version="VideoLAN.VLCPlugin.2"  width="400px"  height="300px" id="vlc" loop="yes" autoplay="yes" target="'+ip+'" allowfullscreen="false" controls="false" toolbar="false" windowless="true"></embed>';
+    var html = '<embed controls="false" class="ramp-frame  ramk-edit-view" id="#in_cam_edit_ramkc" toolbar="false" type="application/x-vlc-plugin" pluginspage="http://www.videolan.org" version="VideoLAN.VLCPlugin.2"  width="400px"  height="300px" id="vlc" loop="yes" autoplay="yes" target="'+ip+'" allowfullscreen="false" controls="false" toolbar="false"></embed>';
     return html;
 }
 
