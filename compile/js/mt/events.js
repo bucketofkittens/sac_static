@@ -297,17 +297,13 @@ var EventMainWidget = function(panel, options) {
             thisContainer.find('p.position').html(
                 this.ramp.positionName+'<br>'+this.ramp.positionCoords
             );
+
+            $("#video_in_ramp").html(getVideoTag(showFakeCamera(this.ramp, this.ramp.ip)));
         }.bind(this);
         if (thisContainer.length) {
             thisContainer.removeClass('hidden');
             thisContainer.siblings().addClass('hidden');
             updateInfo();
-
-            if(ramp.webcam) {
-                self.useWebcam();
-            } else {
-                self.noiseVideo(); 
-            }
         } else {
             thisContainer = $('<div id="event-main-ramp-info" class="widget-obscure hidden hide-to-right">');
             this.element.append(thisContainer);
@@ -316,11 +312,6 @@ var EventMainWidget = function(panel, options) {
                 thisContainer.siblings().addClass('hidden');
                 thisContainer.removeClass('hidden');
                 updateInfo();
-                if(ramp.webcam) {
-                    self.useWebcam();
-                } else {
-                    self.noiseVideo(); 
-                }
             });
         }
     };
