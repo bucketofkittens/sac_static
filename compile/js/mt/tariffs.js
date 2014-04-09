@@ -454,15 +454,16 @@ TariffCamersMainWidget.onCamera_ = function(e) {
     var index = $("#edit_camera_index_old").val();
     var camera = this.getCameraByIndex_(index);
 
-    var html = '<embed allowfullscreen="false" controls="false" toolbar="false" controls="false" toolbar="false" type="application/x-mplayer2" pluginspage="http://www.videolan.org" version="VideoLAN.VLCPlugin.2"  width="400px"  height="300px" id="vlc" loop="yes" autoplay="yes" src="'+ip+'"></embed>';
-    $("#in_cam_add_camera").html(html);
-    $(".camera-add-view").hide();
+    $("#scene-info-map embed").remove();
+
+    var html = '<embed allowfullscreen="false" controls="false" toolbar="false" controls="false" toolbar="false" type="application/x-vlc-plugin" pluginspage="http://www.videolan.org" version="VideoLAN.VLCPlugin.2"  width="400px"  height="300px" id="vlc" loop="yes" autoplay="yes" target="'+ip+'"></embed>';
+    $("#in_cam_add_camera").append(html);
+    //$(".camera-add-view").hide();
     
     //$(".camera-add-view").attr("src", "rtsp://"+$(e.target).val()+"/video.pro1");
 }
 
 TariffCamersMainWidget.onCameraEdit_ = function(e) {
-    console.log("onCameraEdit_");
     var ip = "";
     var enterIp = $(e.target).val();
     var index = $("#edit_camers_index_old").val();
