@@ -8,7 +8,7 @@ window.AppData.frames = [
         positionName: '41-й км трассы M9',
         positionСoords: '55°48’36   37°26’33',
         webcam: true,
-        ip: "/static/images/scene/r01.mp4"
+        ip: "10.10.1.10"
     },
     {
         index: 1,
@@ -18,7 +18,7 @@ window.AppData.frames = [
         positionName: '43-й км трассы M9',
         positionСoords: '55°48’36   37°26’33',
         webcam: false,
-        ip: "/static/images/scene/r02.mp4"
+        ip: "10.10.1.11"
     },
     {
         index: 2,
@@ -28,7 +28,7 @@ window.AppData.frames = [
         positionName: '46-й км трассы M9',
         positionСoords: '55°48’36   37°26’33',
         webcam: false,
-        ip: "/static/images/scene/r03.mp4"
+        ip: "10.10.1.12"
     },
     {
         index: 3,
@@ -38,7 +38,8 @@ window.AppData.frames = [
         positionName: '84-й км трассы M9',
         positionСoords: '55°48’36   37°26’33',
         webcam: false,
-        ip: "/static/images/scene/r04.mp4"
+        ip: "10.10.1.13"
+        
     },
     {
         index: 4,
@@ -48,7 +49,7 @@ window.AppData.frames = [
         positionName: '87-й км трассы M9',
         positionСoords: '55°48’36   37°26’33',
         webcam: false,
-        ip: "/static/images/scene/r05.mp4"
+        ip: "10.10.1.14"
     },
 ];
 
@@ -59,7 +60,7 @@ window.AppData.camers = [
         number: 'Камера 1',
         adress: 'Адресс 1',
         positionСoords: '55°48’36   37°26’33',
-        ip: "/static/images/scene/tula01.mp4"
+        ip: "10.10.1.14"
     },
     {
         index: 1,
@@ -67,7 +68,8 @@ window.AppData.camers = [
         number: 'Камера 2',
         adress: 'Адресс 2',
         positionСoords: '55°48’36   37°26’33',
-        ip: "/static/images/scene/tula02.mp4"
+        ip: "10.10.1.15",
+        
     },
     {
         index: 2,
@@ -75,9 +77,45 @@ window.AppData.camers = [
         number: 'Камера 3',
         adress: 'Адресс 3',
         positionСoords: '55°48’36   37°26’33',
-        ip: "/static/images/scene/tula03.mp4"
+        ip: "10.10.1.16"
     }
 ];
+
+window.AppData.fakeCameras = [
+	{
+		path: "/static/images/scene/tula03.mp4",
+        ip: "10.10.1.16"
+	},
+	{
+		path: "/static/images/scene/tula02.mp4",
+        ip: "10.10.1.15"
+	},
+	{
+		path: "/static/images/scene/tula01.mp4",
+        ip: "10.10.1.14"
+	},
+	{
+		path: "/static/images/scene/r01.mp4",
+        ip: "10.10.1.10"
+	},
+	{
+		path: "/static/images/scene/r02.mp4",
+        ip: "10.10.1.11"
+	},
+	{
+		path: "/static/images/scene/r03.mp4",
+        ip: "10.10.1.11"
+	},
+	{
+		path: "/static/images/scene/r04.mp4",
+        ip: "10.10.1.12"
+	},
+	{
+		path: "/static/images/scene/r05.mp4",
+        ip: "10.10.1.13"
+	}
+];
+
 
 /**
  * [ description]
