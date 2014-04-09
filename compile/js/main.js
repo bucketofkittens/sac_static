@@ -59,7 +59,7 @@ window.AppData.camers = [
         number: 'Камера 1',
         adress: 'Адресс 1',
         positionСoords: '55°48’36   37°26’33',
-        ip: "192.168.1.195"
+        ip: "/static/images/scene/tula01.mp4"
     },
     {
         index: 1,
@@ -67,7 +67,7 @@ window.AppData.camers = [
         number: 'Камера 2',
         adress: 'Адресс 2',
         positionСoords: '55°48’36   37°26’33',
-        ip: "127.0.0.1"
+        ip: "/static/images/scene/tula02.mp4"
     },
     {
         index: 2,
@@ -75,7 +75,7 @@ window.AppData.camers = [
         number: 'Камера 3',
         adress: 'Адресс 3',
         positionСoords: '55°48’36   37°26’33',
-        ip: "127.0.0.1"
+        ip: "/static/images/scene/tula03.mp4"
     }
 ];
 

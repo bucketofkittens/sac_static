@@ -226,6 +226,7 @@ var SceneInfoWidget = function(app, panel) {
 
         $.get('/static/compile/scene/camera.html', {}, function (data, status, jqxhr) {
             console.log(camera);
+            //rtsp://<%= camera.ip %>/video.pro1
             data = _.template(data, { camera : camera});
             $("#camera-info").append(data);
             $("#camera-info").show();
