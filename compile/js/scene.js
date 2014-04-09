@@ -325,6 +325,7 @@ var SceneInfoWidget = function(app, panel) {
         if (thisContainer.length) {
             thisContainer.removeClass('hidden');
             thisContainer.siblings().addClass('hidden');
+            self.drawMapItems();
         } else {
             setTimeout(function() {
                 thisContainer = $('<div id="sceneinfo-panel-map" class="sceneinfo-panel hidden hide-to-left">');
