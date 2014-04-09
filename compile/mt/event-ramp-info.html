@@ -13,7 +13,7 @@
     <section class="right">
         <h1>Видео с дорожной камеры</h1>
         <div class="well" style="height: 300px;">
-            <video id="rampVideo" class="ramp-frame" src="/static/images/scene/noise.mp4" preload="" autoplay="" height="300" loop="true"></video>
+            <embed type="application/x-vlc-plugin" pluginspage="http://www.videolan.org" version="VideoLAN.VLCPlugin.2"  width="540px"  height="300px" id="vlc" loop="yes" autoplay="yes" allowfullscreen="false" controls="false" toolbar="false" windowless="true" target="<%= camera.ip %>"></embed>
         </div>
     </section>
 
