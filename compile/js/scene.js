@@ -222,8 +222,14 @@ var SceneInfoWidget = function(app, panel) {
     }
 
     this.onCameraClick_ = function(e) {
-        var camera = window.AppData.camers[$(e.target).attr("data-index")];
-
+        var camera = null;
+        var index = $(e.target).attr("data-index");
+        _.each(window.AppData.camers, function(cm) {
+            if(cm.index == index) {
+                camera = cm;
+            }
+        })
+        
         $.get('/static/compile/scene/camera.html', {}, function (data, status, jqxhr) {
             console.log(camera);
             //rtsp://<%= camera.ip %>/video.pro1

@@ -735,7 +735,14 @@ TariffRamkMainWidget.drawFrames = function() {
 }
 
 TariffRamkMainWidget.onCamera_ = function(e) {
-    var html = '<embed allowfullscreen="false" controls="false" toolbar="false" controls="false" toolbar="false" type="application/x-vlc-plugin" pluginspage="http://www.videolan.org" version="VideoLAN.VLCPlugin.2"  width="400px"  height="300px" id="vlc" loop="yes" autoplay="yes" target="'+$(e.target).val()+'"></embed>';
+    var ip = "";
+    var enterIp = $(e.target).val();
+    var index = $("#edit_frame_index_old").val();
+    var frame = this.getFrameByIndex_(index);
+
+    ip = showFakeCamera(frame, enterIp);
+
+    var html = '<embed allowfullscreen="false" controls="false" toolbar="false" controls="false" toolbar="false" type="application/x-vlc-plugin" pluginspage="http://www.videolan.org" version="VideoLAN.VLCPlugin.2"  width="400px"  height="300px" id="vlc" loop="yes" autoplay="yes" target="'+ip+'"></embed>';
     $("#in_cam_add_ramk").html(html);
     $(".ramk-add-view").hide();
     //$(".camera-add-view").attr("src", "rtsp://"+$(e.target).val()+"/video.pro1");
