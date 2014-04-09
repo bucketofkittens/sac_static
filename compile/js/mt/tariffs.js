@@ -459,7 +459,7 @@ TariffCamersMainWidget.onCamera_ = function(e) {
 
 TariffCamersMainWidget.onCameraEdit_ = function(e) {
     var ip = "";
-    var enterIp = $(e.target).val();
+    var enterIp = $("#edit_camers_ip").val();
     var index = $("#edit_camers_index_old").val();
     var camera = this.getCameraByIndex_(index);
 
@@ -483,7 +483,7 @@ TariffCamersMainWidget.init = function(data) {
     $("body").on("click", this.navId + " " + ".edit-button", $.proxy(this.onUpdateFrame_, this));
 
     $("body").on("click", this.navId + " " + "#check_camers", $.proxy(this.onCamera_, this));
-    //$("body").on("change keyup", this.navId + " " + "#edit_camers_ip", $.proxy(this.onCameraEdit_, this));
+    $("body").on("click", this.navId + " " + "#check_camers_edit", $.proxy(this.onCameraEdit_, this));
 }
 
 var TariffRamkListWidget = Object.create(ExWidget);
@@ -679,7 +679,7 @@ TariffRamkMainWidget.init = function() {
     $("body").on("click", this.navId + " " + ".edit-button", $.proxy(this.onUpdateFrame_, this));
 
     $("body").on("click", this.navId + " " + "#new_ramk_check", $.proxy(this.onCamera_, this));
-    //$("body").on("change keyup", this.navId + " " + "#edit_frame_ip", $.proxy(this.onCameraEdit_, this));
+    $("body").on("click", this.navId + " " + "#edit_ramk_check", $.proxy(this.onCameraEdit_, this));
 }
 
 TariffRamkMainWidget.onDragEnd = function(instance, event, pointer) {
@@ -748,13 +748,13 @@ TariffRamkMainWidget.onCamera_ = function(e) {
 
 TariffRamkMainWidget.onCameraEdit_ = function(e) {
     var ip = "";
-    var enterIp = $(e.target).val();
+    var enterIp = $("#edit_frame_ip").val();
     var index = $("#edit_frame_index_old").val();
     var frame = this.getFrameByIndex_(index);
 
     ip = showFakeCamera(enterIp);
 
-    var html = '<embed allowfullscreen="false" controls="false" toolbar="false" controls="false" class="ramp-frame  ramk-edit-view" id="#in_cam_edit_ramkc" toolbar="false" type="application/x-vlc-plugin" pluginspage="http://www.videolan.org" version="VideoLAN.VLCPlugin.2"  width="400px"  height="300px" id="vlc" loop="yes" autoplay="yes" target="'+ip+'"></embed>';
+    var html = getVideoTag(ip);
     $("#in_cam_edit_ramkc").remove();
     $("#innn").html("");
     $("#innn").append(html);
