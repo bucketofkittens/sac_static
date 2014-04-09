@@ -451,17 +451,10 @@ TariffCamersMainWidget.onUpdateFrame_ = function(e) {
 TariffCamersMainWidget.onCamera_ = function(e) {
     var ip = "";
     var enterIp = $("#new_camers_ip").val();
-    var index = $("#edit_camera_index_old").val();
-    var camera = this.getCameraByIndex_(index);
 
     ip = showFakeCamera(enterIp);
-    console.log(camera);
     html = getVideoTag(ip);
     $("#in_cam_add_camera").html(html);
-
-    //$(".camera-add-view").hide();
-    
-    //$(".camera-add-view").attr("src", "rtsp://"+$(e.target).val()+"/video.pro1");
 }
 
 TariffCamersMainWidget.onCameraEdit_ = function(e) {
@@ -685,8 +678,8 @@ TariffRamkMainWidget.init = function() {
     $("body").on("click", this.navId + " " + ".close-edit", $.proxy(this.closeEdit, this));
     $("body").on("click", this.navId + " " + ".edit-button", $.proxy(this.onUpdateFrame_, this));
 
-    $("body").on("change keyup", this.navId + " " + "#new_frame_ip", $.proxy(this.onCamera_, this));
-    $("body").on("change keyup", this.navId + " " + "#edit_frame_ip", $.proxy(this.onCameraEdit_, this));
+    $("body").on("click", this.navId + " " + "#new_ramk_check", $.proxy(this.onCamera_, this));
+    //$("body").on("change keyup", this.navId + " " + "#edit_frame_ip", $.proxy(this.onCameraEdit_, this));
 }
 
 TariffRamkMainWidget.onDragEnd = function(instance, event, pointer) {
@@ -744,15 +737,12 @@ TariffRamkMainWidget.drawFrames = function() {
 
 TariffRamkMainWidget.onCamera_ = function(e) {
     var ip = "";
-    var enterIp = $(e.target).val();
-    var index = $("#edit_frame_index_old").val();
-    var frame = this.getFrameByIndex_(index);
+    var enterIp = $("#new_frame_ip").val();
 
     ip = showFakeCamera(enterIp);
+    html = getVideoTag(ip);
 
-    var html = '<embed allowfullscreen="false" controls="false" toolbar="false" controls="false" toolbar="false" type="application/x-vlc-plugin" pluginspage="http://www.videolan.org" version="VideoLAN.VLCPlugin.2"  width="400px"  height="300px" id="vlc" loop="yes" autoplay="yes" target="'+ip+'"></embed>';
     $("#in_cam_add_ramk").html(html);
-    $(".ramk-add-view").hide();
     //$(".camera-add-view").attr("src", "rtsp://"+$(e.target).val()+"/video.pro1");
 }
 
