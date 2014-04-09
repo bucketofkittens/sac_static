@@ -599,11 +599,11 @@ td.time { color: #7dc2e3; }
 }
 .addbox, .editbox {
     width: 500px;
-    height: 610px;
+    height: 530px;
     background: url('/static/images/mt/addbox.png') top left no-repeat;
     background-size: 100% 100%;
     position: absolute;
-    top: 20px;
+    top: 50px;
     left: 50%;
     margin-left: -250px;
     overflow: hidden;
@@ -623,6 +623,10 @@ td.time { color: #7dc2e3; }
     background: none;
     color: #ffffff;
     font-size: 14px;
+}
+.addbox embed, .editbox embed {
+    width: 400px;
+    height: 225px;
 }
 .addbox button, .editbox button {
     display: inline-block;
@@ -705,7 +709,7 @@ button.check {
     height: 40px;
 }
 .camr h3 {
-    margin-left: 185px;
+    margin-left: 175px;
 }
 .camr h4 {
     margin: 10px 90px;
@@ -715,10 +719,10 @@ button.check {
     padding: 20px;
     border-radius: 5px;
     border: 1px solid #4C8AB5;
-    width: 695px;
+    width: 710px;
     margin: 0px auto;
     background-color: #075286;
-    margin-left: 180px;
+    margin-left: 170px;
 }
 .camr video {
     height: 480px !important;
