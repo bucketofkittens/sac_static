@@ -251,8 +251,16 @@ TariffCamersListWidget.beforeCreate_ = function(data) {
 TariffCamersListWidget.onAddClick_ = function(event) {
     this.panel.stateWidgets.cameras.main.showAdd();
 }
+
+TariffCamersListWidget.onItemClick_ = function(event) {
+    $("#scene-info-map .tooltip").remove();
+    var index = $(event.target).parents(".ramp-entry").attr("data-index");
+
+    this.panel.stateWidgets.cameras.main.addTooltip_(index);
+}
 TariffCamersListWidget.init = function(data) {
     $("body").on("click", this.navId + " .add", $.proxy(this.onAddClick_, this));
+    $("body").on("click", this.navId + " .ramp-entry", $.proxy(this.onItemClick_, this));
 }
 //rtsp://192.168.1.195/video.pro1
 
@@ -471,18 +479,14 @@ TariffRamkListWidget.onAddClick_ = function(event) {
     this.panel.stateWidgets.ramks.main.showAdd();
 }
 TariffRamkListWidget.onItemClick_ = function(event) {
-    /*var index = $(event.target).attr("data-index");
-    if(!index) {
-        index = $(event.target).parents(".ramp-entry").attr("data-index");
-    }
+    //var index = $(event.target).attr("data-index");
 
-    this.panel.stateWidgets.ramks.main.closeCurrentFrame_();
-    this.panel.stateWidgets.ramks.main.showCurrentFrame_(index);
-    */
+    //this.panel.stateWidgets.cameras.main.addTooltip_(index);
 }
 TariffRamkListWidget.init = function(data) {
     $("body").on("click", "#ramks-list .add", $.proxy(this.onAddClick_, this));
-    $("body").on("click", "#ramks-list .ramp-entry", $.proxy(this.onItemClick_, this));
+    //$("body").on("click", "#ramks-list .ramp-entry", $.proxy(this.onItemClick_, this));
+
 }
 
 var TariffRamkMainWidget = Object.create(ExWidget);

@@ -4,7 +4,7 @@
 
 	<div id="event-ramp-menu">
 	<% _.each(camers, function(item,key) { %>
-		<div class="ramp-entry sidebar-entry" data-index="0">
+		<div class="ramp-entry sidebar-entry" data-index="<%= item.index %>">
 			<p class="num"><%= item.number %></p>
 			<p class="position-name"><%= item.adress %></p>
 			<p class="position">( <%= item.positionСoords %> )</p>
