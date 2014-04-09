@@ -295,7 +295,7 @@ var EventMainWidget = function(panel, options) {
         var updateInfo = function () {
             thisContainer.find('p.number').text(this.ramp.number);
             thisContainer.find('p.position').html(
-                this.ramp.positionName+'<br>'+this.ramp.positionCoords
+                this.ramp.positionName+'<br>'+this.ramp.positionСoords
             );
 
             $("#video_in_ramp").html(getVideoTag(showFakeCamera(this.ramp.ip)));
