@@ -160,6 +160,7 @@ var SceneInfoWidget = function(app, panel) {
             // HTML-содержимое контекстного меню.
             var menuContent =
                     '<div id="scene-patrol-menu">\
+                        <span class="close"></span>\
                         <div align="center"><input type="submit" value="Отправить" /></div>\
                     </div>';
 
@@ -178,6 +179,10 @@ var SceneInfoWidget = function(app, panel) {
                 console.log('Launching patrol with index', index);
                 self.patrols[index].startedAt = new Date();
                 $('#scene-patrol-menu').remove();
+            });
+
+            $('#scene-patrol-menu .close').click(function (e) {
+                $("#scene-patrol-menu").remove();
             });
         }
     }
@@ -222,26 +227,54 @@ var SceneInfoWidget = function(app, panel) {
     }
 
     this.onCameraClick_ = function(e) {
-        var camera = null;
         var index = $(e.target).attr("data-index");
+
+        var camera = null;
         _.each(window.AppData.camers, function(cm) {
             if(cm.index == index) {
                 camera = cm;
             }
         })
+
+        var html = '<div style="margin-top: 40px; left:'+$(e.target).css("left")+'; top: '+$(e.target).css("top")+'" class="tooltip-main-map tooltip bottom blue event-ramp-menu" data-index="'+index+'">' +
+        '    <span class="close"></span> ' +
+        '    <div class="tooltip-obscure">' +
+        '        <div class="center">' +
+        '            <p class="gosnumber">'+camera.number+'</p>' +
+        '            <p>'+camera.adress+'</p>' +
+        '        </div>' +
+        '    </div>' +
+        '</div>';
+
+        this.mapTag.append(html);
+
+        $(".tooltip-main-map .close").on("click", function() {
+            $(".tooltip-main-map").remove();
+        })
+
+        $(".tooltip-main-map .gosnumber").on("click", function() {
+            $(".tooltip-main-map").remove();
+
+            $.get('/static/compile/scene/camera.html', {}, function (data, status, jqxhr) {
+                //rtsp://<%= camera.ip %>/video.pro1
+                camera.path = showFakeCamera(camera, camera.ip);
+                data = _.template(data, { camera : camera});
+                $("#camera-info").append(data);
+                $("#camera-info").show();
+                $("#camera-info").on("click", ".close", function() {
+                    $("#camera-info").html("");
+                    $("#camera-info").hide();
+                })
+            });
+        })
         
-        $.get('/static/compile/scene/camera.html', {}, function (data, status, jqxhr) {
-            console.log(camera);
-            //rtsp://<%= camera.ip %>/video.pro1
-            camera.path = showFakeCamera(camera, camera.ip);
-            data = _.template(data, { camera : camera});
-            $("#camera-info").append(data);
-            $("#camera-info").show();
-            $("#camera-info").on("click", ".close", function() {
-                $("#camera-info").html("");
-                $("#camera-info").hide();
-            })
-        });
+
+        /*
+        
+        
+
+        
+        */
     }
 
     this.close = function() {

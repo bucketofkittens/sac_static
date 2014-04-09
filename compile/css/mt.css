@@ -798,7 +798,7 @@ embed.tablecam {
     padding-top: 0px;
 }
 
-#camers-main .tooltip .close, #ramks-main .tooltip .close {
+#camers-main .tooltip .close, #ramks-main .tooltip .close, #scene-info-map .close {
     top: 20px;
     right: 10px;
 }
