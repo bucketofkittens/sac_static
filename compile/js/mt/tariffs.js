@@ -479,13 +479,14 @@ TariffRamkListWidget.onAddClick_ = function(event) {
     this.panel.stateWidgets.ramks.main.showAdd();
 }
 TariffRamkListWidget.onItemClick_ = function(event) {
-    //var index = $(event.target).attr("data-index");
-
-    //this.panel.stateWidgets.cameras.main.addTooltip_(index);
+    $("#map-fake .tooltip").remove();
+    var index = $(event.target).parents(".ramp-entry").attr("data-index");
+    console.log(this.panel.stateWidgets);
+    this.panel.stateWidgets.ramks.main.addTooltip_(index);
 }
 TariffRamkListWidget.init = function(data) {
     $("body").on("click", "#ramks-list .add", $.proxy(this.onAddClick_, this));
-    //$("body").on("click", "#ramks-list .ramp-entry", $.proxy(this.onItemClick_, this));
+    $("body").on("click", "#ramks-list .ramp-entry", $.proxy(this.onItemClick_, this));
 
 }
 
