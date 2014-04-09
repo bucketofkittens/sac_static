@@ -432,7 +432,7 @@ TariffCamersMainWidget.onUpdateFrame_ = function(e) {
     });
 
     window.AppData.camers[keys].number = $("#edit_camers_index").val();
-    window.AppData.camers[keys].positionName = $("#edit_camers_adress").val();
+    window.AppData.camers[keys].adress = $("#edit_camers_adress").val();
     window.AppData.camers[keys].positionСoords = $("#edit_camers_coords").val();
     window.AppData.camers[keys].ip = $("#edit_camers_ip").val();
 
@@ -452,7 +452,6 @@ TariffCamersMainWidget.onCamera_ = function(e) {
 }
 
 TariffCamersMainWidget.onCameraEdit_ = function(e) {
-    alert("gfg");
     var html = '<embed controls="false" toolbar="false" type="application/x-vlc-plugin" pluginspage="http://www.videolan.org" version="VideoLAN.VLCPlugin.2"  width="400px"  height="300px" id="vlc" loop="yes" autoplay="yes" target="'+$(e.target).val()+'"></embed>';
     $("#in_cam_edit_camera").html(html);
     $(".camera-edit-view").hide();
