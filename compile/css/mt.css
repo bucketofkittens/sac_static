@@ -772,6 +772,10 @@ button.check {
     left: 50px;
 }
 
+#in_cam_add_camera embed {
+    margin: 0px !important;
+}
+
 #video-main {
     padding: 100px 0px 0px 80px;
     margin-top: -40px;

@@ -409,7 +409,7 @@ TariffCamersMainWidget.showEdit = function(e) {
     $(e.target).parents(".tooltip").remove();
     $(this.navId + " .editbox h3").html(camera.number);
 
-    $("#in_cam_edit_camera embed").attr("target", showFakeCamera(camera, camera.ip));
+    $("#in_cam_edit_camera embed").attr("target", showFakeCamera(camera.ip));
 
     $("#edit_camers_adress").val(camera.adress);
     $("#edit_camers_ip").val(camera.ip);
@@ -450,13 +450,15 @@ TariffCamersMainWidget.onUpdateFrame_ = function(e) {
 
 TariffCamersMainWidget.onCamera_ = function(e) {
     var ip = "";
-    var enterIp = $(e.target).val();
+    var enterIp = $("#new_camers_ip").val();
     var index = $("#edit_camera_index_old").val();
     var camera = this.getCameraByIndex_(index);
 
-    ip = showFakeCamera(camera, enterIp);
+    ip = showFakeCamera(enterIp);
+    console.log(camera);
     html = getVideoTag(ip);
     $("#in_cam_add_camera").html(html);
+
     //$(".camera-add-view").hide();
     
     //$(".camera-add-view").attr("src", "rtsp://"+$(e.target).val()+"/video.pro1");
@@ -468,7 +470,7 @@ TariffCamersMainWidget.onCameraEdit_ = function(e) {
     var index = $("#edit_camers_index_old").val();
     var camera = this.getCameraByIndex_(index);
 
-    ip = showFakeCamera(camera, enterIp);
+    ip = showFakeCamera(enterIp);
 
     html = getVideoTag(ip);
     $("#in_cam_edit_camera").html(html);
@@ -487,8 +489,8 @@ TariffCamersMainWidget.init = function(data) {
     $("body").on("click", this.navId + " " + ".close-edit", $.proxy(this.closeEdit, this));
     $("body").on("click", this.navId + " " + ".edit-button", $.proxy(this.onUpdateFrame_, this));
 
-    $("body").on("change keyup", this.navId + " " + "#new_camers_ip", $.proxy(this.onCamera_, this));
-    $("body").on("change keyup", this.navId + " " + "#edit_camers_ip", $.proxy(this.onCameraEdit_, this));
+    $("body").on("click", this.navId + " " + "#check_camers", $.proxy(this.onCamera_, this));
+    //$("body").on("change keyup", this.navId + " " + "#edit_camers_ip", $.proxy(this.onCameraEdit_, this));
 }
 
 var TariffRamkListWidget = Object.create(ExWidget);
@@ -607,7 +609,7 @@ TariffRamkMainWidget.addFrame_ = function(event) {
 TariffRamkMainWidget.showEdit = function(e) {
     var frame = this.getFrameByIndex_($(e.target).parents(".event-ramp-menu").attr("data-index"));
 
-    $("#in_cam_edit_ramkc").attr("target", showFakeCamera(frame, frame.ip));
+    $("#in_cam_edit_ramkc").attr("target", showFakeCamera(frame.ip));
 
     $(this.navId + " .editbox h3").html(frame.number);
 
@@ -746,7 +748,7 @@ TariffRamkMainWidget.onCamera_ = function(e) {
     var index = $("#edit_frame_index_old").val();
     var frame = this.getFrameByIndex_(index);
 
-    ip = showFakeCamera(frame, enterIp);
+    ip = showFakeCamera(enterIp);
 
     var html = '<embed allowfullscreen="false" controls="false" toolbar="false" controls="false" toolbar="false" type="application/x-vlc-plugin" pluginspage="http://www.videolan.org" version="VideoLAN.VLCPlugin.2"  width="400px"  height="300px" id="vlc" loop="yes" autoplay="yes" target="'+ip+'"></embed>';
     $("#in_cam_add_ramk").html(html);
@@ -760,7 +762,7 @@ TariffRamkMainWidget.onCameraEdit_ = function(e) {
     var index = $("#edit_frame_index_old").val();
     var frame = this.getFrameByIndex_(index);
 
-    ip = showFakeCamera(frame, enterIp);
+    ip = showFakeCamera(enterIp);
 
     var html = '<embed allowfullscreen="false" controls="false" toolbar="false" controls="false" class="ramp-frame  ramk-edit-view" id="#in_cam_edit_ramkc" toolbar="false" type="application/x-vlc-plugin" pluginspage="http://www.videolan.org" version="VideoLAN.VLCPlugin.2"  width="400px"  height="300px" id="vlc" loop="yes" autoplay="yes" target="'+ip+'"></embed>';
     $("#in_cam_edit_ramkc").remove();
@@ -790,9 +792,8 @@ VideoMainWidget.show = function() {
 }
 
 
-function showFakeCamera(camera, enterIp) {
+function showFakeCamera(enterIp) {
     var ip = null;
-
     _.each(window.AppData.fakeCameras, function(fake) {
         if(fake.ip == enterIp) {
             ip = fake.path;
