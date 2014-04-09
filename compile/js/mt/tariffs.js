@@ -369,6 +369,9 @@ TariffCamersMainWidget.addTooltip_ = function(index) {
     var camera = this.getCameraByIndex_(index);
     var html = $('<div class="tooltip bottom blue event-ramp-menu" data-index="'+camera.index+'"><span class="close"></span> <div class="tooltip-obscure"><div class="center"><p class="gosnumber">'+camera.number+'</p><p>'+camera.adress+'</p><p class="delete">Удалить</p></div></div></div>');
     
+    if(camera.position.left > 800) {
+        camera.position.left = 780;
+    }
     $(html).css("left", (camera.position.left+15)+"px");
     $(html).css("top", (camera.position.top+65)+"px");
 
