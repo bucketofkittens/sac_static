@@ -764,12 +764,12 @@ td.time { color: #7dc2e3; }
 }
 
 #video-main {
-    padding: 100px 0px 0px 60px;
+    padding: 100px 0px 0px 80px;
     margin-top: -40px;
 }
 .tablecam {
     display: inline-block;
-    width: 270px;
+    width: 265px;
     height: 210px;
     padding: 5px 0px;
 }
