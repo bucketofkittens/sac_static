@@ -244,7 +244,6 @@ var TariffCamersListWidget = Object.create(ExWidget);
 TariffCamersListWidget.navId = "#camers-list";
 
 TariffCamersListWidget.beforeCreate_ = function(data) {
-    console.log("camers");
     return _.template(data, { camers : window.AppData.camers});
 }
 
@@ -366,6 +365,8 @@ TariffCamersMainWidget.onTooltipCloseClick_ = function(event) {
 }
 
 TariffCamersMainWidget.addTooltip_ = function(index) {
+    $(".tooltip").remove();
+
     var camera = this.getCameraByIndex_(index);
     var html = $('<div class="tooltip bottom blue event-ramp-menu" data-index="'+camera.index+'"><span class="close"></span> <div class="tooltip-obscure"><div class="center"><p class="gosnumber">'+camera.number+'</p><p>'+camera.adress+'</p><p class="delete">Удалить</p></div></div></div>');
     
@@ -544,6 +545,8 @@ TariffRamkMainWidget.closeCurrentFrame_ = function(index) {
 }
 
 TariffRamkMainWidget.addTooltip_ = function(index) {
+    $(".tooltip").remove();
+    
     var frame = this.getFrameByIndex_(index);
     var html = $('<div class="tooltip bottom blue event-ramp-menu" data-index="'+frame.index+'"><span class="close"></span> <div class="tooltip-obscure"><div class="center"><p class="gosnumber">'+frame.number+'</p><p>'+frame.positionName+'</p><p class="delete">Удалить</p></div></div></div>');
     
@@ -551,6 +554,8 @@ TariffRamkMainWidget.addTooltip_ = function(index) {
     $(html).css("top", (frame.position.top+35)+"px");
 
     $(html).find(".gosnumber").on("click", $.proxy(this.showEdit, this));
+
+    $(".tooltip").remove();
     
     $(this.navId + " " + this.eventMapId).append(html);
 }

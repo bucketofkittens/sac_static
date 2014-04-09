@@ -783,3 +783,11 @@ embed.tablecam {
     position: relative;
     left: 50px;
 }
+
+.menu {
+    margin: 50px 0px 0px 10px;
+}
+
+.menu .sidebar-entry {
+    padding-top: 0px;
+}
