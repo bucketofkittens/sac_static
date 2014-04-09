@@ -298,7 +298,7 @@ var EventMainWidget = function(panel, options) {
                 this.ramp.positionName+'<br>'+this.ramp.positionCoords
             );
 
-            $("#video_in_ramp").html(getVideoTag(showFakeCamera(this.ramp, this.ramp.ip)));
+            $("#video_in_ramp").html(getVideoTag(showFakeCamera(this.ramp.ip)));
         }.bind(this);
         if (thisContainer.length) {
             thisContainer.removeClass('hidden');
@@ -370,6 +370,7 @@ var EventMapTruckMenuWidget = function(options, panel) {
         this.innerElement.html(content);
 
         this.element.find(".gosnumber").on('click', function (e) {
+            $(".tooltip").remove();
             panel.widgets.mainWidget.showTruckInfo(this.element, e);
         }.bind(this));
 
