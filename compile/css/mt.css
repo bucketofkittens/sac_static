@@ -772,7 +772,7 @@ button.check {
     left: 50px;
 }
 
-#in_cam_add_camera embed, #in_cam_add_ramk embed {
+#in_cam_add_camera embed, #in_cam_add_ramk embed, #in_cam_edit_camera embed, #in_cam_edit_ramk embed {
     margin: 0px !important;
 }
 
