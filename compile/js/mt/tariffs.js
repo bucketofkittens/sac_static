@@ -458,7 +458,7 @@ TariffCamersMainWidget.onCamera_ = function(e) {
 
     $("#in_cam_add_camera embed").remove();
 
-    var html = '<embed allowfullscreen="false" controls="false" toolbar="false" toolbar="false" type="application/x-vlc-plugin" pluginspage="http://www.videolan.org" version="VideoLAN.VLCPlugin.2"  width="400px"  height="300px" id="vlc" loop="yes" autoplay="no" target="'+ip+'"></embed>';
+    var html = '<embedtype="application/x-vlc-plugin" pluginspage="http://www.videolan.org" version="VideoLAN.VLCPlugin.2"  width="400px"  height="300px" id="vlc" loop="yes" autoplay="no" target="'+ip+'"></embed>';
     $("#in_cam_add_camera").append(html);
     //$(".camera-add-view").hide();
     
