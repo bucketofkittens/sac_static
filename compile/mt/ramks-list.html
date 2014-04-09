@@ -5,7 +5,7 @@
 	<div class="menu">
 	<% _.each(frames, function(item,key) { %>
 		<div class="ramp-entry sidebar-entry" data-index="<%= item.index %>">
-			<p class="num">Рамка № <%= item.index %></p>
+			<p class="num"><%= item.number %></p>
 			<p class="position-name"><%= item.positionName %></p>
 			<p class="position"><%= item.positionСoords %></p>
 		</div>

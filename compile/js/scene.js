@@ -227,6 +227,8 @@ var SceneInfoWidget = function(app, panel) {
     }
 
     this.onCameraClick_ = function(e) {
+        $(".tooltip-main-map").remove();
+
         var index = $(e.target).attr("data-index");
 
         var camera = null;
@@ -242,6 +244,7 @@ var SceneInfoWidget = function(app, panel) {
         '        <div class="center">' +
         '            <p class="gosnumber">'+camera.number+'</p>' +
         '            <p>'+camera.adress+'</p>' +
+        '            <p class="gosnumber more">Подробнее</p>' +
         '        </div>' +
         '    </div>' +
         '</div>';
