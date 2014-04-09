@@ -56,7 +56,7 @@ window.AppData.frames = [
 window.AppData.camers = [
     {
         index: 0,
-        position: {top: 173 , left: 820},
+        position: {top: 173 , left: 738},
         number: 'Камера 1',
         adress: 'Адресс 1',
         positionСoords: '55°48’36   37°26’33',
@@ -64,7 +64,7 @@ window.AppData.camers = [
     },
     {
         index: 1,
-        position: {top: 200 , left: 448},
+        position: {top: 223 , left: 381},
         number: 'Камера 2',
         adress: 'Адресс 2',
         positionСoords: '55°48’36   37°26’33',

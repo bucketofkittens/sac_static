@@ -561,7 +561,7 @@ td.time { color: #7dc2e3; }
     background-size: 100% 100%;
     width: 40px;
     height: 40px;
-    position: absolute;
+    position: absolute !important;
     top: 40%;
     left: 50%;
     cursor: pointer;
@@ -790,4 +790,9 @@ embed.tablecam {
 
 .menu .sidebar-entry {
     padding-top: 0px;
+}
+
+#camers-main .tooltip .close, #ramks-main .tooltip .close {
+    top: 20px;
+    right: 10px;
 }
