@@ -58,7 +58,7 @@ window.AppData.camers = [
         index: 0,
         position: {top: 173 , left: 738},
         number: 'Камера 1',
-        adress: 'Адресс 1',
+        adress: 'ул Репина, 8',
         positionСoords: '55°48’36   37°26’33',
         ip: "10.10.1.14"
     },
@@ -66,7 +66,7 @@ window.AppData.camers = [
         index: 1,
         position: {top: 223 , left: 381},
         number: 'Камера 2',
-        adress: 'Адресс 2',
+        adress: 'ул Кирова, 7',
         positionСoords: '55°48’36   37°26’33',
         ip: "10.10.1.15",
         
@@ -75,7 +75,7 @@ window.AppData.camers = [
         index: 2,
         position: {top: 381 , left: 498},
         number: 'Камера 3',
-        adress: 'Адресс 3',
+        adress: 'ул Оборонная, 25/3',
         positionСoords: '55°48’36   37°26’33',
         ip: "10.10.1.16"
     }
