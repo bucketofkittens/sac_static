@@ -455,8 +455,7 @@ TariffCamersMainWidget.onCamera_ = function(e) {
     var camera = this.getCameraByIndex_(index);
 
     ip = showFakeCamera(camera, enterIp);
-
-    var html = '<embed type="application/x-vlc-plugin" pluginspage="http://www.videolan.org" version="VideoLAN.VLCPlugin.2"  width="400px"  height="300px" id="vlc" loop="yes" autoplay="no" target="'+ip+'"></embed>';
+    html = getVideoTag(ip);
     $("#in_cam_add_camera").html(html);
     //$(".camera-add-view").hide();
     
@@ -471,7 +470,7 @@ TariffCamersMainWidget.onCameraEdit_ = function(e) {
 
     ip = showFakeCamera(camera, enterIp);
 
-    var html = '<embed allowfullscreen="false" controls="false" toolbar="false" controls="false" toolbar="false" type="application/x-vlc-plugin" pluginspage="http://www.videolan.org" version="VideoLAN.VLCPlugin.2"  width="400px"  height="300px" id="vlc" loop="yes" autoplay="yes" target="'+ip+'"></embed>';
+    html = getVideoTag(ip);
     $("#in_cam_edit_camera").html(html);
     $(".camera-edit-view").hide();
     //$(".camera-add-view").attr("src", "rtsp://"+$(e.target).val()+"/video.pro1");
