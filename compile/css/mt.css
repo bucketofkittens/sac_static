@@ -475,12 +475,15 @@ td.time { color: #7dc2e3; }
     text-decoration: none;
 }
 
-.widget input[type=number] {
+#event-tariff-menu input[type=text] {
     background: transparent;
     color: white;
     border: none;
     width: 3em;
     font-size: 80%;
+    text-align: center;
+    display: inline-block;
+    -webkit-appearance: none !important;
 }
 
 .tariff-bar {

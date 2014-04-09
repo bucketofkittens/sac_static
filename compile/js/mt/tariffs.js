@@ -146,7 +146,7 @@ var TariffListWidget = function(panel, options) {
         input.val(val+0.5);
         input.trigger('change');
     });
-    $("body").on('change', 'input[type=number]', function() {
+    $("body").on('change', '#event-tariff-menu  input[type=text]', function() {
        var groupTag = $(this).closest('tbody');
        var base  = parseFloat(groupTag[0].dataset.cost);
        var day   = parseFloat(groupTag.find('input').first().val());
@@ -740,6 +740,7 @@ var VideoMainWidget = Object.create(ExWidget);
 VideoMainWidget.navId = "#video-main";
 
 VideoMainWidget.show = function() {
+    /*
     var video = document.querySelector("#current_video");
  
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
@@ -751,6 +752,6 @@ VideoMainWidget.show = function() {
     function handleVideo(stream) {
         video.src = window.URL.createObjectURL(stream);
     }
-
+    */
     $(this.navId).removeClass('hidden');
 }
