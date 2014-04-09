@@ -336,6 +336,11 @@ TariffCamersMainWidget.addCamera_ = function(event) {
     this.createCamera(newCamera);
     this.closeAdd();
 
+    $("#new_camers_index").val("");
+    $("#new_camers_adress").val("");
+    $("#new_camers_coords").val("");
+    $("#new_camers_ip").val("");
+
     this.panel.stateWidgets.cameras.list.refresh();
 }
 
@@ -569,6 +574,11 @@ TariffRamkMainWidget.addFrame_ = function(event) {
     window.AppData.frames.push(newFrame);
     this.createFrame(newFrame);
     this.closeAdd();
+
+    $("#new_frame_index").val("");
+    $("#new_frame_adress").val("");
+    $("#new_frame_coords").val("");
+    $("#new_frame_ip").val("");
 
     this.panel.stateWidgets.ramks.list.refresh();
 }
