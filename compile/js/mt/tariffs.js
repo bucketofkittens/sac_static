@@ -154,7 +154,7 @@ var TariffListWidget = function(panel, options) {
        var avg   = (day+night)/2;
        var load  = base/avg;
        var oldLoad = groupTag.find('tr:last td:last').text();
-       var delta = (Math.round(load*100)-oldLoad)/4;
+       var delta = ((Math.round(load*100)-oldLoad)/4).toFixed(1);
        
        groupTag.find('tr:last td:last').text(Math.round(load*100));
 
@@ -162,7 +162,7 @@ var TariffListWidget = function(panel, options) {
         console.log($(item).attr("id"));
         console.log($(groupTag).attr("id"));
         if($(item).attr("id") != $(groupTag).attr("id")) {
-            $(item).find(".road-load").html(parseInt(parseInt($(item).find(".road-load").html())+delta));
+            $(item).find(".road-load").html((parseFloat($(item).find(".road-load").html())+parseFloat(delta)).toFixed(1));
         }
        });
     });
