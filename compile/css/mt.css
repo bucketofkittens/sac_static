@@ -828,3 +828,13 @@ embed.tablecam {
     top: 20px;
     right: 10px;
 }
+
+.gss {
+    position: absolute;
+    display: block;
+    top: -35px;
+    left: 370px;    
+    color: #ffffff;
+    font-family: EuropeExt, sans-serif;
+    font-size: 25px;
+}

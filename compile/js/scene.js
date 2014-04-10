@@ -362,7 +362,7 @@ var SceneInfoWidget = function(app, panel) {
         e.preventDefault()
         this.showSimpleContent({
           id: 'sceneinfo-graph',
-          content: '<img src="/static/images/connect.png">'
+          content: '<b class="gss">Граф социальных связей</b><img src="/static/images/connect.png">'
         })
     }
 
