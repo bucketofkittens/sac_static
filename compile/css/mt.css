@@ -384,13 +384,13 @@
     background: #056fa7;
     box-shadow: 2px 3px 9px 0px rgba(0, 0, 0, 0.33);
     color: white;
-    width: 8em;
+    width: 7em;
     margin: 0 0.5em 1em;
     padding: 0.2em;
     float: right;
     text-align: center;
-    font-size 120%;
     cursor: pointer;
+    box-shadow: inset -43px 0px 0px 1px rgba(84, 136, 171, 0.5);
 }
 
 .gosnumber:hover {
