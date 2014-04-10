@@ -401,6 +401,9 @@
 .event-ramp-trucks .gosnumber {
     box-shadow: inset -43px 0px 0px 1px rgba(84, 136, 171, 0.5);    
 }
+#events-truck-info .gosnumber {
+    box-shadow: inset -43px 0px 0px 1px rgba(84, 136, 171, 0.5);    
+}
 
 td > .gosnumber { margin: 1px; }
 td > .gosnumber, td.time { float: none; }
