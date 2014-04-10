@@ -110,57 +110,54 @@ var EventMainWidget = function(panel, options) {
     this.truckMenu = function(e) {
         var index = parseInt(e.target.getAttribute('data-index'));
         var truck = this.trucks[index];
-        if (truck.tooltip) {
-            truck.tooltip.toggle();
-        } else {
-            var menu = new EventMapTruckMenuWidget({
-                container: $('#events-map'),
-                index: truck.index,
-                target: e.target,
-                class: 'event-truck-menu',
-                side: truck.toolTipDir,
-                color: (truck.type == 'bad') ? 'red' : 'blue',
-            }, application.panels.SVP);
-            menu.setContent('<span class="close"></span>' +
-                '<div class="center">' +
-                '<p class="time">'+truck.time+'</p>' +
-                '<p class="gosnumber">'+truck.number+'</p>' +
-                '<p class="truck-status">'+truck.status+'</p>' +
-                '<p class="gosnumber more">Подробнее</p>' +
-                '<div class="well photo" style="height: 220px;">' +
-                '<img class="truck-photo" src="'+truck.images[0]+'">' +
-                '<img class="truck-photo" src="'+truck.images[1]+'">' +
-                '</div>' +
-            '</div>');
-            menu.show();
-            truck.tooltip = menu;
-        }
+
+        $(".event-truck-menu").remove();
+
+        var menu = new EventMapTruckMenuWidget({
+            container: $('#events-map'),
+            index: truck.index,
+            target: e.target,
+            class: 'event-truck-menu',
+            side: truck.toolTipDir,
+            color: (truck.type == 'bad') ? 'red' : 'blue',
+        }, application.panels.SVP);
+        menu.setContent('<span class="close"></span>' +
+            '<div class="center">' +
+            '<p class="time">'+truck.time+'</p>' +
+            '<p class="gosnumber">'+truck.number+'</p>' +
+            '<p class="truck-status">'+truck.status+'</p>' +
+            '<p class="gosnumber more">Подробнее</p>' +
+            '<div class="well photo" style="height: 220px;">' +
+            '<img class="truck-photo" src="'+truck.images[0]+'">' +
+            '<img class="truck-photo" src="'+truck.images[1]+'">' +
+            '</div>' +
+        '</div>');
+        menu.show();
+        truck.tooltip = menu;
     }
 
     this.rampMenu = function(e) {
         var index = parseInt(e.target.getAttribute('data-index'));
         var ramp = window.AppData.frames[index];
 
-        if (ramp.tooltip) {
-            ramp.tooltip.toggle();
-        } else {
-            var menu = new EventMapRampMenuWidget({
-                container: $('#events-map'),
-                index: ramp.index,
-                target: e.target,
-                class: 'event-ramp-menu',
-                side: 'bottom',
-                color: 'blue',
-            }, ramp, application.panels.SVP);
-            menu.setContent('<span class="close"></span>' +
-                    '<div class="center">' +
-                    '<p class="gosnumber">'+ramp.number+'</p>' +
-                    '<p>Журнал</p>' +
-                    '<p class="gosnumber more">Подробнее</p>' +
-                    '</div>');
-            menu.show();
-            ramp.tooltip = menu;
-        }
+        $(".event-ramp-menu").remove();
+
+        var menu = new EventMapRampMenuWidget({
+            container: $('#events-map'),
+            index: ramp.index,
+            target: e.target,
+            class: 'event-ramp-menu',
+            side: 'bottom',
+            color: 'blue',
+        }, ramp, application.panels.SVP);
+        menu.setContent('<span class="close"></span>' +
+                '<div class="center">' +
+                '<p class="gosnumber">'+ramp.number+'</p>' +
+                '<p>Журнал</p>' +
+                '<p class="gosnumber more">Подробнее</p>' +
+                '</div>');
+        menu.show();
+        ramp.tooltip = menu;
     }
 
     this.drawItems = function() {
@@ -242,7 +239,7 @@ var EventMainWidget = function(panel, options) {
         var thisContainer = jQuery('#event-main-truck-info');
         var updateInfo = function () {
             var e = jQuery(elem);
-            thisContainer.find('p.gosnumber').text(e.find('.gosnumber').text());
+            thisContainer.find('p.gosnumber').text(e.find('.gosnumber').text().replace("Подробнее", ""));
             thisContainer.find('p.time').text(e.find('.time').text());
             thisContainer.find('p.truck-status').text(e.find('.truck-status').text());
             thisContainer.find('.well.photo').html(e.find('.well').html());
