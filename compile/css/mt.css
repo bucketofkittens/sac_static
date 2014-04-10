@@ -265,6 +265,8 @@
     color: black;
     line-height: 32px;
     background-size: 32px;
+    z-index: 9;
+    cursor: pointer;
 }
 
 .events-map .placemark.good {
