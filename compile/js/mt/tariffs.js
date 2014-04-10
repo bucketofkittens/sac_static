@@ -407,12 +407,6 @@ TariffCamersMainWidget.showEdit = function(e) {
     var camera = this.getCameraByIndex_($(e.target).parents(".event-ramp-menu").attr("data-index"));
     
     $(e.target).parents(".tooltip").remove();
-
-    if(camera.number.lenght > 0) {
-        $(this.navId + " .editbox h3").html(camera.number);
-    } else {
-        $(this.navId + " .editbox h3").html("<br />");
-    }
     
 
     $("#in_cam_edit_camera embed").attr("target", showFakeCamera(camera.ip));
@@ -610,12 +604,6 @@ TariffRamkMainWidget.showEdit = function(e) {
 
     $("#in_cam_edit_ramkc").attr("target", showFakeCamera(frame.ip));
 
-    if(frame.number.lenght > 0) {
-        $(this.navId + " .editbox h3").html(frame.number);
-    } else {
-        $(this.navId + " .editbox h3").html("<br />");
-    }
-    
 
     $("#edit_frame_adress").val(frame.positionName);
     $("#edit_frame_ip").val(frame.ip);
