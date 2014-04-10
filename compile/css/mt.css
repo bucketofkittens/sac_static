@@ -390,11 +390,13 @@
     float: right;
     text-align: center;
     cursor: pointer;
-    box-shadow: inset -43px 0px 0px 1px rgba(84, 136, 171, 0.5);
 }
 
 .gosnumber:hover {
   box-shadow: 2px 3px 9px 0px rgba(90, 90, 90, 0.33);
+}
+.sidebar-entry .gosnumber {
+    box-shadow: inset -43px 0px 0px 1px rgba(84, 136, 171, 0.5);    
 }
 
 td > .gosnumber { margin: 1px; }
