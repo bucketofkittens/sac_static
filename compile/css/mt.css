@@ -448,7 +448,7 @@ td.time { color: #7dc2e3; }
 
 .ramp-frame {
     box-sizing: border-box;
-    padding: 0.5em;
+    padding: 0.65em 0.5em;
     display: block;
     width: 100%;
 }
@@ -678,7 +678,7 @@ button.check {
     margin: 5px auto;
     padding: 0px;
     width: 400px;
-    height: 300px;
+    height: 225px;
     border-radius: 5px;
     box-shadow: 0 0 10px 2px #8fb7d3;
 }
