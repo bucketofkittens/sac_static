@@ -520,6 +520,14 @@ td.time { color: #7dc2e3; }
     width: 270px;
     height: 300px;
 }
+#reference-nav i {
+    position: absolute;
+    top: 10px;
+    left: 30px;
+    font-size: 20px;
+    color: #8fb7d3;
+    font-family: 'Open Sans',sans-serif;
+}
 #reference-nav ul {
     position: relative;
     top: 48px;
@@ -791,7 +799,7 @@ button.check {
 }
 
 #video-main {
-    padding: 100px 0px 0px 65px;
+    padding: 100px 0px 0px 70px;
     margin-top: -40px;
 }
 .tablecam {
