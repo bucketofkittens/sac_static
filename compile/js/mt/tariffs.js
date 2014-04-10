@@ -160,6 +160,7 @@ var TariffListWidget = function(panel, options) {
 
        _.each($('#event-tariff-menu tbody'), function(item) {
         console.log($(item).attr("id"));
+        console.log($(groupTag).attr("id"));
         if($(item).attr("id") != $(groupTag).attr("id")) {
             $(item).find(".road-load").html(parseInt(parseInt($(item).find(".road-load").html())+delta));
         }
