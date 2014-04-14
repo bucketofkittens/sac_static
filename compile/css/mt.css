@@ -401,9 +401,8 @@
 .truck-entry.bad {
     background: #994040;
 }
-
-.gosnumber:hover {
-  box-shadow: 2px 3px 9px 0px rgba(90, 90, 90, 0.33);
+#camers-main .gosnumber, #ramks-main .gosnumber {
+    box-shadow: none;
 }
 .truck-entry .gosnumber {
     box-shadow: inset -43px 0px 0px 1px rgba(84, 136, 171, 0.5);    
