@@ -391,6 +391,9 @@
     text-align: center;
     cursor: pointer;
 }
+.gosnumber.bad {
+    background: #994040;
+}
 
 .gosnumber:hover {
   box-shadow: 2px 3px 9px 0px rgba(90, 90, 90, 0.33);
