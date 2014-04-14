@@ -8,13 +8,13 @@ var ConfigApp = {
 	"API-HOST": window.location.origin, /* window.location.origin works only in webkit */
 	"FOOTER-NAV": {
         "EVENTS": {
-            "title": "События"
+            "title": "Реагирование"
         },
         "REGIONS": {
-            "title": "Регионы"
+            "title": "Аналитика"
         },
         "SVP": {
-            "title": "СВП"
+            "title": "Транспорт"
         },
         "DCH": {
             "title": "ВН"
