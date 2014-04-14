@@ -255,7 +255,9 @@ var EventMainWidget = function(panel, options) {
             var index = $(e).attr("data-index");
             var truck = self.truckById(index);
 
-            thisContainer.find('p.gosnumber').html("<span class='"+truck.type+"'>"+truck.number+"</span>");
+            thisContainer.find('p.gosnumber').html(truck.number);
+            thisContainer.find('p.gosnumber').removeClass("bad").removeClass("good");
+            thisContainer.find('p.gosnumber').addClass(truck.type);
             thisContainer.find('p.time').html(truck.time);
             thisContainer.find('p.truck-status').html(truck.status);
 
