@@ -20,7 +20,7 @@ var EventMainWidget = function(panel, options) {
             position: {top: 460, left: 840},
             toolTipDir: 'bottom',
             time: '18.02 15:32',
-            number: 'K 101 PA 95',
+            number: 'K 101 PA &nbsp; 95',
             status: 'Оплачено',
             images: [
                 "/static/images/mt/truck-info-photo.jpg",
@@ -33,7 +33,7 @@ var EventMainWidget = function(panel, options) {
             position: {top: 320, left: 475},
             toolTipDir: 'top',
             time: '18.02 15:32',
-            number: 'E 551 TT 177',
+            number: 'E 551 TT &nbsp; 177',
             status: 'Несоответствие НЗ',
             images: [
                 "/static/images/mt/truck-info-photo2.jpg",
@@ -46,7 +46,7 @@ var EventMainWidget = function(panel, options) {
             position: {top: 392, left: 750},
             toolTipDir: 'bottom',
             time: '23.02 15:32',
-            number: 'X 399 BX 177',
+            number: 'X 399 BX &nbsp; 177',
             status: 'Оплачено',
             images: [
                 "/static/images/mt/truck-info-photo3.jpg",
@@ -59,7 +59,7 @@ var EventMainWidget = function(panel, options) {
             position: {top: 512, left: 250},
             toolTipDir: 'bottom',
             time: '23.02 15:32',
-            number: 'X 499 BX 177',
+            number: 'X 499 BX &nbsp; 177',
             status: 'Оплачено',
             images: [
                 "/static/images/mt/truck-info-photo3.jpg",
@@ -72,7 +72,7 @@ var EventMainWidget = function(panel, options) {
             position: {top: 292, left: 550},
             toolTipDir: 'bottom',
             time: '23.02 15:32',
-            number: 'X 599 BX 177',
+            number: 'X 599 BX &nbsp; 177',
             status: 'Оплачено',
             images: [
                 "/static/images/mt/truck-info-photo3.jpg",
@@ -85,7 +85,7 @@ var EventMainWidget = function(panel, options) {
             position: {top: 212, left: 750},
             toolTipDir: 'bottom',
             time: '23.02 15:32',
-            number: 'X 699 BX 177',
+            number: 'X 699 BX &nbsp; 177',
             status: 'Оплачено',
             images: [
                 "/static/images/mt/truck-info-photo3.jpg",
@@ -98,7 +98,7 @@ var EventMainWidget = function(panel, options) {
             position: {top: 512, left: 550},
             toolTipDir: 'bottom',
             time: '23.02 15:32',
-            number: 'X 799 BX 177',
+            number: 'X 799 BX &nbsp; 177',
             status: 'Оплачено',
             images: [
                 "/static/images/mt/truck-info-photo3.jpg",
