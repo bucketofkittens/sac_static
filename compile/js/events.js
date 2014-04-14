@@ -183,12 +183,20 @@ var OnEventsChangeState = function(app, map, video_id, currentRegion) {
 	this.finishEvent += 1;
 	//this.app.legendWidget.hide();
 
-	this.app.videoPlayer.play(
-		video_id,
-		{
-			onEndedCallback: $.proxy(this.onAfterEvent_, this),
-			poster: this.map.bgImage,
-      map: self.map	
-		}
-	);
+
+	var mobile = navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i);
+
+	if(!mobile) {
+		this.app.videoPlayer.play(
+			video_id,
+			{
+				onEndedCallback: $.proxy(this.onAfterEvent_, this),
+				poster: this.map.bgImage,
+	      		map: self.map	
+			}
+		);	
+	} else {
+		this.onAfterEvent_();
+	}
+	
 }

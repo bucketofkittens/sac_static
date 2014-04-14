@@ -221,8 +221,8 @@ var RegionPanel = Panel.extend({
 	},
 
 	show: function() {
-    this.setBg();
-    this.app.setAppTitle('Россия')
+	    this.setBg();
+	    this.app.setAppTitle('Россия')
 		this.elements["BG-IMAGE"].addClass("onShow");
 
 		if(this.currentCamera != "LEFT") {
@@ -244,7 +244,7 @@ var RegionPanel = Panel.extend({
 		this.elements["BG-IMAGE"].removeClass("onShow");
 		this.elements["CAMERA-LEFT"].removeClass("onShow");
 		this.elements["CAMERA-RIGHT"].removeClass("onShow");
-    $('#bg-colored-image').css({backgroundImage: 'none'});
+    	$('#bg-colored-image').css({backgroundImage: 'none'});
 
 		this.widgets.regionsParametrs.fullHidden();
 
@@ -278,15 +278,21 @@ var RegionPanel = Panel.extend({
 			endState = "CENTER";
 		}
 
-    var poster =  (this.bgImage || '/static/images/map/all-regions-center.jpg')
-		this.app.videoPlayer.play(
-			this.app.getResByPath(this.getVideoName(startState, endState)) ,
-			{
-				onEndedCallback: $.proxy(this.onVideoPlayEnd_, this),
-				poster: poster
-			}
-		);
-		
+		var mobile = navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i);
+
+		if(!mobile) {
+			var poster =  (this.bgImage || '/static/images/map/all-regions-center.jpg')
+
+			this.app.videoPlayer.play(
+				this.app.getResByPath(this.getVideoName(startState, endState)) ,
+				{
+					onEndedCallback: $.proxy(this.onVideoPlayEnd_, this),
+					poster: poster
+				}
+			);
+		} else {
+			this.onVideoPlayEnd_();
+		}
 	},
 
 	onVideoPlayEnd_ : function() {
@@ -327,14 +333,21 @@ var RegionPanel = Panel.extend({
 			startState = "LEFT";
 			endState = "CENTER";
 		}
-    var poster =  (this.bgImage || '/static/images/map/all-regions-center.jpg')
-		this.app.videoPlayer.play(
-			this.app.getResByPath(this.getVideoName(startState, endState)) ,
-			{
-				onEndedCallback: $.proxy(this.onVideoPlayEnd_, this),
-				poster: poster
-			}
-		);
+
+		var mobile = navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i);
+		if(!mobile) {
+			var poster =  (this.bgImage || '/static/images/map/all-regions-center.jpg')
+			this.app.videoPlayer.play(
+				this.app.getResByPath(this.getVideoName(startState, endState)) ,
+				{
+					onEndedCallback: $.proxy(this.onVideoPlayEnd_, this),
+					poster: poster
+				}
+			);
+		} else {
+			this.onVideoPlayEnd_();
+		}
+    	
 	},
 
 	bindEvents_ : function() {

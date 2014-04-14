@@ -142,7 +142,7 @@ var VideoPlayer = function() {
 		if(e.currentTarget.duration - e.currentTarget.currentTime < 0.2) {
 			e.currentTarget.pause();
 			this.endedCallback();
-      this.video.off('playing');
+      		this.video.off('playing');
 		}
 	}
 
@@ -158,7 +158,7 @@ var VideoPlayer = function() {
 		if(config && config.onEndedCallback) {
 			this.endedCallback = config.onEndedCallback;
 		}
-	  this.video.on('playing', function(){if (config.map) {config.map.setBgImage()}});
+	  	this.video.on('playing', function(){if (config.map) {config.map.setBgImage()}});
 		
 		this.video[0].load();
 		this.video[0].play();
