@@ -528,7 +528,7 @@ var DchPanel = Panel.extend({
 
     show: function() {
 		this.elements["CONTAINER"].removeClass("hidden");
-
+		this.app.pageTitleWidget.set('ВН').show();
 		_.each(this.widgets, function(w){ w.show(); });
 	},
 
