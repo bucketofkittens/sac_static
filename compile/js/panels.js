@@ -491,7 +491,7 @@ var SvpPanel = Panel.extend({
 		    this.elements["CONTAINER"].removeClass("hidden");
         this.map.show();
         _.each(this.widgets, function(w){ w.show(); });
-        this.app.pageTitleWidget.set('СВП').show();
+        this.app.pageTitleWidget.set('Транспорт').show();
 	},
 
 	hide: function() {
@@ -578,7 +578,7 @@ var TariffsPanel = Panel.extend({
         _.each(this.widgets, function(w){ 
         	w.show(); 
        	});
-        this.app.pageTitleWidget.set('Тарифы').show();
+        this.app.pageTitleWidget.set('Справочники').show();
         this.changeState("cameras");
     },
 
