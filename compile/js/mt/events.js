@@ -234,15 +234,37 @@ var EventMainWidget = function(panel, options) {
         }
     };
 
+    this.truckById = function(index) {
+        var ret = null;
+        _.each(this.trucks, function (truck) {
+            if(truck.index == index) {
+                ret = truck;   
+            }
+        });
+
+        return ret;
+    }
+
     this.showTruckInfo = function (elem, event) {
         if (event && ('preventDefault' in event)) event.preventDefault();
         var thisContainer = jQuery('#event-main-truck-info');
+        var self = this;
+
         var updateInfo = function () {
             var e = jQuery(elem);
-            thisContainer.find('p.gosnumber').text(e.find('.gosnumber').text().replace("Подробнее", ""));
-            thisContainer.find('p.time').text(e.find('.time').text());
-            thisContainer.find('p.truck-status').text(e.find('.truck-status').text());
-            thisContainer.find('.well.photo').html(e.find('.well').html());
+            var index = $(e).attr("data-index");
+            var truck = self.truckById(index);
+
+            thisContainer.find('p.gosnumber').html("<span class='"+truck.type+"'>"+truck.number+"</span>");
+            thisContainer.find('p.time').html(truck.time);
+            thisContainer.find('p.truck-status').html(truck.status);
+
+            var photos = '';
+            _.each(truck.images, function(image) {
+                photos +='<img class="truck-photo" src="'+image+'" />';
+            });
+            
+            thisContainer.find('.well.photo').html(photos);
         };
         if (thisContainer.length) {
             thisContainer.removeClass('hidden');
