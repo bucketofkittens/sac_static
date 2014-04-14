@@ -302,6 +302,12 @@ var Application = function() {
 
 		// TODO: Enable caching, when needed: this.initResource_();
         this.onCacheLoaded_();
+
+        var mobile = navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i);
+
+		if(!mobile) {
+			$("html").attr("manifest", "/static/cache.appcache");
+		}
 	}
 
 	// Загружаем ресурсы, используя родной applicationCache
