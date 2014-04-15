@@ -247,6 +247,8 @@ var EventMainWidget = function(panel, options) {
 
     this.element.on('click', '.close-button', function (e) {
         this.showMap(e);
+
+        $(".ramp-entry").removeClass("current");
         $("#event-truck-menu .truck-entry").removeClass("current");
     }.bind(this));
 
@@ -388,6 +390,16 @@ var EventMapRampMenuWidget = function(options, ramp, panel) {
         this.innerElement.html(content);
 
         this.element.find(".gosnumber").on('click', function (e) {
+            $(".ramp-entry").removeClass("current");
+
+            var self = this;
+            var index = $(e.target).parents(".tooltip").attr("data-index");
+            $.each($(".ramp-entry"), function(key, item) {
+                if($(item).attr("data-index") == index) {
+                    $(item).addClass("current");
+                }
+            });
+
             this.panel.widgets.mainWidget.showRampInfo(e, this.ramp);
         }.bind(this));
 
@@ -442,6 +454,8 @@ var EventSidebarWidget = function(panel, options) {
         if (thisContainer.length) {
             thisContainer.removeClass('hidden');
             thisContainer.siblings('.widget-obscure').addClass('hidden');
+
+            thisContainer.find(".sidebar-entry:first-child").click();
         } else {
             thisContainer = $('<div id="event-sidebar-trucks" class="widget-obscure hidden hide-to-left">');
 
@@ -454,6 +468,9 @@ var EventSidebarWidget = function(panel, options) {
                 thisContainer.siblings('.widget-obscure').addClass('hidden');
                 thisContainer.removeClass('hidden');
 
+                thisContainer.find(".sidebar-entry:first-child").click();
+
+
                 $("#event-truck-menu").on('click', '.truck-entry', function() {
                     window.application.panels.SVP.widgets.mainWidget.showTruckInfo(this);
                     $("#event-truck-menu .truck-entry").removeClass("current");
@@ -461,6 +478,8 @@ var EventSidebarWidget = function(panel, options) {
                 });
             });
         }
+
+
     };
 
     this.drawFrames = function() {
@@ -478,6 +497,8 @@ var EventSidebarWidget = function(panel, options) {
         });
 
         jQuery("#event-ramp-menu").on('click', '.ramp-entry', function(e) {
+            $(".ramp-entry").removeClass("current");
+            $(this).addClass("current");
             window.application.panels.SVP.widgets.mainWidget.showRampInfo(e, window.AppData.frames[this.dataset.index]);
         });
     }
@@ -489,6 +510,8 @@ var EventSidebarWidget = function(panel, options) {
         if (thisContainer.length) {
             thisContainer.removeClass('hidden');
             thisContainer.siblings('.widget-obscure').addClass('hidden');
+
+            thisContainer.find(".sidebar-entry:first-child").click();
         } else {
             thisContainer = $('<div id="event-sidebar-ramps" class="widget-obscure hidden hide-to-left">');
             this.element.append(thisContainer);
@@ -497,6 +520,8 @@ var EventSidebarWidget = function(panel, options) {
                 thisContainer.siblings('.widget-obscure').addClass('hidden');
                 thisContainer.removeClass('hidden');
                 self.drawFrames();
+
+                thisContainer.find(".sidebar-entry:first-child").click();
             });
         }
     };
