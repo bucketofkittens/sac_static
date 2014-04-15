@@ -401,7 +401,7 @@
 .truck-entry.bad {
     background: #994040;
 }
-#camers-main .gosnumber, #ramks-main .gosnumber, #scene-info-map .gosnumber {
+#camers-main .gosnumber, #ramks-main .gosnumber, #scene-info-map .gosnumber, .event-ramp-menu .gosnumber {
     box-shadow: none;
 }
 .truck-entry .gosnumber {
