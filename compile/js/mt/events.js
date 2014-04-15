@@ -13,103 +13,11 @@ var EventMainWidget = function(panel, options) {
     this.element.addClass('widget widget-xl');
     jQuery(this.options.container).append(this.element);
 
-    this.trucks = [
-        {
-            index: 0,
-            type: 'good',
-            position: {top: 460, left: 840},
-            toolTipDir: 'bottom',
-            time: '18.02 15:32',
-            number: 'K 101 PA &nbsp; 95',
-            status: 'Оплачено',
-            images: [
-                "/static/images/mt/truck-info-photo.jpg",
-                "/static/images/mt/truck-info-photo-number.jpg"
-            ]
-        },
-        {
-            index: 1,
-            type: 'bad',
-            position: {top: 320, left: 475},
-            toolTipDir: 'top',
-            time: '18.02 15:32',
-            number: 'E 551 TT &nbsp; 177',
-            status: 'Несоответствие НЗ',
-            images: [
-                "/static/images/mt/truck-info-photo2.jpg",
-                "/static/images/mt/truck-info-photo-number2.jpg"
-            ]
-        },
-        {
-            index: 2,
-            type: 'good',
-            position: {top: 392, left: 750},
-            toolTipDir: 'bottom',
-            time: '23.02 15:32',
-            number: 'X 399 BX &nbsp; 177',
-            status: 'Оплачено',
-            images: [
-                "/static/images/mt/truck-info-photo3.jpg",
-                "/static/images/mt/truck-info-photo-number3.jpg"
-            ]
-        },
-        {
-            index: 3,
-            type: 'good',
-            position: {top: 512, left: 250},
-            toolTipDir: 'bottom',
-            time: '23.02 15:32',
-            number: 'X 499 BX &nbsp; 177',
-            status: 'Оплачено',
-            images: [
-                "/static/images/mt/truck-info-photo3.jpg",
-                "/static/images/mt/truck-info-photo-number3.jpg"
-            ]
-        },
-        {
-            index: 4,
-            type: 'good',
-            position: {top: 292, left: 550},
-            toolTipDir: 'bottom',
-            time: '23.02 15:32',
-            number: 'X 599 BX &nbsp; 177',
-            status: 'Оплачено',
-            images: [
-                "/static/images/mt/truck-info-photo3.jpg",
-                "/static/images/mt/truck-info-photo-number3.jpg"
-            ]
-        },
-        {
-            index: 5,
-            type: 'good',
-            position: {top: 212, left: 750},
-            toolTipDir: 'bottom',
-            time: '23.02 15:32',
-            number: 'X 699 BX &nbsp; 177',
-            status: 'Оплачено',
-            images: [
-                "/static/images/mt/truck-info-photo3.jpg",
-                "/static/images/mt/truck-info-photo-number3.jpg"
-            ]
-        },
-        {
-            index: 6,
-            type: 'good',
-            position: {top: 512, left: 550},
-            toolTipDir: 'bottom',
-            time: '23.02 15:32',
-            number: 'X 799 BX &nbsp; 177',
-            status: 'Оплачено',
-            images: [
-                "/static/images/mt/truck-info-photo3.jpg",
-                "/static/images/mt/truck-info-photo-number3.jpg"
-            ]
-        }
-    ];
+    
 
     this.truckMenu = function(e) {
         var index = parseInt(e.target.getAttribute('data-index'));
-        var truck = this.trucks[index];
+        var truck = window.AppData.trucks[index];
 
         $(".event-truck-menu").remove();
 
@@ -168,7 +76,7 @@ var EventMainWidget = function(panel, options) {
         $(mapTag).find(".ramp").remove();
 
         // Add trucks to the map
-        _.each(this.trucks, function (truck) {
+        _.each(window.AppData.trucks, function (truck) {
             var truckMark = $('<div class="placemark truck">');
             truckMark.attr('data-index', truck.index);
             truckMark.addClass(truck.type);
@@ -236,7 +144,7 @@ var EventMainWidget = function(panel, options) {
 
     this.truckById = function(index) {
         var ret = null;
-        _.each(this.trucks, function (truck) {
+        _.each(window.AppData.trucks, function (truck) {
             if(truck.index == index) {
                 ret = truck;   
             }
@@ -339,6 +247,7 @@ var EventMainWidget = function(panel, options) {
 
     this.element.on('click', '.close-button', function (e) {
         this.showMap(e);
+        $("#event-truck-menu .truck-entry").removeClass("current");
     }.bind(this));
 
 };
@@ -392,6 +301,15 @@ var EventMapTruckMenuWidget = function(options, panel) {
 
         this.element.find(".gosnumber").on('click', function (e) {
             $(".tooltip").remove();
+            $("#event-truck-menu .truck-entry").removeClass("current");
+
+            var self = this;
+            var index = $(e.target).parents(".tooltip").attr("data-index");
+            $.each($("#event-truck-menu .truck-entry"), function(key, item) {
+                if($(item).attr("data-index") == index) {
+                    $(item).addClass("current");
+                }
+            });
             panel.widgets.mainWidget.showTruckInfo(this.element, e);
         }.bind(this));
 
@@ -402,14 +320,19 @@ var EventMapTruckMenuWidget = function(options, panel) {
 
     this.showTruckInfo = function (e) {
         if (e) e.preventDefault();
+        var self = this;
         var thisContainer = $('#event-main-truck-info');
         if (thisContainer.length) {
             thisContainer.removeClass('hidden');
             thisContainer.siblings().addClass('hidden');
         } else {
             thisContainer = $('<div id="#event-sidebar-trucks" class="widget-obscure hidden hide-to-left">');
+            t
             this.element.append(thisContainer);
             $.get('/static/compile/mt/event-sidebar-trucks.html', {}, function (data, status, jqxhr) {
+                console.log(data);
+                data = _.template(data, { trucks : window.AppData.trucks});
+
                 thisContainer.html(data);
                 thisContainer.siblings().addClass('hidden');
                 thisContainer.removeClass('hidden');
@@ -515,7 +438,7 @@ var EventSidebarWidget = function(panel, options) {
     this.showTrucks = function (e) {
         if (e) e.preventDefault();
         var thisContainer = $('#event-sidebar-trucks');
-
+        var self = this;
         if (thisContainer.length) {
             thisContainer.removeClass('hidden');
             thisContainer.siblings('.widget-obscure').addClass('hidden');
@@ -525,9 +448,17 @@ var EventSidebarWidget = function(panel, options) {
             this.element.append(thisContainer);
 
             $.get('/static/compile/mt/event-sidebar-trucks.html', {}, function (data, status, jqxhr) {
+                console.log(window.AppData.trucks);
+                data = _.template(data, { trucks : window.AppData.trucks});
                 thisContainer.html(data);
                 thisContainer.siblings('.widget-obscure').addClass('hidden');
                 thisContainer.removeClass('hidden');
+
+                $("#event-truck-menu").on('click', '.truck-entry', function() {
+                    window.application.panels.SVP.widgets.mainWidget.showTruckInfo(this);
+                    $("#event-truck-menu .truck-entry").removeClass("current");
+                    $(this).addClass("current");
+                });
             });
         }
     };
