@@ -801,7 +801,7 @@ function showFakeCamera(enterIp) {
     });
 
     if(!ip) {
-        ip = "rtsp://"+enterIp+"/live";
+        ip = "rtsp://"+enterIp+"/video.pro1";
     }
 
     return ip;
