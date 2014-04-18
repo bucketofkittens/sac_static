@@ -247,6 +247,35 @@
     text-align: center;
     font-family: 'EuropeExt',sans-serif;
 }
+#scene-info-photos .varz {
+  display: block;
+  max-height: 100px;
+}
+#scene-info-photos .varz h2 {
+  display: block;
+}
+#scene-info-photos .varz img {
+  display: inline-block;
+  width: 60px;
+  height: 77px;
+  border: 3px solid #ffffff;
+  margin-right: -5px;
+  cursor: pointer;
+  border-radius: 2px;
+}
+#scene-info-photos .varz img:hover {
+  border: 3px solid #5c9bc3;
+}
+#scene-info-photos .hov {
+  position: absolute;
+  height: 208px;
+  width: 158px;
+  left: 250px;
+  top: 37px;
+  border: 3px solid #5c9bc3;
+  border-radius: 3px;
+  display: none;
+}
 
 #scene-info-photos h1 { text-align: left; margin: 0 0 40px 20px; }
 #scene-info-photos h2 { text-align: left; font-size: 12pt; margin: 1em 0 0.25em 45px; color: #BBDDFF; text-transform: uppercase;}
