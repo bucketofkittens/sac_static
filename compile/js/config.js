@@ -17,7 +17,7 @@ var ConfigApp = {
             "title": "Транспорт"
         },
         "DCH": {
-            "title": "ВН"
+            "title": "Наблюдение"
         },
         "REFBOOKS": {
             "title": "Справочники"
