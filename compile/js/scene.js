@@ -80,6 +80,12 @@ var SceneInfoWidget = function(app, panel) {
                     thisContainer.html(data);
                     thisContainer.siblings().addClass('hidden');
                     thisContainer.removeClass('hidden');
+                    thisContainer.find(".varz img").hover(function() {
+                        $(".hov").show();
+                        $(".hov").attr("src", $(this).attr("src"));
+                    }, function() {
+                        $(".hov").hide();
+                    });
                 });
             }, 400);
         }
