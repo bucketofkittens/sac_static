@@ -250,6 +250,7 @@
 #scene-info-photos .varz {
   display: block;
   max-height: 100px;
+  margin-right: -15px;
 }
 #scene-info-photos .varz h2 {
   display: block;
