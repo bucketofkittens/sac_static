@@ -2,6 +2,89 @@
  * [SVGLoader description]
  * @param {[type]} app [description]
  */
+
+var olmap;
+ var mLayer;
+
+ function getTileURL(bounds)
+{
+            var res = this.map.getResolution();
+            var x = Math.round((bounds.left - this.maxExtent.left) / (res * this.tileSize.w));
+            var y = Math.round((this.maxExtent.top - bounds.top) / (res * this.tileSize.h));
+            var z = this.map.getZoom();
+            var limit = Math.pow(2, z);
+
+            if (y < 0 || y >= limit) {
+                return OpenLayers.Util.getImagesLocation() + "404.png";
+            } else {
+                x = ((x % limit) + limit) % limit;
+                return this.url + "x=" + x + "&y=" + y + "&z=" + z;    //+ "&ss=" + x + "-" + y + "-" + z
+            }
+
+} 
+
+var displObj = {};
+
+
+function showGis(id)
+{
+var gisDiv = document.createElement('div');
+	gisDiv.style.width = "90%";
+	gisDiv.style.height = "80%";
+	gisDiv.style.position = "absolute"; 
+	gisDiv.style.left = "5%"; 
+	gisDiv.style.top = "15%"; 
+	gisDiv.style.background = "#77a4d4"; 
+	gisDiv.style.borderStyle = "solid";
+	gisDiv.style.borderWidth = "3px";
+	gisDiv.style.borderColor = "#79a7d9";
+	gisDiv.id = "gis_div";
+	document.getElementById('bg-image').appendChild(gisDiv);
+
+displObj.events = document.getElementById('bg-events').style.display;
+		
+//	alert(document.getElementById('bg-svg').style.display);block
+//alert(document.getElementById('bg-event-image').style.display);0
+//alert(document.getElementById('bg-video').style.display);none
+//alert(document.getElementById('bg-regions-image').style.display);0
+//alert(document.getElementById('bg-colored-image').style.display);0
+//alert(document.getElementById('miniMap').style.display);0
+
+		document.getElementById('bg-events').style.display='none';
+		document.getElementById('bg-event-image').style.display='none';
+		document.getElementById('bg-svg').style.display='none';
+		document.getElementById('bg-regions-image').style.display='none';
+		document.getElementById('bg-colored-image').style.display='none';
+		document.getElementById('miniMap').className = 'temp';
+		document.getElementById('miniMap').style.display='none';
+
+             
+             olmap = new OLMap();
+
+             olmap.init("gis_div");
+
+
+             this.app.regionsManagerLocal.geRegionLatLonById(id);
+             this.app.regionsManagerLocal.getMarkers(id);
+
+}
+
+function removeGis()
+{
+document.getElementById('bg-events').style.display='yes';
+		document.getElementById('bg-event-image').style.display='';
+		document.getElementById('bg-svg').style.display='block';
+		document.getElementById('bg-video').style.display='';
+		document.getElementById('bg-regions-image').style.display='';
+		document.getElementById('bg-colored-image').style.display='';
+		document.getElementById('miniMap').className = 'onShow';
+		document.getElementById('miniMap').style.display='';
+
+var gisDiv = document.getElementById("gis_div");
+gisDiv.parentNode.removeChild(gisDiv);
+
+}
+
 var SVGLoader = function(app, config) {
 	this.app = app;
 	this.maxOpacity = 0.3;
@@ -67,7 +150,7 @@ var SVGLoader = function(app, config) {
 		$(svg).on("mouseover", function(event) {
 			if(event.target.nodeName == "svg" && self.app.parametrsWidgets.currentParametr && self.app.parametrsWidgets.currentParametr.id) {
 				self.app.legendParamsManager.getLegendByParamAndSubject(
-					self.app.parametrsWidgets.currentParametr.id, 
+					self.app.parametrsWidgets.currentParametr.id,
 					self.app.currentRegion,
 					self.app.ageSelectorWidget.selectedYear,
 					function(data) {
@@ -79,16 +162,16 @@ var SVGLoader = function(app, config) {
 
 						$.each(data, function(value, key){
 							if(key == "#7fff7f") {
-								newData["green"][0] += 1; 
+								newData["green"][0] += 1;
 							}
 							if(key == "#ff7f7f") {
-								newData["red"][0] += 1; 
+								newData["red"][0] += 1;
 							}
 							if(key == "#ffff7f") {
-								newData["yellow"][0] += 1; 
+								newData["yellow"][0] += 1;
 							}
 							if(!key) {
-								newData["blue"][0] += 1; 
+								newData["blue"][0] += 1;
 							}
 						});
 						self.app.legendWidget.setLevelText(newData);
@@ -98,13 +181,13 @@ var SVGLoader = function(app, config) {
 			}
 			event.stopPropagation();
 		});
-		
+
 		$.each($(svg).find("path"), function(key, value) {
 			$(value).attr("fill", "#ffffff");
 			$(value).attr("fill-opacity", "0");
 			$(value).removeAttr("opacity");
 			if(self.app.currentZoom != 3) {
-				$(value).css("cursor", "pointer");	
+				$(value).css("cursor", "pointer");
 			}
 		});
 
@@ -119,13 +202,13 @@ var SVGLoader = function(app, config) {
 
 			if(self.app.parametrsWidgets.currentParametr && self.app.parametrsWidgets.currentParametr.id) {
 				self.app.legendManager.getLegendByParamAndSubject(
-					self.app.parametrsWidgets.currentParametr.id, 
+					self.app.parametrsWidgets.currentParametr.id,
 					$(this).attr("target"),
 					function(data) {
 						self.app.legendWidget.setLevelText(data);
 						self.app.legendWidget.show();
 					}
-				);	
+				);
 			}
 		});
 		groups.on("mouseout", function() {
@@ -134,10 +217,10 @@ var SVGLoader = function(app, config) {
 				"fill-opacity": self.minOpacity
 			});
 		});
-			
+
 
 		if(this.onGroupClick) {
-			groups.on("click", this.onGroupClick);	
+			groups.on("click", this.onGroupClick);
 		}
 	}
 
@@ -177,7 +260,7 @@ var SVGLoader = function(app, config) {
 					"fill-opacity": "0"
 				});
 
-				$(svg).find("svg")[0].appendChild(newElement);	
+				$(svg).find("svg")[0].appendChild(newElement);
 			}
 
 			$(svg).find("text").attr({
@@ -219,7 +302,7 @@ var VideoPlayer = function() {
 			e.currentTarget.pause();
 			console.log(this.endedCallback);
 			if(this.endedCallback) {
-				this.endedCallback();	
+				this.endedCallback();
 			}
 		}
 	}
@@ -230,13 +313,13 @@ var VideoPlayer = function() {
 		this.video.attr("src", videoPath);
 
 		if(config && config.poster) {
-			this.video.attr("poster", config.poster);	
+			this.video.attr("poster", config.poster);
 		}
-		
+
 		if(config && config.onEndedCallback) {
 			this.endedCallback = config.onEndedCallback;
 		}
-		
+
 		this.video[0].load();
 		this.video[0].play();
 		$(this.elements["BG"]).show();
@@ -321,7 +404,7 @@ var LoadingState = function(app) {
 		this.elements["LOADER"].removeClass("onShow");
 
 		if(callback) {
-			callback();	
+			callback();
 		}
 	}
 
@@ -349,9 +432,9 @@ var DistrictsPanel = function(app) {
 
 		this.app.mapStateManager.removeBlur();
 		if(this.app.currentZoom != 1) {
-			this.app.mapStateManager.miniMapWriter.opacityShow();	
+			this.app.mapStateManager.miniMapWriter.opacityShow();
 		}
-		
+
 		this.app.mapStateManager.SVGWriter.show();
 		this.app.mapStateManager.SVGWriter.load(this.app.configManager.getSvgById(this.app.currentRegion));
 		this.app.parametrsWidgets.fullShow();
@@ -507,7 +590,7 @@ var RegionPanel = function(app) {
 
 	this.setBg = function(bg) {
 		if(bg) {
-			this.bgImage = bg;	
+			this.bgImage = bg;
 		}
 		if(this.bgImage) {
 			this.elements["BG-IMAGE"].css("backgroundImage", "url('"+this.bgImage+"')");
@@ -581,9 +664,9 @@ var RegionPanel = function(app) {
 				this.app.getResByPath(this.getVideoName(startState, endState)) ,
 				{
 					onEndedCallback: $.proxy(this.onVideoPlayEnd_, this),
-					poster: this.bgImage	
+					poster: this.bgImage
 				}
-			);	
+			);
 		} else {
 			this.onVideoPlayEnd_();
 		}
@@ -597,15 +680,15 @@ var RegionPanel = function(app) {
 
 		if(this.app.regionsParametrsWidgets.currentParametr) {
 			this.app.regionsMapColorel.colored(
-				this.app.regionsParametrsWidgets.currentParametr.id, 
+				this.app.regionsParametrsWidgets.currentParametr.id,
 				this.app.ageSelectorRegionsWidget.selectedYear
-			);	
+			);
 		}
 		this.app.regionsMapColorWidget.updateParams();
 		setTimeout(function() {
 			self.app.videoPlayer.hide();
 		}, 0);
-		
+
 	}
 
 	this.onCameraRightClick_ = function() {
@@ -632,7 +715,7 @@ var RegionPanel = function(app) {
 				this.app.getResByPath(this.getVideoName(startState, endState)) ,
 				{
 					onEndedCallback: $.proxy(this.onVideoPlayEnd_, this),
-					poster: this.bgImage	
+					poster: this.bgImage
 				}
 			)
 		} else {
@@ -699,7 +782,7 @@ var MapEventsPanel = function(app) {
 					"fill-opacity": "0"
 				});
 
-				$(svg).find("svg")[0].appendChild(newElement);	
+				$(svg).find("svg")[0].appendChild(newElement);
 			}
 
 			$(svg).find("text").attr({
@@ -716,7 +799,7 @@ var MapEventsPanel = function(app) {
 		this.app.mapStateManager.SVGWriter.show();
 		this.app.mapStateManager.SVGWriter.load(this.app.configManager.getSvgById(this.app.currentRegion));
 		this.drawNumbers();
-		
+
 		this.elements["CONTAINER"].removeClass("onHidden");
 		this.app.eventRightWidgets.fullShow();
 		this.app.eventLegendWidgets.fullShow();
@@ -777,7 +860,7 @@ var MapStateManager = function(app) {
 		this.prevRegion = data;
 		this.miniMapWriter.setText(this.prevRegion.name);
 		this.miniMapWriter.show(
-			this.app.configManager.getMiniMapById(this.app.currentRegion), 
+			this.app.configManager.getMiniMapById(this.app.currentRegion),
 			$.proxy(this.onBack_, this)
 		);
 	}
@@ -791,7 +874,7 @@ var MapStateManager = function(app) {
 			if(this.currentRegionData.parent_id) {
 				this.setPrevRegion(
 					this.app.regionsManagerLocal.getRegionById(
-						this.currentRegionData.parent_id, 
+						this.currentRegionData.parent_id,
 						data
 					)
 				);
@@ -801,7 +884,7 @@ var MapStateManager = function(app) {
 
 	this.show = function() {
 		this.app.regionsManagerLocal.getRegions($.proxy(this.setRootRegions, this));
-		
+
 		this.setBgImage();
 		this.app.mapColorWidget.updateParams();
 		this.SVGWriter.load(this.app.configManager.getSvgById(this.app.currentRegion));
@@ -841,6 +924,12 @@ var MapStateManager = function(app) {
 
 	this.onSvgClick_ = function(evt) {
 		var newIdRegion = $(evt.target).parent().attr("target");
+
+		   if(newIdRegion && this.level == this.maxLevel) {
+
+			showGis(newIdRegion);
+		  }
+
 
 		if(newIdRegion && this.level != this.maxLevel) {
 			this.app.legendWidget.hide();
@@ -896,7 +985,7 @@ var Application = function() {
 	this.getResByPath = function(path) {
 		return path;
 	}
-	
+
 	this.CSS = {
 		"APP": "#app",
 		"TITLE": "h1"
@@ -944,7 +1033,7 @@ var Application = function() {
         appCache.addEventListener('progress', $.proxy(function (e) {
             this.loadingState.updateText(e.loaded, e.total);
         }, this), false);
-        
+
 	};
 
 	this.init = function() {
@@ -968,14 +1057,14 @@ var Application = function() {
 
 		this.regionManager = new RegionManager(this);
 		this.paramsManager = new ParamsManager(this);
-		
+
 		this.mapStateManager = new MapStateManager(this);
 		this.legendManager = new LegendManager(this);
 		this.graphManager = new GraphManager(this);
 		this.regionsManagerLocal = new RegionsManagerLocal(this);
 
 		this.videoPlayer = new VideoPlayer();
-		
+
 		this.ageSelectorWidget = new YearSelectWidget(this, {
 			years: [2014, 2013, 2012, 2011, 2010, 2009, 2008],
 			selectedYear: 2012,
@@ -1012,7 +1101,7 @@ var Application = function() {
 		this.eventsDrawWidget = new EventsDrawWidget(this);
 		this.dictionaryManager = new DictionaryManager(this);
 		this.legendParamsManager = new LegendParamsManager(this);
-		
+
 		this.regionsSelectorWidget = new RegionsSelectorWidget(this);
 		this.paramsSelectorWidget = new ParamsSelectorWidget(this);
 		this.formatWidget = new FormatWidget(this);
@@ -1025,7 +1114,7 @@ var Application = function() {
 		this.reportsWidget = new ReportsWidget(this);
 
 		this.regionsMapColorWidget = new RegionsMapColorWidget(this);
-		
+
 		this.regionsParametrsWidgets = new RegionsParametrsWidgets(this);
 		this.regionsLegendWidget = new RegionsLegendWidget(this);
 		this.eventsListWidget = new EventsListWidget(this);

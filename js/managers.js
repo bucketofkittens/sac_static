@@ -159,6 +159,7 @@ var DictionaryManager = function(app) {
 		$.ajax(
 			{
 				url: this.app.apiHost + "/subject_dictionary.json/",
+
 				type: "GET",
 				success: callback
 			}
@@ -209,7 +210,7 @@ var RegionsManagerLocal = function(app) {
 	this.setLocalData_ = function() {
 		var regionsData = JSON.parse(localStorage.getItem('regions'));
 		if(regionsData && regionsData.data) {
-			this.regions = regionsData.data;	
+			this.regions = regionsData.data;
 		}
 	}
 
@@ -230,9 +231,48 @@ var RegionsManagerLocal = function(app) {
 				ret = value;
 			}
 		});
-		
+
 		return ret;
 	}
+
+	this.getMarkers = function(id)
+	{
+		var url = "http://sac.khvi.ru/sac/getMarkers.php?id="+id;
+
+		$.get(url,function(data)
+		{
+			
+			  var markers = JSON.parse(data);
+
+                       olmap.addMarkers(markers);
+		});
+
+
+
+	}
+
+	this.geRegionLatLonById = function(id)
+	{
+		var url = "http://sac.khvi.ru/sac/getSubjLatLon.php?id="+id;
+
+
+		$.get(url,function(data)
+		{
+			if(data == "err1")
+			{
+                olmap.centerMos();
+			}
+			else
+			{
+			 olmap.centerSubj(data);
+			}
+
+
+		});
+	}
+
+
+     
 
 	this.setLocalData_();
 }
