@@ -155,41 +155,20 @@ var EventMainWidget = function(panel, options) {
 
     this.showTruckInfo = function (elem, event) {
         if (event && ('preventDefault' in event)) event.preventDefault();
-        var thisContainer = jQuery('#event-main-truck-info');
+        var thisContainer = $('#event-truck-container');
         var self = this;
 
-        var updateInfo = function () {
+        $.get('/static/compile/mt/event-truck-info.html', {}, function (data, status, jqxhr) {
             var e = jQuery(elem);
             var index = $(e).attr("data-index");
             var truck = self.truckById(index);
+            data = _.template(data, { truck: truck, titles: window.AppData.titles});
 
-            thisContainer.find('p.gosnumber').html(truck.number);
-            thisContainer.removeClass("bad").removeClass("good");
-            thisContainer.addClass(truck.type);
-            thisContainer.find('p.time').html(truck.time);
-            thisContainer.find('p.truck-status').html(truck.status);
-
-            var photos = '';
-            _.each(truck.images, function(image) {
-                photos +='<img class="truck-photo" src="'+image+'" />';
+            thisContainer.html(data);
+            thisContainer.find(".close-button").click(function() {
+                $("#event-main-truck-info").remove();
             });
-            
-            thisContainer.find('.well.photo').html(photos);
-        };
-        if (thisContainer.length) {
-            thisContainer.removeClass('hidden');
-            thisContainer.siblings().addClass('hidden');
-            updateInfo();
-        } else {
-            thisContainer = $('<div id="event-main-truck-info" class="widget-obscure hidden hide-to-right">');
-            this.element.append(thisContainer);
-            $.get('/static/compile/mt/event-truck-info.html', {}, function (data, status, jqxhr) {
-                thisContainer.html(data);
-                thisContainer.siblings().addClass('hidden');
-                thisContainer.removeClass('hidden');
-                updateInfo();
-            });
-        }
+        });
     };
 
     this.useWebcam = function() {

@@ -74,7 +74,7 @@ var OnEvensMapChangeState = function(app) {
 var OnDistrictChangeState = function(app, map, video_id, currentRegion) {
 	this.app = app;
 	this.map = map;
-  this.widgets = this.map.panel.widgets
+    this.widgets = this.map.panel.widgets
 	this.finishEvent = 0;
 	this.maxEvent = 2;
 

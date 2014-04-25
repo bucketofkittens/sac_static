@@ -850,3 +850,9 @@ embed.tablecam {
     font-family: EuropeExt, sans-serif;
     font-size: 25px;
 }
+
+#event-truck-container {
+    position: relative;
+    z-index: 99;
+    background: #075286;
+}

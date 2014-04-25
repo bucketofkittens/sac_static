@@ -1,220 +1,66 @@
-<div class="close-button">×</div>
-<div id="events-truck-info">
-    <section class="left">
-        <h1>Статус</h1>
-        <div class="well" style="height: 80px;">
-            <p class="time">18.02 14:20</p>
-            <p class="gosnumber">К 101 РА &nbsp; 95</p>
-            <p class="truck-status">Несоответствие номерного знака</p>
-        </div>
-    </section>
+<div id="event-main-truck-info" class="widget-obscure hidden hide-to-right <%= truck.type %>">
+    <div class="close-button">×</div>
+    <div id="events-truck-info">
+        <section class="left">
+            <h1>Статус</h1>
+            <div class="well" style="height: 80px;">
+                <p class="time"><%= truck.time %></p>
+                <p class="gosnumber"><%= truck.number %></p>
+                <p class="truck-status"><%= truck.status %></p>
+            </div>
+        </section>
 
-    <section class="right">
-        <h1>Фото с дорожной камеры</h1>
-        <div class="well photo" style="height: 220px;">
-            <img class="truck-photo" src="/static/images/mt/truck-info-photo.jpg">
-            <img class="truck-photo" src="/static/images/mt/truck-info-photo-number.jpg">
-        </div>
-    </section>
+        <section class="right">
+            <h1>Фото с дорожной камеры</h1>
+            <div class="well photo" style="height: 220px;">
+                <% _.each(truck.images, function(image) { %>
+                    <img class="truck-photo" src="<%= image %>">
+                <% }); %>
+            </div>
+        </section>
 
-    <section class="left">
-        <h1>Местоположение</h1>
-        <div class="well">
-            <dl>
-                <dt>Местонахождение</dt>
-                <dd>40-й км трассы А105<br>(55°48’36   37°26’33)</dd>
-                <dt>Рамка</dt>
-                <dd>№ 347860222</dd>
-            </dl>
-        </div>
-    </section>
+        <section class="left">
+            <h1>Местоположение</h1>
+            <div class="well">
+                <dl>
+                    <dt>Местонахождение</dt>
+                    <dd>40-й км трассы А105<br>(55°48’36   37°26’33)</dd>
+                    <dt>Рамка</dt>
+                    <dd>№ 347860222</dd>
+                </dl>
+            </div>
+        </section>
 
-    <section>
-        <h1>Карточка ТС</h1>
-        <div class="well">
-            <dl>
-                <dt>Кол-во осей ТС, шт.</dt>
-                <dd>3</dd>
-                <dt>Масса ТС, т.</dt>
-                <dd>28</dd>
-                <dt>Экологический класс</dt>
-                <dd>Евро-2</dd>
-                <dt>Тип подвески</dt>
-                <dd>пневматическая</dd>
-                <dt>Уровень воздействия на инфраструктуру</dt>
-                <dd>III</dd>
-                <dt>Номер ТС</dt>
-                <dd>К101РА95</dd>
-                <dt>Наименование юр.лица</dt>
-                <dd>ООО “Ромашка”</dd>
-                <dt>Наличие неоплаченных счетов, руб.</dt>
-                <dd>750</dd>
-                <dt>Маршрут</dt>
-                <dd>г.Киров — г.Москва</dd>
-                <dt>Размер сбора, руб.</dt>
-                <dd>1250</dd>
-                <dt>Статус оплаты</dt>
-                <dd>оплачено</dd>
-                <dt>Идентификатор БУ</dt>
-                <dd>12МК5735ЕА37</dd>
-            </dl>
-            <!-- 
-            <dl>
-                <dt>Кол-во осей ТС, шт.</dt>
-                <dd>4</dd>
-                <dt>Масса ТС, т.</dt>
-                <dd>32</dd>
-                <dt>Экологический класс</dt>
-                <dd>Евро-3</dd>
-                <dt>Тип подвески</dt>
-                <dd>пневматическая</dd>
-                <dt>Уровень воздействия на инфраструктуру</dt>
-                <dd>III</dd>
-                <dt>Номер ТС</dt>
-                <dd>E551TT177</dd>
-                <dt>Наименование юр.лица</dt>
-                <dd>ЗАО “Трейд-Инвест”</dd>
-                <dt>Наличие неоплаченных счетов, руб.</dt>
-                <dd>нет</dd>
-                <dt>Маршрут</dt>
-                <dd>г.Смоленск — г.Тула</dd>
-                <dt>Размер сбора, руб.</dt>
-                <dd>1250</dd>
-                <dt>Статус оплаты</dt>
-                <dd>оплачено</dd>
-                <dt>Идентификатор БУ</dt>
-                <dd>24РО3498ЕК23</dd>
-            </dl>
-            <dl>
-                <dt>Кол-во осей ТС, шт.</dt>
-                <dd>6</dd>
-                <dt>Масса ТС, т.</dt>
-                <dd>50</dd>
-                <dt>Экологический класс</dt>
-                <dd>Евро-4</dd>
-                <dt>Тип подвески</dt>
-                <dd>пневматическая</dd>
-                <dt>Уровень воздействия на инфраструктуру</dt>
-                <dd>V</dd>
-                <dt>Номер ТС</dt>
-                <dd>H384HO13</dd>
-                <dt>Наименование юр.лица</dt>
-                <dd>ОАО “РусАвтоДор”</dd>
-                <dt>Наличие неоплаченных счетов, руб.</dt>
-                <dd>1200</dd>
-                <dt>Маршрут</dt>
-                <dd>г.Калининград — г.Москва</dd>
-                <dt>Размер сбора, руб.</dt>
-                <dd>2750</dd>
-                <dt>Статус оплаты</dt>
-                <dd>оплачено</dd>
-                <dt>Идентификатор БУ</dt>
-                <dd>97НР3288ЕК11</dd>
-            </dl>
-            <dl>
-                <dt>Кол-во осей ТС, шт.</dt>
-                <dd>4</dd>
-                <dt>Масса ТС, т.</dt>
-                <dd>30</dd>
-                <dt>Экологический класс</dt>
-                <dd>Евро-3</dd>
-                <dt>Тип подвески</dt>
-                <dd>пневматическая</dd>
-                <dt>Уровень воздействия на инфраструктуру</dt>
-                <dd>III</dd>
-                <dt>Номер ТС</dt>
-                <dd>0978EH56</dd>
-                <dt>Наименование юр.лица</dt>
-                <dd>ООО “Вектор-М”</dd>
-                <dt>Наличие неоплаченных счетов, руб.</dt>
-                <dd>нет</dd>
-                <dt>Маршрут</dt>
-                <dd>г.Витебск — г.Пермь</dd>
-                <dt>Размер сбора, руб.</dt>
-                <dd>1250</dd>
-                <dt>Статус оплаты</dt>
-                <dd>оплачено</dd>
-                <dt>Идентификатор БУ</dt>
-                <dd>37OO3325TT25</dd>
-            </dl>
-            <dl>
-                <dt>Кол-во осей ТС, шт.</dt>
-                <dd>5</dd>
-                <dt>Масса ТС, т.</dt>
-                <dd>38</dd>
-                <dt>Экологический класс</dt>
-                <dd>Евро-2</dd>
-                <dt>Тип подвески</dt>
-                <dd>пневматическая</dd>
-                <dt>Уровень воздействия на инфраструктуру</dt>
-                <dd>IV</dd>
-                <dt>Номер ТС</dt>
-                <dd>E123HO69</dd>
-                <dt>Наименование юр.лица</dt>
-                <dd>ЗАО “ГрузТехПром”</dd>
-                <dt>Наличие неоплаченных счетов, руб.</dt>
-                <dd>750</dd>
-                <dt>Маршрут</dt>
-                <dd>г.Можайск — г.Мурманск</dd>
-                <dt>Размер сбора, руб.</dt>
-                <dd>1800</dd>
-                <dt>Статус оплаты</dt>
-                <dd>оплачено</dd>
-                <dt>Идентификатор БУ</dt>
-                <dd>69УН4718ОС25</dd>
-            </dl>
-            <dl>
-                <dt>Кол-во осей ТС, шт.</dt>
-                <dd>3</dd>
-                <dt>Масса ТС, т.</dt>
-                <dd>26</dd>
-                <dt>Экологический класс</dt>
-                <dd>Евро-2</dd>
-                <dt>Тип подвески</dt>
-                <dd>пневматическая</dd>
-                <dt>Уровень воздействия на инфраструктуру</dt>
-                <dd>III</dd>
-                <dt>Номер ТС</dt>
-                <dd>M103MA97</dd>
-                <dt>Наименование юр.лица</dt>
-                <dd>ООО "Ядвига"</dd>
-                <dt>Наличие неоплаченных счетов, руб.</dt>
-                <dd>750</dd>
-                <dt>Маршрут</dt>
-                <dd>г.Москва — г.Смоленск</dd>
-                <dt>Размер сбора, руб.</dt>
-                <dd>1250</dd>
-                <dt>Статус оплаты</dt>
-                <dd>оплачено</dd>
-                <dt>Идентификатор БУ</dt>
-                <dd>46КМ5756АЕ71</dd>
-            </dl>
-            <dl>
-                <dt>Кол-во осей ТС, шт.</dt>
-                <dd>4</dd>
-                <dt>Масса ТС, т.</dt>
-                <dd>34</dd>
-                <dt>Экологический класс</dt>
-                <dd>Евро-3</dd>
-                <dt>Тип подвески</dt>
-                <dd>пневматическая</dd>
-                <dt>Уровень воздействия на инфраструктуру</dt>
-                <dd>III</dd>
-                <dt>Номер ТС</dt>
-                <dd>E101CC77</dd>
-                <dt>Наименование юр.лица</dt>
-                <dd>ЗАО “Дижон”</dd>
-                <dt>Наличие неоплаченных счетов, руб.</dt>
-                <dd>нет</dd>
-                <dt>Маршрут</dt>
-                <dd>г.Мурманск — г.Минск</dd>
-                <dt>Размер сбора, руб.</dt>
-                <dd>1250</dd>
-                <dt>Статус оплаты</dt>
-                <dd>оплачено</dd>
-                <dt>Идентификатор БУ</dt>
-                <dd>42ОР8943КЕ32</dd>
-            </dl> -->
-        </div>
-    </section>
+        <section>
+            <h1>Карточка ТС</h1>
+            <div class="well">
+                <dl>
+                    <dt><%= titles["RU"]["COUNT_TC"] %></dt>
+                    <dd><%= truck["params"]["COUNT_TC"] %></dd>
+                    <dt><%= titles["RU"]["MASS_TC"] %></dt>
+                    <dd><%= truck["params"]["MASS_TC"] %></dd>
+                    <dt><%= titles["RU"]["ECO_CLASS"] %></dt>
+                    <dd><%= truck["params"]["ECO_CLASS"] %></dd>
+                    <dt><%= titles["RU"]["SYSP_TYPE"] %></dt>
+                    <dd><%= truck["params"]["SYSP_TYPE"] %></dd>
+                    <dt><%= titles["RU"]["LEVEL_INPACT"] %></dt>
+                    <dd><%= truck["params"]["LEVEL_INPACT"] %></dd>
+                    <dt><%= titles["RU"]["NUMBER_TC"] %></dt>
+                    <dd><%= truck["params"]["NUMBER_TC"] %></dd>
+                    <dt><%= titles["RU"]["NAME_UR"] %></dt>
+                    <dd><%= truck["params"]["NAME_UR"] %></dd>
+                    <dt><%= titles["RU"]["UNPAID_BILL"] %></dt>
+                    <dd><%= truck["params"]["UNPAID_BILL"] %></dd>
+                    <dt><%= titles["RU"]["ROUTE"] %></dt>
+                    <dd><%= truck["params"]["ROUTE"] %></dd>
+                    <dt><%= titles["RU"]["FEE"] %></dt>
+                    <dd><%= truck["params"]["FEE"] %></dd>
+                    <dt><%= titles["RU"]["PLAYMENT_STATUS"] %></dt>
+                    <dd><%= truck["params"]["PLAYMENT_STATUS"] %></dd>
+                    <dt><%= titles["RU"]["INDEFIER_BY"] %></dt>
+                    <dd><%= truck["params"]["INDEFIER_BY"] %></dd>
+                </dl>
+            </div>
+        </section>
+    </div>
 </div>

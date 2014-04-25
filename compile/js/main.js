@@ -116,6 +116,23 @@ window.AppData.fakeCameras = [
 	}
 ];
 
+window.AppData.titles = {
+    "RU" : {
+        "COUNT_TC": "Кол-во осей ТС, шт.",
+        "MASS_TC": "Масса ТС, т.",
+        "ECO_CLASS": "Экологический класс",
+        "SYSP_TYPE": "Тип подвески",
+        "LEVEL_INPACT": "Уровень воздействия на инфраструктуру",
+        "NUMBER_TC": "Номер ТС",
+        "NAME_UR": "Наименование юр.лица",
+        "UNPAID_BILL": "Наличие неоплаченных счетов, руб.",
+        "ROUTE": "Маршрут",
+        "FEE": "Размер сбора, руб.",
+        "PLAYMENT_STATUS": "Статус оплаты",
+        "INDEFIER_BY": "Идентификатор БУ"
+    }
+}
+
 window.AppData.trucks = [
     {
         index: 0,
@@ -128,7 +145,21 @@ window.AppData.trucks = [
         images: [
             "/static/images/mt/truck-info-photo.jpg",
             "/static/images/mt/truck-info-photo-number.jpg"
-        ]
+        ],
+        params: {
+            "COUNT_TC": "4",
+            "MASS_TC": "32",
+            "ECO_CLASS": "Евро-3",
+            "SYSP_TYPE": "пневматическая",
+            "LEVEL_INPACT": "III",
+            "NUMBER_TC": "E551TT177",
+            "NAME_UR": "ЗАО “Трейд-Инвест”",
+            "UNPAID_BILL": "нет",
+            "ROUTE": "г.Смоленск — г.Тула",
+            "FEE": "1250",
+            "PLAYMENT_STATUS": "оплачено",
+            "INDEFIER_BY": "24РО3498ЕК23"
+        }
     },
     {
         index: 1,
@@ -141,7 +172,21 @@ window.AppData.trucks = [
         images: [
             "/static/images/mt/truck-info-photo2.jpg",
             "/static/images/mt/truck-info-photo-number2.jpg"
-        ]
+        ],
+        params: {
+            "COUNT_TC": "6",
+            "MASS_TC": "50",
+            "ECO_CLASS": "Евро-4",
+            "SYSP_TYPE": "пневматическая",
+            "LEVEL_INPACT": "V",
+            "NUMBER_TC": "H384HO13",
+            "NAME_UR": "ОАО “РусАвтоДор”",
+            "UNPAID_BILL": "1200",
+            "ROUTE": "г.Калининград — г.Москва",
+            "FEE": "2750",
+            "PLAYMENT_STATUS": "оплачено",
+            "INDEFIER_BY": "97НР3288ЕК11"
+        }
     },
     {
         index: 2,
@@ -154,7 +199,21 @@ window.AppData.trucks = [
         images: [
             "/static/images/mt/truck-info-photo3.jpg",
             "/static/images/mt/truck-info-photo-number3.jpg"
-        ]
+        ],
+        params: {
+            "COUNT_TC": "4",
+            "MASS_TC": "30",
+            "ECO_CLASS": "Евро-3",
+            "SYSP_TYPE": "пневматическая",
+            "LEVEL_INPACT": "III",
+            "NUMBER_TC": "0978EH56",
+            "NAME_UR": "ООО “Вектор-М”",
+            "UNPAID_BILL": "нет",
+            "ROUTE": "г.Витебск — г.Пермь",
+            "FEE": "1250",
+            "PLAYMENT_STATUS": "оплачено",
+            "INDEFIER_BY": "37OO3325TT25"
+        }
     },
     {
         index: 3,
@@ -167,7 +226,21 @@ window.AppData.trucks = [
         images: [
             "/static/images/mt/truck-info-photo3.jpg",
             "/static/images/mt/truck-info-photo-number3.jpg"
-        ]
+        ],
+        params: {
+            "COUNT_TC": "5",
+            "MASS_TC": "38",
+            "ECO_CLASS": "Евро-2",
+            "SYSP_TYPE": "пневматическая",
+            "LEVEL_INPACT": "IV",
+            "NUMBER_TC": "E123HO69",
+            "NAME_UR": "ЗАО “ГрузТехПром”",
+            "UNPAID_BILL": "750",
+            "ROUTE": "г.Можайск — г.Мурманск",
+            "FEE": "1800",
+            "PLAYMENT_STATUS": "оплачено",
+            "INDEFIER_BY": "69УН4718ОС25"
+        }
     },
     {
         index: 4,
@@ -180,7 +253,21 @@ window.AppData.trucks = [
         images: [
             "/static/images/mt/truck-info-photo3.jpg",
             "/static/images/mt/truck-info-photo-number3.jpg"
-        ]
+        ],
+        params: {
+            "COUNT_TC": "3",
+            "MASS_TC": "26",
+            "ECO_CLASS": "Евро-2",
+            "SYSP_TYPE": "пневматическая",
+            "LEVEL_INPACT": "III",
+            "NUMBER_TC": "M103MA97",
+            "NAME_UR": "ООО 'Ядвига'",
+            "UNPAID_BILL": "750",
+            "ROUTE": "г.Москва — г.Смоленск",
+            "FEE": "1250",
+            "PLAYMENT_STATUS": "оплачено",
+            "INDEFIER_BY": "46КМ5756АЕ71"
+        }
     },
     {
         index: 5,
@@ -193,7 +280,21 @@ window.AppData.trucks = [
         images: [
             "/static/images/mt/truck-info-photo3.jpg",
             "/static/images/mt/truck-info-photo-number3.jpg"
-        ]
+        ],
+        params: {
+            "COUNT_TC": "4",
+            "MASS_TC": "34",
+            "ECO_CLASS": "Евро-3",
+            "SYSP_TYPE": "пневматическая",
+            "LEVEL_INPACT": "III",
+            "NUMBER_TC": "E101CC77",
+            "NAME_UR": "ЗАО “Дижон”",
+            "UNPAID_BILL": "нет",
+            "ROUTE": "г.Мурманск — г.Минск",
+            "FEE": "1250",
+            "PLAYMENT_STATUS": "оплачено",
+            "INDEFIER_BY": "42ОР8943КЕ32"
+        }
     },
     {
         index: 6,
@@ -206,7 +307,21 @@ window.AppData.trucks = [
         images: [
             "/static/images/mt/truck-info-photo3.jpg",
             "/static/images/mt/truck-info-photo-number3.jpg"
-        ]
+        ],
+        params: {
+            "COUNT_TC": "4",
+            "MASS_TC": "32",
+            "ECO_CLASS": "Евро-2",
+            "SYSP_TYPE": "пневматическая",
+            "LEVEL_INPACT": "III",
+            "NUMBER_TC": "E251AT377",
+            "NAME_UR": "ЗАО “Инвест-Тревел”",
+            "UNPAID_BILL": "нет",
+            "ROUTE": "г.Смоленск — г.Казань",
+            "FEE": "1250",
+            "PLAYMENT_STATUS": "оплачено",
+            "INDEFIER_BY": "21XО1498NN23"
+        }
     }
 ];
 
