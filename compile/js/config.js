@@ -6,6 +6,7 @@ var ConfigApp = {
 		"MINI-MAP": "/static/images/mini/"
 	},
 	"API-HOST": window.location.origin, /* window.location.origin works only in webkit */
+	"SAC_TYPE": "avto",
 	"FOOTER-NAV": {
         "EVENTS": {
             "title": "Реагирование"

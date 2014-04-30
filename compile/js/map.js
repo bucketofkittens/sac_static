@@ -117,9 +117,16 @@ _.extend(Map.prototype, {
 	},
 
 	onSvgClick_ : function(evt) {
-		var newIdRegion = $(evt.target).parent().attr("target");
 
+		var newIdRegion = $(evt.target).parent().attr("target");
+	//alert(newIdRegion);
 		if(newIdRegion) {
+
+			if(this.currentZoom == 3)showGis(newIdRegion);
+			
+			else
+			{
+
 			this.app.legendWidget.hide();
 			var inVideo = this.app.configManager.getInVideoById(newIdRegion);
 			if(inVideo) {
@@ -129,6 +136,7 @@ _.extend(Map.prototype, {
         this.currentZoom++;
 
 				this.getStateEvent().dispatch(this.app, this, inVideo);
+			}
 			}
 		}
 	}

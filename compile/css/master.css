@@ -1390,5 +1390,6 @@ and (max-device-width : 1024px)  {
 
 #gis_div td
 {
-  cellspacing: 2px;
+  border-spacing: 4px;
+	padding: 2px;
 }
