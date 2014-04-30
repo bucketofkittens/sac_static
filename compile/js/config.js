@@ -307,3 +307,5 @@ var ConfigManager = function(app, config) {
 		return this.app.getResByPath(this.config["PATHES"]["VIDEO"]+id_region+"-out.mp4");
 	}
 }
+
+

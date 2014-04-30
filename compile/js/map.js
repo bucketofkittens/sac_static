@@ -166,7 +166,6 @@ var EventsMapStateManager = Map.extend({
 	onBeforeVideoPlay_ : function() {
 		this.miniMap.hiden();
 		this.SVGWriter.hide();
-    this.panel.widgets.alarm.hide()
 	},
 
   onAfterStateChange: function(){
