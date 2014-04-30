@@ -1,0 +1,11 @@
+<div id="appeals-list" class="widget">
+    <h2>Оповещения</h2>
+    
+    <div class="menu">
+    <% _.each(appeals, function(item,key) { %>
+		<div class="ramp-entry sidebar-entry" data-index="<%= item.index %>">
+			<p class="num"><%= item.name %></p>
+		</div>
+	<% }) %>
+	</div>
+</div>
