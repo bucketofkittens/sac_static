@@ -559,7 +559,7 @@ td.time { color: #7dc2e3; }
     padding-left: 30px;
 }
 
-#camers-list, #ramks-list {
+#camers-list, #ramks-list, #appeals-list {
     position: absolute;
     background: url('/static/images/formats/widget-sidebar-d.png') center center no-repeat;
     background-size: 100% 100%;
@@ -855,4 +855,9 @@ embed.tablecam {
     position: relative;
     z-index: 99;
     background: #075286;
+}
+
+#appeals-list h2 {
+ 	margin-left: 140px;
+ 	margin-top: 10px;
 }

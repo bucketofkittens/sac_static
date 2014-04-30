@@ -168,54 +168,7 @@ var TariffListWidget = function(panel, options) {
     });
 };
 
-var ExWidget = {
-    appId: "#app",
-    navId: "",
-    panel: null,
-    template: null,
 
-    create: function() {
-        if(this.navId) {
-            var self = this;
-            $.get('/static/compile/mt/'+this.navId.replace("#", "")+'.html', {}, function(data, status, jqxhr) {
-                self.template = data;
-                data = self.beforeCreate_(self.template);
-                $(self.appId).append(data);
-                self.afterCreate_();
-            });
-        }
-    },
-
-    refresh: function() {
-        this.destroy();
-        data = this.beforeCreate_(this.template);
-        $(this.appId).append(data);
-        this.afterCreate_();
-        this.show();
-    },
-
-    destroy: function(){
-        $(this.navId).remove();
-    },
-
-    beforeCreate_: function(data) {
-        return data;
-    },
-
-    afterCreate_: function() {
-
-    },
-
-    show: function() {
-        $(this.navId).removeClass('hidden');
-    },
-
-    hide: function() {    
-        $(this.navId).addClass('hidden');
-    },
-
-    init: function() { }
-}
 
 var TariffNavWidget = Object.create(ExWidget);
 

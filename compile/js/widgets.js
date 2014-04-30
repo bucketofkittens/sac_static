@@ -1,3 +1,53 @@
+var ExWidget = {
+    appId: "#app",
+    navId: "",
+    panel: null,
+    template: null,
+    folder: "/compile/mt/",
+
+    create: function() {
+        if(this.navId) {
+            var self = this;
+            $.get('/static'+this.folder+this.navId.replace("#", "")+'.html', {}, function(data, status, jqxhr) {
+                self.template = data;
+                data = self.beforeCreate_(self.template);
+                $(self.appId).append(data);
+                self.afterCreate_();
+            });
+        }
+    },
+
+    refresh: function() {
+        this.destroy();
+        data = this.beforeCreate_(this.template);
+        $(this.appId).append(data);
+        this.afterCreate_();
+        this.show();
+    },
+
+    destroy: function(){
+        $(this.navId).remove();
+    },
+
+    beforeCreate_: function(data) {
+        return data;
+    },
+
+    afterCreate_: function() {
+
+    },
+
+    show: function() {
+        $(this.navId).removeClass('hidden');
+    },
+
+    hide: function() {    
+        $(this.navId).addClass('hidden');
+    },
+
+    init: function() { }
+}
+
 /**
  * [ description]
  * @param  {[type]} app     [description]
@@ -192,3 +242,10 @@ var AppTimer = function(app) {
 		this.elements["age"].html(date.getUTCFullYear());
 	}
 }
+
+
+var AppealsList = Object.create(ExWidget);
+
+AppealsList.navId = "#appeals-list";
+AppealsList.folder = "/templates/";
+

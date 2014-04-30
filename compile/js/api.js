@@ -283,7 +283,10 @@ var RegionsParametrsWidgets = function(panel) {
 
 	this.initScroll_();
 	this.bindEvents_();
-	this.panel.widgets.yearSelector.draw();
+	
+	if(this.panel.widgets.yearSelector) {
+		this.panel.widgets.yearSelector.draw();
+	}
 }
 
 /**
@@ -2696,3 +2699,5 @@ var EventsDrawWidget = function(app) {
 		this.elements["MAIN"].addClass(this.CSS["HIDDEN"]);
 	}
 };
+
+

@@ -71,6 +71,10 @@ var DistrictsPanel = Panel.extend({
     this.widgets.parametrs = new ParametrsWidgets(this);
     this.widgets.mapColor = new MapColorWidget(this);
     this.widgets.mapColor.enable();
+    console.log("regionsParametrs");
+    this.widgets.regionsParametrs = new RegionsParametrsWidgets(this); 
+    this.widgets.regionsParametrs.getRegionsParams();
+    
   },
 
 	show: function() {
@@ -85,7 +89,8 @@ var DistrictsPanel = Panel.extend({
 		this.widgets.mapColor.updateParams();
 		this.mapColorel.show();
 		this.app.pageTitleWidget.show();
-
+		this.widgets.regionsParametrs.fullShow();
+		console.log(this.widgets.regionsParametrs);
 		if(this.widgets.parametrs.currentParametr && this.widgets.parametrs.currentParametr.id) {
 			this.app.legendWidget.show();
 		}
@@ -359,116 +364,34 @@ var RegionPanel = Panel.extend({
 
 var EventsPanel = Panel.extend({
 
+	 getAppealsList_: function(appeals) {
+  	this.appealsList.init();
+  	this.appealsList.beforeCreate_ = function(data) {
+  		console.log(appeals);
+		return _.template(data, { appeals : appeals});
+	}
+    this.appealsList.create();
+  },
+  
   initialize: function(){
 	  this.CSS = { "CONTAINER": "#bg-event-image" }
 	  this.elements = { "CONTAINER": $(this.CSS["CONTAINER"]) }
-    this.alertShown = false
-
-    this.widgets.sceneInfo =  new SceneInfoWidget(this.app, this);
-    var self = this;
-    this.widgets.wx1 = new SceneInfoExtraWidget(this.app, {
-      ONSHOW: function(e) { 
-        if ( $('#sampleMovie')[0] ) { 
-          $('#sampleMovie').show();
-          if ($('#sampleMovie')[0].currentTime < 9) { $('#sampleMovie')[0].play(); }
-        }
-      },
-      ONHIDE: function(e) { 
-      	if ($('#sampleMovie')[0] && $('#sampleMovie')[0].currentTime < 9 ) { 
-      		$('#sampleMovie')[0].pause();
-
-      		if($('#sampleMovie')[0].currentTime) {
-      			$('#sampleMovie')[0].currentTime = 0;	
-      		}
-      	} 
-      }
-    });
-    $.get('/static/compile/scene/extra-1.html', function (data) { self.widgets.wx1.setContent(data); });
-
-    this.widgets.wx2 = new SceneInfoExtraWidget(this.app, {
-      MAIN: '#sceneinfo-extra-2',
-      ONCLICK: function(e){ self.widgets.sceneInfo.showInfo(e) }
-    });
-    $.get('/static/compile/scene/extra-2.html', function (data) { self.widgets.wx2.setContent(data); });
-
-    this.widgets.wx3 = new SceneInfoExtraWidget(this.app, {
-      MAIN: '#sceneinfo-extra-3',
-      ONCLICK: function(e){ self.widgets.sceneInfo.showMap(e) }
-    });
-    $.get('/static/compile/scene/extra-3.html', function (data) { self.widgets.wx3.setContent(data); });
-
-    this.widgets.wx4 = new SceneInfoExtraWidget(this.app, {
-      MAIN: '#sceneinfo-extra-4',
-      ONCLICK: function(e){ self.widgets.sceneInfo.showText(e) },
-      ONRESET: function() { $('#sceneinfo-extra-4').attr({class: 'right hidden top sceneinfo-extras'});}
-    });
-    $.get('/static/compile/scene/text.html', function (data) { self.widgets.wx4.setContent(data); });
-
-    this.widgets.wx5 = new SceneInfoExtraWidget(this.app, {
-      MAIN: '#sceneinfo-extra-5',
-      ONCLICK: function(e){ self.widgets.sceneInfo.showGraph(e) },
-      ONSHOW: function(e) { $('#sceneinfo-extra-5').html('<img src="/static/images/scene/mini-graph.png">')},
-      ONRESET: function() { $('#sceneinfo-extra-5').attr({class: 'right hidden middle sceneinfo-extras'});}
-    })
-
-    this.widgets.wx6 = new SceneInfoExtraWidget(this.app, {
-      MAIN: '#sceneinfo-extra-6',
-      ONCLICK: function(e){ self.widgets.sceneInfo.showDiagram(e) },
-      ONSHOW: function(e) { $('#sceneinfo-extra-6').html('<img src="/static/images/scene/mini-diagram.png">')},
-      ONRESET: function() { $('#sceneinfo-extra-6').attr({class: 'right hidden bottom sceneinfo-extras'});}
-    })
-
-    this.widgets.wx7 = new SceneInfoExtraWidget(this.app, {
-      MAIN: '#sceneinfo-extra-7',
-      ONSHOW: function() { $('.waveform').addClass('waveform-playback');},
-      // TODO: Show detailed info in main window on click
-      ONCLICK: function(e){ self.widgets.sceneInfo.showPhone(e) },
-      ONRESET: function() { $('#sceneinfo-extra-7').attr({class: 'hidden right hide-to-bottom sceneinfo-extras'});}
-    });
-    $.get('/static/compile/scene/extra-7.html', function (data) {
-        self.widgets.wx7.setContent(data);
-    });
-
-    this.widgets.wx8 = new SceneInfoExtraWidget(this.app, {
-      MAIN: '#sceneinfo-extra-8',
-      ONCLICK: function(e){ self.widgets.sceneInfo.showEmail(e) },
-      ONSHOW: function(e) { $('#sceneinfo-extra-8').html('<img src="/static/images/scene/mini-email.png">')},
-      ONRESET: function() { $('#sceneinfo-extra-8').attr({class: 'hidden right hide-to-bottom sceneinfo-extras'});}
-    });
-
-    this.widgets.wx9 = new SceneInfoExtraWidget(this.app, {
-      MAIN: '#sceneinfo-extra-9',
-      ONCLICK: function(e){ self.widgets.sceneInfo.showTrack(e) },
-      ONSHOW: function(e) { $('#sceneinfo-extra-9').html('<img src="/static/images/scene/mini-track.png">')},
-      ONRESET: function() { $('#sceneinfo-extra-9').attr({class: 'hidden right hide-to-bottom sceneinfo-extras'});}
-    });
-
-    this.widgets.wx10 = new SceneInfoExtraWidget(this.app, {
-      MAIN: '#sceneinfo-extra-10',
-      ONCLICK: function(e){ self.widgets.sceneInfo.showProperties(e) },
-      ONSHOW: function(e) { $('#sceneinfo-extra-10').html('<img src="/static/images/scene/mini-properties.png">');},
-      ONRESET: function() { $('#sceneinfo-extra-10').attr({class: 'hidden right hide-to-bottom sceneinfo-extras'});}
-    });
-
-    // Management panels
-    this.widgets.mgmtTopRight = new SceneInfoExtraMgmtWidget(this, {
-        direction: 'top',
-        side: 'right'
-    });
-    this.widgets.mgmtBottomRight = new SceneInfoExtraMgmtWidget(this, {
-        direction: 'bottom',
-        side: 'right'
-    });
-
-    this.widgets.alarm = new EventsAlarmWidget(this);
-
-	  //this.OnEvensMapChangeState = new signals.Signal();
-	  //this.OnEvensMapChangeState.add(OnEvensMapChangeState);
 
     this.map = new EventsMapStateManager(this.app, this);
+    
+    this.appealsList = AppealsList;
+    this.appealsList.panel = this;
+	
+    $.get(this.app.apiHost + "/appeal_types.json", $.proxy(this.getAppealsList_, this));
+    
+    //this.widgets.regionsParametrs.getRegionsParams();
   },
+  
+ 
 
 	show: function() {
+		this.appealsList.show();
+		
 		this.elements["CONTAINER"].removeClass("onHidden");
     this.map.show(this.map.currentZoom)
     if (Number(this.map.currentZoom) == 3 && Number(this.map.currentRegion) == 72) {

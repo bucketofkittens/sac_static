@@ -564,6 +564,7 @@ var Application = function() {
 
 		this.legendWidget = new LegendWidget(this);
 		this.regionsLegendWidget = new RegionsLegendWidget(this);
+		this.regionsLegendWidget.show();
 		//this.eventsLegendWidget = new EventsLegendWidget(this);
 		this.pageTitleWidget = new PageTitleWidget(this);
 		
