@@ -1,0 +1,14 @@
+<div id="camers-list" class="hidden widget">
+	<h2>Камеры</h2>
+	<img class="add" src="/static/images/mt/add.png">
+
+	<div class="menu">
+	<% _.each(camers, function(item,key) { %>
+		<div class="ramp-entry sidebar-entry" data-index="<%= item.index %>">
+			<p class="num"><%= item.comment %></p>
+			<p class="position-name"><%= item.adress %></p>
+			<p class="position"><%= item.lat %> <%= item.lon %></p>
+		</div>
+	<% }) %>
+	</div>
+</div>
