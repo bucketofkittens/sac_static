@@ -71,9 +71,10 @@ var DistrictsPanel = Panel.extend({
     this.widgets.parametrs = new ParametrsWidgets(this);
     this.widgets.mapColor = new MapColorWidget(this);
     this.widgets.mapColor.enable();
-    console.log("regionsParametrs");
-    this.widgets.regionsParametrs = new RegionsParametrsWidgets(this); 
-    this.widgets.regionsParametrs.getRegionsParams();
+    
+    
+    //this.widgets.regionsParametrs = new RegionsParametrsWidgets(this); 
+    //this.widgets.regionsParametrs.getRegionsParams();
     
   },
 
@@ -89,8 +90,8 @@ var DistrictsPanel = Panel.extend({
 		this.widgets.mapColor.updateParams();
 		this.mapColorel.show();
 		this.app.pageTitleWidget.show();
-		this.widgets.regionsParametrs.fullShow();
-		console.log(this.widgets.regionsParametrs);
+		//this.widgets.regionsParametrs.fullShow();
+		//console.log(this.widgets.regionsParametrs);
 		if(this.widgets.parametrs.currentParametr && this.widgets.parametrs.currentParametr.id) {
 			this.app.legendWidget.show();
 		}
@@ -165,7 +166,7 @@ var RegionPanel = Panel.extend({
       "CAMERA-LEFT": $(this.CSS["CAMERA-LEFT"]),
       "CAMERA-RIGHT": $(this.CSS["CAMERA-RIGHT"])
     }
-		this.regionsMapColorel = new RegionsMapColorel(this);
+		//this.regionsMapColorel = new RegionsMapColorel(this);
 	  this.svgWriter = new SVGLoader(this.app, {panel: this});
     this.widgets.yearSelector = new YearSelectWidget(this, {
 			years: [2012],
@@ -173,12 +174,12 @@ var RegionPanel = Panel.extend({
 			container: "#regions_age_select"
 		});
 
-	  this.widgets.regionsParametrs = new RegionsParametrsWidgets(this); 
-    this.widgets.regionsParametrs.getRegionsParams();
+	  //this.widgets.regionsParametrs = new RegionsParametrsWidgets(this); 
+    //this.widgets.regionsParametrs.getRegionsParams();
 		//this.widgets.paramsSelector = new ParamsSelectorWidget(this);
     //this.widgets.regionsSelector = new RegionsSelectorWidget(this)
-	  this.widgets.regionsMapColor = new RegionsMapColorWidget(this); 
-		this.widgets.regionsMapColor.enable();
+	 // this.widgets.regionsMapColor = new RegionsMapColorWidget(this); 
+	//	this.widgets.regionsMapColor.enable();
 	  this.bindEvents_();
   },
 
@@ -239,7 +240,7 @@ var RegionPanel = Panel.extend({
 		this.svgWriter.show();
 		this.svgWriter.load(this.getSVGCurrentCamera());
 
-		this.widgets.regionsParametrs.fullShow();
+		//this.widgets.regionsParametrs.fullShow();
 		this.widgets.regionsMapColor.updateParams();
 
 		//this.app.regionsLegendWidget.show();
@@ -251,7 +252,7 @@ var RegionPanel = Panel.extend({
 		this.elements["CAMERA-RIGHT"].removeClass("onShow");
     	$('#bg-colored-image').css({backgroundImage: 'none'});
 
-		this.widgets.regionsParametrs.fullHidden();
+		//this.widgets.regionsParametrs.fullHidden();
 
 		//this.app.regionsLegendWidget.hide();
 	},
@@ -364,45 +365,54 @@ var RegionPanel = Panel.extend({
 
 var EventsPanel = Panel.extend({
 
-	 getAppealsList_: function(appeals) {
-  	this.appealsList.init();
-  	this.appealsList.beforeCreate_ = function(data) {
-  		console.log(appeals);
-		return _.template(data, { appeals : appeals});
-	}
-    this.appealsList.create();
-  },
+	getAppealsListLast_: function(statuses) {
+		var self = this;
+	  	this.appealsList.init();
+	  	this.appealsList.beforeCreate_ = function(data) {
+			return _.template(data, { appeals : self.appeals, statuses: statuses});
+		}
+		this.appealsList.afterCreate_ = function() {
+			$("#appeals-list .num").on("click", function() {
+				$(this).parent().find(".status_list").toggle();
+			});
+		}
+		this.appealsList.create();
+  	},
   
-  initialize: function(){
-	  this.CSS = { "CONTAINER": "#bg-event-image" }
-	  this.elements = { "CONTAINER": $(this.CSS["CONTAINER"]) }
+	getAppealsList_: function(appeals) {
+		this.appeals = appeals;
+		$.get(this.app.apiHost + "/appeal_statuses.json", $.proxy(this.getAppealsListLast_, this));
+	},
+  
+	initialize: function(){
+		this.CSS = { "CONTAINER": "#bg-event-image" }
+		this.elements = { "CONTAINER": $(this.CSS["CONTAINER"]) }
 
-    this.map = new EventsMapStateManager(this.app, this);
-    
-    this.appealsList = AppealsList;
-    this.appealsList.panel = this;
-	
-    $.get(this.app.apiHost + "/appeal_types.json", $.proxy(this.getAppealsList_, this));
-    
-    //this.widgets.regionsParametrs.getRegionsParams();
-  },
-  
- 
+		this.map = new Map(this.app, this);
+
+		this.appealsList = AppealsList;
+		this.appealsList.panel = this;
+		
+		this.requisitionInfoWidget = RequisitionInfoWidget;
+		this.requisitionInfoWidget.panel = this;
+		
+		$.get(this.app.apiHost + "/appeal_types.json", $.proxy(this.getAppealsList_, this));
+	},
 
 	show: function() {
 		this.appealsList.show();
-		
 		this.elements["CONTAINER"].removeClass("onHidden");
-    this.map.show(this.map.currentZoom)
-    if (Number(this.map.currentZoom) == 3 && Number(this.map.currentRegion) == 72) {
-      this.widgets.alarm.show()
-    }
+		
+		this.map.show(this.map.currentZoom)
+		if (Number(this.map.currentZoom) == 3 && Number(this.map.currentRegion) == 72) {
+		  this.widgets.alarm.show()
+		}
 		//this.app.pageTitleWidget.show();
 	},
 
 	hide: function() {
 		this.elements["CONTAINER"].addClass("onHidden");
-    _.each(this.widgets, function(w){ w.hide() })
+	_.each(this.widgets, function(w){ w.hide() })
 		this.map.miniMap.opacityHidden();
 
 	}

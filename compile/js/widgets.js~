@@ -248,4 +248,9 @@ var AppealsList = Object.create(ExWidget);
 
 AppealsList.navId = "#appeals-list";
 AppealsList.folder = "/templates/";
-$.get(this.app.apiHost + "/subjects/"+id_parent+"/parent.json", callback);
+
+var RequisitionInfoWidget = Object.create(ExWidget);
+
+RequisitionInfoWidget.navId = "#requisition-info";
+RequisitionInfoWidget.folder = "/templates/";
+

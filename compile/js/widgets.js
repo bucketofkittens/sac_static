@@ -249,3 +249,8 @@ var AppealsList = Object.create(ExWidget);
 AppealsList.navId = "#appeals-list";
 AppealsList.folder = "/templates/";
 
+var RequisitionInfoWidget = Object.create(ExWidget);
+
+RequisitionInfoWidget.navId = "#requisition";
+RequisitionInfoWidget.folder = "/templates/";
+

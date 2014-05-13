@@ -568,32 +568,31 @@ var Application = function() {
 		//this.eventsLegendWidget = new EventsLegendWidget(this);
 		this.pageTitleWidget = new PageTitleWidget(this);
 		
-    /*
-		this.eventsDrawWidget = new EventsDrawWidget(this);
-		this.formatManager = new FormatManager(this);
-		this.reportsParamsSelector = new ReportsParamsSelector(this);
-		this.reportsDiscSelector = new ReportsDiscSelector(this);
-		this.reportsWidget = new ReportsWidget(this);
-    */
+		/*
+			this.eventsDrawWidget = new EventsDrawWidget(this);
+			this.formatManager = new FormatManager(this);
+			this.reportsParamsSelector = new ReportsParamsSelector(this);
+			this.reportsDiscSelector = new ReportsDiscSelector(this);
+			this.reportsWidget = new ReportsWidget(this);
+		*/
 
-    this.panels = {
-      'EVENTS':     new EventsPanel(this),
-      'REGIONS':    new RegionPanel(this),
-      'SVP':        new SvpPanel(this),
-      'DCH':        new DchPanel(this),
-      'REFBOOKS':   new TariffsPanel(this) 
-      /*'TARIFFS':    new TariffsPanel(this),
-      'DISTRICTS':  new DistrictsPanel(this),
-      'FORMATS':    new FormatsPanel(this),
-      'GRAPHS':     new GraphPanel(this),
-      'REPORTS':    new ReportsPanel(this)*/
-    };
+		this.panels = {
+		  'EVENTS':     new EventsPanel(this),
+		  'REGIONS':    new RegionPanel(this),
+		  'SVP':        new SvpPanel(this),
+		  'DCH':        new DchPanel(this),
+		  'REFBOOKS':   new TariffsPanel(this) 
+		  /*'TARIFFS':    new TariffsPanel(this),
+		  'DISTRICTS':  new DistrictsPanel(this),
+		  'FORMATS':    new FormatsPanel(this),
+		  'GRAPHS':     new GraphPanel(this),
+		  'REPORTS':    new ReportsPanel(this)*/
+		};
 
 		this.footerNavWidget.draw();
 		this.loadingState.stop();
 
-    // открываем первую панель
-    this.footerNavWidget.elements['MAIN'].find('a').first().click()
+		this.app.panels['EVENTS'].show();
 	}
 
 	this.setAppTitle = function(title) {

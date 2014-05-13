@@ -115,20 +115,42 @@ _.extend(Map.prototype, {
     if (this.panel.mapColorel) this.panel.mapColorel.hidden();
 		this.SVGWriter.hide();
 	},
+	
+	showRequisition: function(requisition) {
+		var self = this;
+		
+		this.panel.requisitionInfoWidget.init();
+		this.panel.requisitionInfoWidget.beforeCreate_ = function(data) {
+		
+			return _.template(data, { requisition: requisition});
+		}
+		this.panel.requisitionInfoWidget.afterCreate_ = function() {
+			$("#requisition .close").on("click", function() {
+				self.panel.requisitionInfoWidget.destroy();
+			});
+		}
+		this.panel.requisitionInfoWidget.create();
+		this.panel.requisitionInfoWidget.show();
+	},
 
 	onSvgClick_ : function(evt) {
 		var newIdRegion = $(evt.target).parent().attr("target");
-
+		
 		if(newIdRegion) {
-			this.app.legendWidget.hide();
-			var inVideo = this.app.configManager.getInVideoById(newIdRegion);
-			if(inVideo) {
-				this.onBeforeVideoPlay_();
+	
+			if(this.currentZoom == 3)showGis(newIdRegion, $.proxy(this.showRequisition, this));
+			else
+			{
+				this.app.legendWidget.hide();
+				var inVideo = this.app.configManager.getInVideoById(newIdRegion);
+				if(inVideo) {
+					this.onBeforeVideoPlay_();
 
-				this.currentRegion = newIdRegion;
-        this.currentZoom++;
+					this.currentRegion = newIdRegion;
+		    		this.currentZoom++;
 
-				this.getStateEvent().dispatch(this.app, this, inVideo);
+					this.getStateEvent().dispatch(this.app, this, inVideo);
+				}
 			}
 		}
 	}

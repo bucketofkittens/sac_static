@@ -1,0 +1,55 @@
+<div id="requisition" class="widget">
+	<span class="close" id="reports-close"></span>
+    <div class="sub">
+    	<div class="in">
+			<div class="text">
+				<h2>Обращение</h2>
+				<table>
+					<tr>
+						<td>Статус:</td>
+						<td><%= requisition.status %></td>
+					</tr>
+					<tr>
+						<td>Тип:</td>
+						<td><%= requisition.type_ru %></td>
+					</tr>
+					<tr>
+						<td>Местонахождение:</td>
+						<td><%= requisition.address %></td>
+					</tr>
+					<tr>
+						<td>Комментарий:</td>
+						<td><%= requisition.comment %></td>
+					</tr>
+					<tr>
+						<td>Исполнитель:</td>
+						<td>
+							<select>
+								<option value="-1">000 Исполнитель</option>
+							</select>
+							<button>Назначить</button>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="images">
+				<h2>Фото до:</h2>
+			</div>
+		</div>
+	</div>
+    <div class="history">
+    	<div class="left">
+			<h2>Обращение</h2>
+			<table>
+				<tr>
+					<td>История</td>
+					<td>123</td>
+				</tr>
+			</table>
+		</div>
+		<div class="images">
+    		<h2>Фото после:</h2>
+    	</div>
+    </div>
+</div>
+

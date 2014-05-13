@@ -1,11 +1,26 @@
 <div id="appeals-list" class="widget">
-    <h2>Оповещения</h2>
+    <h2>Обращения</h2>
     
     <div class="menu">
     <% _.each(appeals, function(item,key) { %>
-		<div class="ramp-entry sidebar-entry" data-index="<%= item.index %>">
+		<div class="ramp-entry sidebar-entry" data-index="<%= item.id %>">
 			<p class="num"><%= item.name %></p>
+			<ul class="status_list">
+				<% _.each(statuses, function(status,s_key) { %>
+					<li data-id="<%= status.id %>"><%= status.name %></li>
+				<% }) %>
+				<li>Все</li>
+			</ul>
 		</div>
 	<% }) %>
+	<div class="ramp-entry sidebar-entry" data-index="-1">
+			<p class="num">Все</p>
+			<ul class="status_list">
+				<% _.each(statuses, function(status,s_key) { %>
+					<li data-id="<%= status.id %>"><%= status.name %></li>
+				<% }) %>
+				<li>Все</li>
+			</ul>
+		</div>
 	</div>
 </div>
