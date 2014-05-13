@@ -20,7 +20,6 @@ OLMap.prototype.addLpus =  function(lpus)
 
 OLMap.prototype.addRequisitions =  function(data, onPopupClick)
 {
-	console.log(data);
   if(data == null) return false;
 	for(var i = 0; i < data.length; i++)
     {

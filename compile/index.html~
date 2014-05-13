@@ -57,93 +57,11 @@
     <b><span id="hour">16</span>:<span id="minute">40</span></b>
     <p><span id="day">04</span> <span id="month">апреля</span> <span id="age">2013</span></p>
 </div>
-<!--
-<div class="nav nav-elements" id="footer-nav-widget">
-</div>
--->
-<!--
-<div class="legend hidden" id="regions-legend-widget" >
-    <p class="green">нет данных</p>
-    <p class="yellow">нет данных</p>
-    <p class="red">нет данных</p>
-    <p class="blue">нет данных</p>
-</div>
-<div id="regions-params" class="hidden">
-    <div class="show nav-elements" id="regions-paramers-show"></div>
-    <div class="data" id="regions-parametrs-widget">
-        <a href="#" class="hidden"></a>
-        <h3>&nbsp;</h3>
-        <p id="regions-param-info">&nbsp;</p>
-        <input type="text" class="search" id="regions-params-filter" placeholder="Поиск" />
-        <select class="year" id="regions_age_select"></select>
-        <section class="scroll" id="regions-parametrs-list"></section>
-    </div>
-</div>
--->
+
 <div id="load">
     <p class="text" id="loading"></p>
     <img src="/static/images/load.png" id="load-image" alt="" />
 </div>
-<!--
-<div class=" hidden" id="events-alarm">
-    <div id="events-alarm-icon"></div>
-    <div id="events-alarm-msg">
-        <h2>Внимание!</h2>
-        <a href="#">Подробнее</a>
-    </div>
-</div>
- -->
-<!--
-<div class=" hidden" id="sceneinfo-content">
-    <div id="sceneinfo-content-obscure">
-        <div id="sceneinfo-panel" class="sceneinfo-panel"></div>
-    </div>
-     <menu id="sceneinfo-selector">
-      <li id="sceneinfo-main" class="current"><a href="">Информация</a></li>
-      <li id="sceneinfo-map"><a href="">Карта</a></li>
-      <li id="sceneinfo-forces"><a href="">Связи</a></li>
-    </menu>
-</div>
-<div class=" hidden left top sceneinfo-extras" id="sceneinfo-extra-1">
-    <div class="sceneinfo-extra-panel"></div>
-</div>
-<div class=" hidden left middle sceneinfo-extras" id="sceneinfo-extra-2">
-    <div class="sceneinfo-extra-panel"></div>
-</div>
-<div class=" hidden left bottom sceneinfo-extras" id="sceneinfo-extra-3">
-    <div class="sceneinfo-extra-panel"></div>
-</div>
-<div class=" hidden right top sceneinfo-extras" id="sceneinfo-extra-4">
-    <div class="sceneinfo-extra-panel"></div>
-</div>
-<div class=" hidden right middle sceneinfo-extras" id="sceneinfo-extra-5">
-    <div class="sceneinfo-extra-panel"></div>
-</div>
-<div class=" hidden right bottom sceneinfo-extras" id="sceneinfo-extra-6">
-    <div class="sceneinfo-extra-panel"></div>
-</div>
-<div class=" hidden right hide-to-bottom sceneinfo-extras" id="sceneinfo-extra-7">
-    <div class="sceneinfo-extra-panel"></div>
-</div>
-<div class=" hidden right hide-to-bottom sceneinfo-extras" id="sceneinfo-extra-8">
-    <div class="sceneinfo-extra-panel"></div>
-</div>
-<div class=" hidden right hide-to-bottom sceneinfo-extras" id="sceneinfo-extra-9">
-    <div class="sceneinfo-extra-panel"></div>
-</div>
-<div class=" hidden right hide-to-bottom sceneinfo-extras" id="sceneinfo-extra-10">
-    <div class="sceneinfo-extra-panel"></div>
-</div>
-<div class="hidden left  top    sceneinfo-extras-mgmt"></div>
-<div class="hidden left  bottom sceneinfo-extras-mgmt"></div>
-<div class="hidden right top    sceneinfo-extras-mgmt"></div>
-<div class="hidden right bottom sceneinfo-extras-mgmt"></div>
-
-<div id="regions-left-camera"></div>
-<div id="regions-right-camera"></div>
-</div>
-</div>
--->
 
 <div id="bg-colored-image"></div>
 <div id="bg-image"></div>
@@ -171,7 +89,12 @@
 <script type="text/javascript" src="/static/compile/js/lib/signals.min.js"></script>
 
 <script type="text/javascript" src="/static/compile/js/OpenLayers/OpenLayers.js"></script>
-<script type="text/javascript" src="/static/compile/js/olmap.js"></script>
+<script type="text/javascript" src="/static/compile/js/olmap/olmap.js"></script>
+<script type="text/javascript" src="/static/compile/js/olmap/tools.js"></script>
+<script type="text/javascript" src="/static/compile/js/olmap/create_map.js"></script>
+<script type="text/javascript" src="/static/compile/js/olmap/vector_layers.js"></script>
+<script type="text/javascript" src="/static/compile/js/olmap/subj.js"></script>
+<script type="text/javascript" src="/static/compile/js/olmap/markers.js"></script>
 <script type="text/javascript" src="/static/compile/js/gis.js"></script>
 
 <script type="text/javascript" src="/static/compile/js/utils.js"></script>

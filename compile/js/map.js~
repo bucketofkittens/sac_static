@@ -151,7 +151,6 @@ _.extend(Map.prototype, {
 
 					this.getStateEvent().dispatch(this.app, this, inVideo);
 				}
->>>>>>> Stashed changes
 			}
 		}
 	}

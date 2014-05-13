@@ -113,7 +113,7 @@ var SVGLoader = function(app, config) {
 			self.app.legendWidget.hide();
 		});
 
-		if(this.onGroupClick) {
+		if(this.onGroupClick && zoom != 3) {
 			groups.on("click", this.onGroupClick);	
 		}
 	}

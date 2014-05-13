@@ -47,7 +47,7 @@ function showGis(id, getRequisitionCallback)
 
     olmap = new OLMap();
     olmap.init("gis_div", this.app.apiHost, ConfigApp["SAC_TYPE"]);
-    console.log(getRequisitionCallback);
+
     this.app.regionsManagerLocal.geRegionLatLonById(id);
     if(ConfigApp["SAC_TYPE"] == 'avto')this.app.regionsManagerLocal.getRequisitions(id, getRequisitionCallback);
     else if(ConfigApp["SAC_TYPE"] == 'lpu') this.app.regionsManagerLocal.getMarkers(id);

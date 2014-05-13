@@ -137,7 +137,7 @@ _.extend(Map.prototype, {
 		var newIdRegion = $(evt.target).parent().attr("target");
 		
 		if(newIdRegion) {
-	
+			console.log(newIdRegion);
 			if(this.currentZoom == 3)showGis(newIdRegion, $.proxy(this.showRequisition, this));
 			else
 			{
