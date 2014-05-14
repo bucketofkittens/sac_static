@@ -381,7 +381,7 @@ var EventsPanel = Panel.extend({
   
 	getAppealsList_: function(appeals) {
 		this.appeals = appeals;
-		$.get(this.app.apiHost + "/appeal_statuses.json", $.proxy(this.getAppealsListLast_, this));
+		$.get(this.app.apiHost + "/requisition_statuses.json", $.proxy(this.getAppealsListLast_, this));
 	},
   
 	initialize: function(){
@@ -396,7 +396,7 @@ var EventsPanel = Panel.extend({
 		this.requisitionInfoWidget = RequisitionInfoWidget;
 		this.requisitionInfoWidget.panel = this;
 		
-		$.get(this.app.apiHost + "/appeal_types.json", $.proxy(this.getAppealsList_, this));
+		$.get(this.app.apiHost + "/requisition_types.json", $.proxy(this.getAppealsList_, this));
 	},
 
 	show: function() {

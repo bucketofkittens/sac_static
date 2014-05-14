@@ -402,7 +402,7 @@ var EventsPanel = Panel.extend({
 	show: function() {
 		this.appealsList.show();
 		this.elements["CONTAINER"].removeClass("onHidden");
-		console.log(this.map);
+		
 		this.map.show(this.map.currentZoom)
 		if (Number(this.map.currentZoom) == 3 && Number(this.map.currentRegion) == 72) {
 		  this.widgets.alarm.show()

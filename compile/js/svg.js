@@ -116,9 +116,11 @@ var SVGLoader = function(app, config) {
 		if(this.onGroupClick) {
 			groups.on("click", this.onGroupClick);	
 		}
+		
+		self.drawParamValues();
 	}
 
-	this.drawParamValues = function(data, CSSclasses) {
+	this.drawParamValues = function() {
 		this.removeParamValues();
 
 		var svg = $(this.CSS["SVG"])[0].getSVGDocument();
@@ -127,7 +129,7 @@ var SVGLoader = function(app, config) {
 
 		$.each($(svg).find("g"), function(key, value) {
 			var id = $(value).attr("target");
-			if(id && data[id] != 0) {
+			if(id) {
 				var newElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
 				var path = $(value).find("path")[0];
 
@@ -136,16 +138,19 @@ var SVGLoader = function(app, config) {
 
 				var correctPath = "DISTRICT";
 
-				if(CSSclasses == "regions") {
-					correctPath = "REGIONS";
-				}
 				if(ConfigApp["TARGETS"][correctPath][id]) {
 					x = x + parseInt(ConfigApp["TARGETS"][correctPath][id]["x"]);
 					y = y + parseInt(ConfigApp["TARGETS"][correctPath][id]["y"]);
 				}
 
-				var classes = "zoom" + zoom + " "+CSSclasses;
-				var val = decorateValues(data[id], 2);
+				var classes = "zoom" + zoom;
+				var val = parseInt(getRandomArbitary(0, 100));
+				if(zoom == 2 ) {
+					val = parseInt(getRandomArbitary(0, 10));
+				}
+				if(zoom == 3 ) {
+					val = parseInt(getRandomArbitary(0, 5));
+				}
 				$(newElement).html(Number(val));
 				$(newElement).attr({
 					x: x,
@@ -169,3 +174,8 @@ var SVGLoader = function(app, config) {
 		$(svg).find("text").remove();
 	}
 }
+
+function getRandomArbitary (min, max) {
+    return Math.random() * (max - min) + min;
+}
+

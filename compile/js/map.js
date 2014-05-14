@@ -135,9 +135,9 @@ _.extend(Map.prototype, {
 
 	onSvgClick_ : function(evt) {
 		var newIdRegion = $(evt.target).parent().attr("target");
-		
+		console.log(newIdRegion);
 		if(newIdRegion) {
-			console.log(newIdRegion);
+			
 			if(this.currentZoom == 3)showGis(newIdRegion, $.proxy(this.showRequisition, this));
 			else
 			{
