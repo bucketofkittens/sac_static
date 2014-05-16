@@ -1,4 +1,5 @@
 <div id="requisition" class="widget">
+	<input type="hidden" id="req_id" value="<%= requisition.id %>" />
 	<span class="close" id="reports-close"></span>
     <div class="sub">
     	<div class="in">
@@ -7,49 +8,88 @@
 				<table>
 					<tr>
 						<td>Статус:</td>
-						<td><%= requisition.status %></td>
+						<td><span id="stat"><%= requisition.status %></span></td>
 					</tr>
 					<tr>
 						<td>Тип:</td>
 						<td><%= requisition.type_ru %></td>
 					</tr>
 					<tr>
+						<td>Дата:</td>
+						<% 
+							var formatDateStr = moment(requisition.creation_time).format('DD.MM.YYYY'); 
+						%>
+						<td><%= formatDateStr %></td>
+					</tr>
+					<tr>
 						<td>Местонахождение:</td>
-						<td><%= requisition.address %></td>
+						<td><%= requisition.address %><br />( <%= requisition.lat %>, <%= requisition.lon %>)</td>
 					</tr>
 					<tr>
 						<td>Комментарий:</td>
 						<td><%= requisition.comment %></td>
 					</tr>
+					<% if(requisition.status_id == 1) { %>
 					<tr>
 						<td>Исполнитель:</td>
 						<td>
-							<select>
-								<option value="-1">000 Исполнитель</option>
+							<select class="executor">
+								<option value="-1">Выберите исполнителя</option>
+								<option value="1">ОАО "ДРСУ"</option>
+								<option value="2">ООО "Нокс"</option>
+								<option value="3">ООО "СтройРегионСервис"</option>
+								<option value="4">ООО "Трансюжстрой"</option>
+								<option value="5">ФГУ ДСД «Центр»</option>
+								<option value="6">ФКУ «Центравтомагистраль»</option>
 							</select>
-							<button>Назначить</button>
+							<button id="assign" disabled="disabled">Назначить</button>
+							<div class="warning1">Обращение назначено <span id="text1"></span>. <br />Срок исполнения дата обращения + 1 месяц</div>
 						</td>
 					</tr>
+					<% } else { %>
+						<tr>
+							<td>Исполнитель:</td>
+							<td>
+								
+							</td>
+						</tr>
+					<% } %>
 				</table>
 			</div>
 			<div class="images">
 				<h2>Фото до:</h2>
+				<div class="images">
+					<div class="left"><img src="/static/images/fl.png" /></div>
+					<img src="/static/images/photos/<%= requisition.id %>_before_1.png" class="current" alt="" />
+					<img src="/static/images/photos/<%= requisition.id %>_before_2.png" alt="" />
+					<img src="/static/images/photos/<%= requisition.id %>_before_3.png" alt="" />
+					<img src="/static/images/photos/<%= requisition.id %>_before_4.png" alt="" />
+					<div class="right"><img src="/static/images/fr.png" /></div>
+				</div>
+			</div>
+		</div>
+		<div class="history">
+			<div class="left">
+				<h2>Журнал</h2>
+				<table>
+					<% _.each(history, function(h) { %>
+						<tr>
+							<td>
+								<% 
+								var formatDateStr = moment(h.change_dt).format('DD.MM.YYYY'); 
+								%>
+								<%= formatDateStr %>
+							</td>
+							<td><%= h.name %></td>
+							<td><%= h.comment %></td>
+						</tr>
+					<% }) %>
+				</table>
+			</div>
+			<div class="images">
+				<h2>Фото после:</h2>
 			</div>
 		</div>
 	</div>
-    <div class="history">
-    	<div class="left">
-			<h2>Обращение</h2>
-			<table>
-				<tr>
-					<td>История</td>
-					<td>123</td>
-				</tr>
-			</table>
-		</div>
-		<div class="images">
-    		<h2>Фото после:</h2>
-    	</div>
-    </div>
 </div>
 

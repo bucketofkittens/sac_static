@@ -36,8 +36,8 @@ OLMap.prototype.maskSubj =  function(geom)
 OLMap.prototype.centerSubj =  function(data)
 {
 
-		var pnt1 = this.newPnt(data.min_lat, data.min_lon);
-        var pnt2 = this.newPnt(data.max_lat, data.max_lon);
+		var pnt1 = this.newPnt(data.min_lon, data.min_lat);
+        var pnt2 = this.newPnt(data.max_lon, data.max_lat);
 
 		var bounds = new OpenLayers.Bounds(pnt1.x, pnt1.y, pnt2.x, pnt2.y);
 

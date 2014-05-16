@@ -36,7 +36,7 @@
   z-index: 130;
   width: 438px;
   height: 100px;
-  background: url(/static/images/mvd-logo.png) left center no-repeat;  
+  background: url(/static/images/logo.png) left center no-repeat;  
 }
 
 header
@@ -1420,12 +1420,18 @@ and (max-device-width : 1024px)  {
 
 #logo {
   position:absolute;
-  left: 15px;
-  top: 15px;
+  left: 35px !important;
+  top: 35px !important;
   z-index: 130;
-  width: 438px;
-  height: 100px;
-  background: url(/static/images/mvd-logo.png) left center no-repeat;  
+  width: 638px;
+  height: 76px;
+  background: url(/static/images/logo.png) left center no-repeat;
+  font-size: 20px;
+  color: #ffffff; 
+  font-family:NeoSansPro-Medium;
+  padding-left: 120px;
+  padding-top: 63px;
+  text-shadow: 1, 1, 1, rgba(0, 0, 0, 0.5);
 }
 
 header
@@ -2831,11 +2837,43 @@ and (max-device-width : 1024px)  {
 }
 #requisition .text, #requisition .left {
 	float: left;
-	width: 700px;
+	width: 800px;
 }
 #requisition .images {
 	float: right;
-	width: 300px;
+	width: 200px;
+	overflow: hidden;
+	position: relative;
+}
+#requisition .images .left, #requisition .images .right {
+	position: absolute;
+	height: 100%;
+}
+#requisition .images .left img, #requisition .images .right img {
+	width: 23px;
+	position: relative;
+	top: 95px;
+	display: block;
+}
+#requisition .images .current {
+	display: block;
+}
+#requisition .images .left {
+	left: 0px;
+	top: 0px;
+}
+#requisition .images .right {
+	right: 0px;
+	top: 0px;
+}
+#requisition .images .images {
+	width: 200px;
+	overflow: hidden;
+	height: 230px;
+}
+#requisition .images img {
+	width: 200px;
+	display: none;
 }
 #requisition .text table td, #requisition .left td {
 	border: 0px;
@@ -2843,8 +2881,53 @@ and (max-device-width : 1024px)  {
 	font-family:NeoSansPro-Light;
 }
 
+#appeals-list .sbHolder {
+	position: relative;
+	top: 35px;
+}
+
 #requisition .history {
 	width: 100%;
 	overflow: hidden;
 	margin-top: 20px;
+}
+
+#popup_contentDiv {
+	overflow: visible !important;
+}
+
+.jspVerticalBar {
+	background-size: 100% 100%;
+}
+
+image[cursor="1"] {
+  animation: blink 1s steps(5, start) infinite;
+  -webkit-animation: blink 1s steps(5, start) infinite;
+}
+image {
+	cursor: pointer;
+}
+@keyframes blink {
+  to { visibility: hidden; }
+}
+@-webkit-keyframes blink {
+  to { visibility: hidden; }
+}
+
+div.olControlZoom {
+	z-index: 199;
+}
+
+.warning1 {
+	display: none;
+}
+
+.sidebar-entry .num.current {
+	font-weight: bold;
+	color: #ffffff;
+}
+
+#appeals-list .status_list li.current {
+	color: #ffffff;
+	font-weight: bold;
 }

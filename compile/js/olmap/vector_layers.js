@@ -35,8 +35,8 @@ OLVectorStyle =
     requisitions: new OpenLayers.StyleMap(
    	{
         externalGraphic: "${path}",
-	  	graphicWidth: 30,
-	  	graphicHeight: 30,
+	  	graphicWidth: 42,
+	  	graphicHeight: 42,
 	  	pointRadius: 100
 	}),
 };

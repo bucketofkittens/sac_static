@@ -66,6 +66,8 @@ function removeGis()
 
     var gisDiv = document.getElementById("gis_div");
     gisDiv.parentNode.removeChild(gisDiv);
+    
+    $("#appeals-list").fadeIn();
 }
 
 

@@ -1,9 +1,14 @@
 OLMap.prototype.addMarker =  function(layer, lat, lon, options)
 {
+	var style = {
+        externalGraphic: options.path,
+        graphicWidth: 42,
+    	graphicHeight: 42,
+    	cursor: options.status_id
+    };
     var pnt = this.newPnt(lat, lon);
-    var feature = new OpenLayers.Feature.Vector(pnt, options );
+    var feature = new OpenLayers.Feature.Vector(pnt, options, style);
 	layer.addFeatures([feature]);
-    
 } 
 
 
@@ -40,16 +45,19 @@ OLMap.prototype.addRequisitions =  function(data, onPopupClick)
 
 OLMap.prototype.createRequisitionsPopupHtml =  function(attr) 
 {
-    html =   '<div style="background-image: url('+attr.popup_bg_path+');';
-    html += 'height: 109px; width: 232px; ">';
-    html += '<div style="position: absolute; top: 25px; left: 20px; color: white">';
+	var myDate = new Date(attr.creation_time);
+	var formatDateStr = (myDate.getMonth() + 1) + "-" + myDate.getDate() + "-" + myDate.getFullYear();
+    
+    html =   '<div style="background-image: url('+attr.popup_bg_path+'); background-size: 100% 100%;';
+    html += 'height: 189px; width: 232px; ">';
+    html += '<div style="position: absolute; top: 25px; left: 20px; color: white; padding-top: 10px;">';
     html += '<table cellpadding = 1px cellspacing=2px width=185px border=0'+
     ' style="color: white; font-size: 12; font-family: arial">';
-    html += '<tr><td>№ ' + attr.num + '</td><td  align=center bgcolor="'+ attr.color +'">' +
+    html += '<tr><td style="white-space: no-wrap;">' + attr.num + '</td><td  align=center bgcolor="'+ attr.color +'">' +
         attr.status + '</td></tr>';
-    html += '<tr><td colspan="2" style="font-size: 14; font-weight: bold">' + attr.type_ru + '</td></tr>';
-    html += '<tr><td colspan="2">' + attr.address + '</td></tr>';
-    html += '<tr><td colspan="2">' + attr.creation_time + '</td></tr>';        
+    html += '<tr><td colspan="2" style="font-size: 14px; font-weight: bold">' + attr.type_ru + '</td></tr>';
+    html += '<tr><td colspan="2" style="font-size: 12px;">' + attr.address + '</td></tr>';
+    html += '<tr><td colspan="2" style="font-size: 12px;">' + formatDateStr + '</td></tr>';        
     html +=  '</table></div>';
     html +=  '<div class="close" style="position: absolute; top: 23px; right: 20px;'+
         ' " onclick="olmap.popup.destroy()"></div>';
@@ -107,4 +115,11 @@ OLMap.prototype.addMarkersPopup =  function(layer, createHTMLFunction, onPopupCl
     this.map.addControl(popupControl);
             
     popupControl.activate();
+}
+
+OLMap.prototype.addRequisition =  function(attr)
+{
+ attr.path = this.hostIP + '/static/compile/js/olmap/images/' +
+            attr.type + '_' + attr.color + '.gif';
+ this.addMarker(this.requisitionsLayer, attr.lat, attr.lon, attr);
 }

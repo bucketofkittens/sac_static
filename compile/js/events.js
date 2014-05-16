@@ -101,6 +101,8 @@ var OnDistrictChangeState = function(app, map, video_id, currentRegion) {
 
 		this.app.videoPlayer.hide();
 		
+		this.app.panels['EVENTS'].appealsList.drawValue(this.app.panels['EVENTS'].appealsList.currentType, this.app.panels['EVENTS'].appealsList.currentStatus);
+		
 		if(this.map.onAfterStateChange) {
 			this.map.onAfterStateChange();
 		}
@@ -172,6 +174,8 @@ var OnEventsChangeState = function(app, map, video_id, currentRegion) {
     }
 
 		this.app.videoPlayer.hide();
+		
+		this.app.panel.appealsList.drawValue(this.app.panel.appealsList.currentType, this.app.panel.appealsList.currentStatus);
 		
 		if(this.map.onAfterStateChange) {
 			this.map.onAfterStateChange();

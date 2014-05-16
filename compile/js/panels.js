@@ -365,16 +365,78 @@ var RegionPanel = Panel.extend({
 
 var EventsPanel = Panel.extend({
 
+	
+
 	getAppealsListLast_: function(statuses) {
 		var self = this;
 	  	this.appealsList.init();
+	  	this.appealsList.currentType = "all";
+	  	this.appealsList.currentStatus = "all";
 	  	this.appealsList.beforeCreate_ = function(data) {
 			return _.template(data, { appeals : self.appeals, statuses: statuses});
 		}
+		this.appealsList.drawValue = function(type, status) {
+			console.log(this);
+			if(!type || type == "-1") {
+				type = "all";
+			}
+			if(!status || status == "-1") {
+				status = "all";
+			}
+			$.get(self.app.apiHost + "/requisitions/get_subtree_count_requisition_list/"+self.map.currentRegion+"/"+type+"/"+status, $.proxy(this.getMapData_, this));
+		}
+		this.appealsList.getMapData_ = function(data) {
+			this.panel.map.SVGWriter.drawParamValues(data);
+		}
 		this.appealsList.afterCreate_ = function() {
+			this.drawValue(this.currentType, this.currentStatus);
+			
 			$("#appeals-list .num").on("click", function() {
+				$("#appeals-list .num").removeClass("current");
+				$(this).addClass("current");
+				$(this).parent().find(".all").addClass("current");
+				
 				$(this).parent().find(".status_list").toggle();
+				self.currentType = $(this).parent().attr("data-index");
+				console.log(self);
+				self.appealsList.drawValue(self.currentType, self.currentStatus);
 			});
+			
+			$("#appeals-list .status_list li").on("click", function() {
+				$("#appeals-list .status_list li").removeClass("current");
+				$(this).addClass("current");
+			
+				self.currentStatus = $(this).attr("data-id");
+				self.appealsList.drawValue(self.currentType, self.currentStatus);
+			});
+			
+			this.panel.ageSelectorWidget = new YearSelectWidget(this, {
+				years: [2014, 2013, 2012, 2011],
+				selectedYear: 2012,
+				container: "#age_select",
+				onAfterYearSelected: function() {}
+			});
+			
+			$("#appeals-list .menu").jScrollPane(
+			{
+				showArrows: true,
+				verticalDragMinHeight: 60,
+	    		verticalDragMaxHeight: 60,
+	    		autoReinitialise: true
+			}
+			
+			
+		);
+			
+			this.panel.ageSelectorWidget.draw();
+			
+			console.log(this.panel.ageSelectorWidget);
+		}
+		this.appealsList.hidden = function() {
+			$("#appeals-list").fadeOut();
+		}
+		this.appealsList.show = function() {
+			$("#appeals-list").fadeIn();
 		}
 		this.appealsList.create();
   	},

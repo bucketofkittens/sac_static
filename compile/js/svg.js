@@ -120,16 +120,16 @@ var SVGLoader = function(app, config) {
 		self.drawParamValues();
 	}
 
-	this.drawParamValues = function() {
+	this.drawParamValues = function(data) {
 		this.removeParamValues();
 
 		var svg = $(this.CSS["SVG"])[0].getSVGDocument();
-    var zoom = this.map ? this.map.currentZoom : 1 
+    	var zoom = this.map ? this.map.currentZoom : 1 
 		var self = this;
 
 		$.each($(svg).find("g"), function(key, value) {
 			var id = $(value).attr("target");
-			if(id) {
+			if(id && data &&  data[id]) {
 				var newElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
 				var path = $(value).find("path")[0];
 
@@ -151,7 +151,7 @@ var SVGLoader = function(app, config) {
 				if(zoom == 3 ) {
 					val = parseInt(getRandomArbitary(0, 5));
 				}
-				$(newElement).html(Number(val));
+				$(newElement).html(data[id]);
 				$(newElement).attr({
 					x: x,
 					y: y,

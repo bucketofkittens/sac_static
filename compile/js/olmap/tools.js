@@ -1,6 +1,6 @@
 OLMap.prototype.newPnt = function(lat, lon)
 {
-    var pnt = new OpenLayers.Geometry.Point(lat, lon);
+    var pnt = new OpenLayers.Geometry.Point(lon, lat);
     pnt = pnt.transform( new OpenLayers.Projection("EPSG:4326"),
         this.map.getProjectionObject());
     return pnt;

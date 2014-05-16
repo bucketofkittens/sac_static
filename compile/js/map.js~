@@ -116,31 +116,88 @@ _.extend(Map.prototype, {
 		this.SVGWriter.hide();
 	},
 	
-	showRequisition: function(requisition) {
+	getTypes_: function(history) {
 		var self = this;
 		
 		this.panel.requisitionInfoWidget.init();
 		this.panel.requisitionInfoWidget.beforeCreate_ = function(data) {
-		
-			return _.template(data, { requisition: requisition});
+			return _.template(data, { requisition: self.requisition, history: history});
 		}
 		this.panel.requisitionInfoWidget.afterCreate_ = function() {
+			var self = this;
 			$("#requisition .close").on("click", function() {
 				self.panel.requisitionInfoWidget.destroy();
 			});
+			$("#requisition .images .left img").on("click", function() {
+				var currentIndex = $("#requisition .images .current").index();
+				currentIndex -= 1;
+				
+				if(currentIndex == 0) {
+					currentIndex = $("#requisition .images img").size()-2;
+				}
+				
+				console.log(currentIndex);
+				
+				$("#requisition .images img").removeClass("current");
+				$("#requisition .images img").eq(currentIndex).addClass("current");
+			});
+			$("#requisition .images .right img").on("click", function() {
+				var currentIndex = $("#requisition .images .current").index();
+				currentIndex += 1;
+				
+				if(currentIndex > $("#requisition .images img").size()-2) {
+					currentIndex = 1;
+				}
+				
+				$("#requisition .images img").removeClass("current");
+				$("#requisition .images img").eq(currentIndex).addClass("current");
+			});
+			
+			$("#requisition #assign").on("click", function() {
+				console.log(self);
+				$.post(window.location.origin+"/requisitions/change_status", {status_id: 2, requisition_id: $("#req_id").val()}, function() {
+					$(".warning1").fadeIn();
+				
+					$("#text1").html($(".executor option:selected").text());
+				
+					$("#assign").remove();
+					$(".executor").remove();
+					
+					$("#stat").html("В работе");
+				});
+				
+			});
+			
+			$(".executor").on("change", function() {
+				if($(this).val() == -1) {
+					$("#assign").attr("disabled", "disabled");
+				} else {
+					$("#assign").attr("disabled", false);
+				}
+			});
+			
 		}
 		this.panel.requisitionInfoWidget.create();
 		this.panel.requisitionInfoWidget.show();
+	},
+	
+	showRequisition: function(requisition) {
+		var self = this;
+		self.requisition = requisition;
+		
+		$.get(this.app.apiHost + "/requisitions/get_status_history_list/by_requisition_id/"+requisition.id, $.proxy(this.getTypes_, this));
 	},
 
 	onSvgClick_ : function(evt) {
 		var newIdRegion = $(evt.target).parent().attr("target");
 		
 		if(newIdRegion) {
-			console.log(this.currentZoom);
-			if(this.currentZoom == 3)showGis(newIdRegion, $.proxy(this.showRequisition, this));
-			else
-			{
+			
+			if(this.currentZoom == 3) {
+				showGis(newIdRegion, $.proxy(this.showRequisition, this));
+				this.panel.appealsList.hidden();
+			} else {
+				this.panel.appealsList.show();
 				this.app.legendWidget.hide();
 				var inVideo = this.app.configManager.getInVideoById(newIdRegion);
 				if(inVideo) {
