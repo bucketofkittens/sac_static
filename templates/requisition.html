@@ -43,7 +43,7 @@
 								<option value="6">ФКУ «Центравтомагистраль»</option>
 							</select>
 							<button id="assign" disabled="disabled">Назначить</button>
-							<div class="warning1">Обращение назначено <span id="text1"></span>. <br />Срок исполнения дата обращения + 1 месяц</div>
+							<div class="warning1"><span id="text1"></span></div>
 						</td>
 					</tr>
 					<% } else { %>
@@ -60,10 +60,21 @@
 				<h2>Фото до:</h2>
 				<div class="images">
 					<div class="left"><img src="/static/images/fl.png" /></div>
-					<img src="/static/images/photos/<%= requisition.id %>_before_1.png" class="current" alt="" /> 
-					<img src="/static/images/photos/<%= requisition.id %>_before_2.png" alt="" />
-					<img src="/static/images/photos/<%= requisition.id %>_before_3.png" alt="" />
-					<img src="/static/images/photos/<%= requisition.id %>_before_4.png" alt="" />
+					<% var len = $.map(images, function(n, i) { return i; }).length; %>
+					<% console.log(len); %>
+					<% if(len > 0) { %>
+						<% var kk = 0; %>
+						<% _.each(images, function(p, k) { %>
+							<% kk += 1; %>
+							<img src="<%= p %>" alt="" <% if(kk == 1) { %> class="current"<% } %> />
+						<% }) %>
+					<% } %>
+					<% if(len == 0) { %>
+						<img src="/static/images/photos/2_before_1.png" class="current" alt="" /> 
+						<img src="/static/images/photos/2_before_2.png" alt="" />
+						<img src="/static/images/photos/2_before_3.png" alt="" />
+						<img src="/static/images/photos/2_before_4.png" alt="" />
+					<% } %>
 					<div class="right"><img src="/static/images/fr.png" /></div>
 				</div>
 			</div>

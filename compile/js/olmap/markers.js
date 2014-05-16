@@ -25,8 +25,8 @@ OLMap.prototype.addLpus =  function(lpus)
 
 OLMap.prototype.addRequisitions =  function(data, onPopupClick)
 {
-	console.log(data);
   if(data == null) return false;
+  	var self = this;
 	for(var i = 0; i < data.length; i++)
     {
         data[i].path = this.hostIP + '/static/compile/js/olmap/images/' +
@@ -38,6 +38,8 @@ OLMap.prototype.addRequisitions =  function(data, onPopupClick)
     
         this.addMarker(this.requisitionsLayer, data[i].lat, data[i].lon, data[i]);
     }
+
+	this.map.events.register('featureclick', this.requisitionsLayer, function hh(e) {onPopupClick(e.feature.attributes) });
 
     this.addMarkersPopup(this.requisitionsLayer, this.createRequisitionsPopupHtml , onPopupClick);
     return true;
@@ -114,7 +116,7 @@ OLMap.prototype.addMarkersPopup =  function(layer, createHTMLFunction, onPopupCl
        
     this.map.addControl(popupControl);
             
-    popupControl.activate();
+// popupControl.activate();
 }
 
 OLMap.prototype.addRequisition =  function(attr)

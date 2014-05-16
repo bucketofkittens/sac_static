@@ -116,12 +116,14 @@ _.extend(Map.prototype, {
 		this.SVGWriter.hide();
 	},
 	
-	getTypes_: function(history) {
+	getPhotos_: function(photos) {
 		var self = this;
+		self.photos = photos;
 		
 		this.panel.requisitionInfoWidget.init();
 		this.panel.requisitionInfoWidget.beforeCreate_ = function(data) {
-			return _.template(data, { requisition: self.requisition, history: history});
+			console.log(self.photos);
+			return _.template(data, { requisition: self.requisition, history: self.history, images: self.photos});
 		}
 		this.panel.requisitionInfoWidget.afterCreate_ = function() {
 			var self = this;
@@ -178,6 +180,12 @@ _.extend(Map.prototype, {
 		}
 		this.panel.requisitionInfoWidget.create();
 		this.panel.requisitionInfoWidget.show();
+	},
+	
+	getTypes_: function(history) {
+		this.history = history;
+		
+		$.get(this.app.apiHost + "/requisitions/get_requisition_photos/"+this.requisition.id, $.proxy(this.getPhotos_, this));
 	},
 	
 	showRequisition: function(requisition) {

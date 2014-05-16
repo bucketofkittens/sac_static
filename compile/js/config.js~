@@ -2,27 +2,15 @@ var ConfigApp = {
 	"SAC_TYPE": 'avto',
 	"PATHES": {
 		"VIDEO": "/static/video/",
-		"SVG": "/static/svg/",
+		"SVG": "/static/svg/", 
 		"MAP": "/static/images/map/",
 		"MINI-MAP": "/static/images/mini/"
 	},
 	"API-HOST": window.location.origin, /* window.location.origin works only in webkit */
 	"FOOTER-NAV": {
         "EVENTS": {
-            "title": "Реагирование"
+            "title": "Округа"
         },
-        "REGIONS": {
-            "title": "Аналитика"
-        },
-        "SVP": {
-            "title": "Транспорт"
-        },
-        "DCH": {
-            "title": "Наблюдение"
-        },
-        "REFBOOKS": {
-            "title": "Справочники"
-        }
     },
 	"REGIONS": {
 		"LEFT": {

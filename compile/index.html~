@@ -78,7 +78,7 @@
 	<div id="bg-video">
 		<video id="video" type="video/mp4" class="video"  preload="auto" width="1920" height="1080" ></video>
 	</div>
-	</div>
+	</div> 
 
 	<script type="text/javascript" src="/static/compile/js/lib/jquery-2.0.0.min.js"></script>
 	<script type="text/javascript" src="/static/compile/js/lib/jquery-migrate-1.2.1.min.js"></script>
