@@ -592,7 +592,7 @@ var Application = function() {
 		this.footerNavWidget.draw();
 		this.loadingState.stop();
 
-		this.app.panels['EVENTS'].show();
+		this.panels['EVENTS'].show();
 	}
 
 	this.setAppTitle = function(title) {

@@ -1,4 +1,5 @@
 var ConfigApp = {
+	"SAC_TYPE": 'avto',
 	"PATHES": {
 		"VIDEO": "/static/video/",
 		"SVG": "/static/svg/",

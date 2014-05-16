@@ -378,11 +378,11 @@ var EventsPanel = Panel.extend({
 		this.appealsList.drawValue = function(type, status) {
 			console.log(this);
 			if(!type || type == "-1") {
-				type = "all";
-			}
+				type = "all"; 
+			} 
 			if(!status || status == "-1") {
 				status = "all";
-			}
+			} 
 			$.get(self.app.apiHost + "/requisitions/get_subtree_count_requisition_list/"+self.map.currentRegion+"/"+type+"/"+status, $.proxy(this.getMapData_, this));
 		}
 		this.appealsList.getMapData_ = function(data) {

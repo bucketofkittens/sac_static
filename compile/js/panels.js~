@@ -394,7 +394,7 @@ var EventsPanel = Panel.extend({
 			$("#appeals-list .num").on("click", function() {
 				$("#appeals-list .num").removeClass("current");
 				$(this).addClass("current");
-				$(this).find(".all").addClass("current");
+				$(this).parent().find(".all").addClass("current");
 				
 				$(this).parent().find(".status_list").toggle();
 				self.currentType = $(this).parent().attr("data-index");

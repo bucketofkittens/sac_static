@@ -118,7 +118,7 @@ var SVGLoader = function(app, config) {
 		}
 		
 		self.drawParamValues();
-	}
+	} 
 
 	this.drawParamValues = function(data) {
 		this.removeParamValues();

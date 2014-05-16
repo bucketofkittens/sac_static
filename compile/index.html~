@@ -90,6 +90,7 @@
 	<script type="text/javascript" src="/static/compile/js/lib/jquery.flot.time.min.js"></script>
 	<script type="text/javascript" src="/static/compile/js/lib/underscore-min.js"></script>
 	<script type="text/javascript" src="/static/compile/js/lib/signals.min.js"></script>
+	<script type="text/javascript" src="/static/compile/js/lib/moment.min.js"></script>
 
 	<script type="text/javascript" src="/static/compile/js/OpenLayers/OpenLayers.js"></script>
 	<script type="text/javascript" src="/static/compile/js/olmap/olmap.js"></script>

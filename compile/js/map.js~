@@ -154,7 +154,6 @@ _.extend(Map.prototype, {
 			});
 			
 			$("#requisition #assign").on("click", function() {
-				console.log(self);
 				$.post(window.location.origin+"/requisitions/change_status", {status_id: 2, requisition_id: $("#req_id").val()}, function() {
 					$(".warning1").fadeIn();
 				

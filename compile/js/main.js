@@ -560,10 +560,10 @@ var Application = function() {
 			container: "#reposrts-params-age-selected",
 			onAfterYearSelected: $.proxy(this.onFormatUpdateContentEventBind_, this)
 		});
-
+ 
 
 		this.legendWidget = new LegendWidget(this);
-		this.regionsLegendWidget = new RegionsLegendWidget(this);
+		this.regionsLegendWidget = new RegionsLegendWidget(this); 
 		this.regionsLegendWidget.show();
 		//this.eventsLegendWidget = new EventsLegendWidget(this);
 		this.pageTitleWidget = new PageTitleWidget(this);

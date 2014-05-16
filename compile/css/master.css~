@@ -2927,7 +2927,7 @@ div.olControlZoom {
 	color: #ffffff;
 }
 
-#appeals-list .status_list li {
+#appeals-list .status_list li.current {
 	color: #ffffff;
 	font-weight: bold;
 }

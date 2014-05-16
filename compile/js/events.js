@@ -80,7 +80,7 @@ var OnDistrictChangeState = function(app, map, video_id, currentRegion) {
 
 	this.onAfterEvent_ = function() {
 		this.finishEvent += 1;
-		this.testEvents_();
+		this.testEvents_(); 
 	}
 
 	this.testEvents_ = function() {

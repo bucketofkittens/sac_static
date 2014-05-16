@@ -128,7 +128,7 @@ _.extend(Map.prototype, {
 			$("#requisition .close").on("click", function() {
 				self.panel.requisitionInfoWidget.destroy();
 			});
-			$("#requisition .images .left img").on("click", function() {
+			$("#requisition .images .left img").on("click", function() { 
 				var currentIndex = $("#requisition .images .current").index();
 				currentIndex -= 1;
 				

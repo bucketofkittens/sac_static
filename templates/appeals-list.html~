@@ -9,7 +9,7 @@
 				<% _.each(statuses, function(status,s_key) { %>
 					<li data-id="<%= status.id %>"><%= status.name %></li>
 				<% }) %>
-				<li>Все</li>
+				<li class="all">Все</li>
 			</ul>
 		</div>
 	<% }) %>
