@@ -1182,7 +1182,8 @@ var RegionsSelectorWidget = function(panel) {
 		}
 
 		$(this.CSS["LOAD"]).addClass("onShow");
-		this.panel.widgets.format.updateContent();
+		console.log(this.panel);
+		this.panel.app.panels["FORMATS"].widgets.format.updateContent();
 	}
 
 	this.onRegionNameClick_ = function(evt) {
@@ -1376,34 +1377,38 @@ var ParamsSelectorWidget = function(panel) {
 		}
 		var html = "";
 		var self = this;
-		var contentPane = this.scrollApi.getContentPane();
+		
+		if(this.scrollApi) {
+		
+			var contentPane = this.scrollApi.getContentPane();
 
-		$.each(params, function(key, value) {
-			var elementCurrentGroup = $("ul[data-id='"+value.id+"']", self.CSS["DATA-PLACE"]);
-			if(elementCurrentGroup.size() == 0) {
-				var html =  "<ul data-id='"+value.id+"' class='first'><li class='first-li'>";
-					html += "<span class='group params-name params-checkbox'>"+value.name+"</span><a href='#' class='params-checkbox current'></a>";
-					html += "<ul></ul></li></ul>";
+			$.each(params, function(key, value) {
+				var elementCurrentGroup = $("ul[data-id='"+value.id+"']", self.CSS["DATA-PLACE"]);
+				if(elementCurrentGroup.size() == 0) {
+					var html =  "<ul data-id='"+value.id+"' class='first'><li class='first-li'>";
+						html += "<span class='group params-name params-checkbox'>"+value.name+"</span><a href='#' class='params-checkbox current'></a>";
+						html += "<ul></ul></li></ul>";
 
-				contentPane.append(html);
-			}
+					contentPane.append(html);
+				}
 
-			var elementCurrentGroup = $("ul[data-id='"+value.id+"']", self.CSS["DATA-PLACE"]);
+				var elementCurrentGroup = $("ul[data-id='"+value.id+"']", self.CSS["DATA-PLACE"]);
 
-			if(value.parameters.length > 0) {
-				$.each(value.parameters, function(key2, value2) {
-					var paramCurrent = $("li[data-id='"+value2.id+"']", self.CSS["DATA-PLACE"]);
-					if(paramCurrent.size() == 0) {
-						var html = "<li data-name='"+value2.name+"' data-id='"+value2.id+"'><span  class='param params-name '><em class='spr'>-</em> <em class='name'>"+value2.name+"</em></span><a class='params-checkbox current' href='#'></a></li>";
+				if(value.parameters.length > 0) {
+					$.each(value.parameters, function(key2, value2) {
+						var paramCurrent = $("li[data-id='"+value2.id+"']", self.CSS["DATA-PLACE"]);
+						if(paramCurrent.size() == 0) {
+							var html = "<li data-name='"+value2.name+"' data-id='"+value2.id+"'><span  class='param params-name '><em class='spr'>-</em> <em class='name'>"+value2.name+"</em></span><a class='params-checkbox current' href='#'></a></li>";
 
-						elementCurrentGroup.find("ul").append(html);
-					} else {
-						paramCurrent.find("i").html(value2.value);
-					}
-				});	
-			}
-		});
-		this.scrollApi.reinitialise();
+							elementCurrentGroup.find("ul").append(html);
+						} else {
+							paramCurrent.find("i").html(value2.value);
+						}
+					});	
+				}
+			});
+			this.scrollApi.reinitialise();
+		}
 	}
 
 	this.prepareParamerts_ = function(data) {

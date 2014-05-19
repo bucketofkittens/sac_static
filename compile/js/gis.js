@@ -52,9 +52,9 @@ function showGis(id, getRequisitionCallback)
     if(ConfigApp["SAC_TYPE"] == 'avto') {
     	var self = this;
     	self.app.regionsManagerLocal.getRequisitions(id, getRequisitionCallback);
-    	//setInterval(function() {
-    	//	self.app.regionsManagerLocal.getRequisitions(id, getRequisitionCallback);
-    	//}, 5000);
+    	setInterval(function() {
+    		self.app.regionsManagerLocal.getRequisitions(id, getRequisitionCallback);
+    	}, 5000);
     	
     }
     if(ConfigApp["SAC_TYPE"] == 'lpu') this.app.regionsManagerLocal.getMarkers(id);

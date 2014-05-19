@@ -559,7 +559,7 @@ td.time { color: #7dc2e3; }
     padding-left: 30px;
 }
 
-#camers-list, #ramks-list, #appeals-list {
+#camers-list, #ramks-list, #appeals-list, #reports-list {
     position: absolute;
     background: url('/static/images/formats/widget-sidebar-d.png') center center no-repeat;
     background-size: 100% 100%;
@@ -573,8 +573,7 @@ td.time { color: #7dc2e3; }
     font-family: 'Open Sans',sans-serif;
     font-size: 14pt;
 }
-#appeals-list {
-	background: url('/static/images/formats/right-f.png') center center no-repeat;
+#appeals-list, #reports-list {
 	height: 635px;
 	width: 335px;
 	right: 0px;
@@ -865,23 +864,24 @@ embed.tablecam {
     background: #075286;
 }
 
-#appeals-list h2 {
+#appeals-list h2, #reports-list h2 {
  	margin-left: 60px;
  	margin-top: 10px;
  	font-size: 24px;
 }
-#appeals-list .menu {
+#appeals-list .menu, #reports-list .menu {
 	margin-top: 150px;
 	height: 400px;
 	overflow: auto;
 }
-#appeals-list .sidebar-entry {
+#appeals-list .sidebar-entry, #reports-list .sidebar-entry {
 	border: 0px;
 	cursor: pointer;
 	font-size: 20px;
 }
-#appeals-list .sidebar-entry li {
-	padding-bottom: 5px;
+#appeals-list .sidebar-entry li, #reports-list .sidebar-entry li {
+	padding-top: 5px;
+	padding-bottom: 3px;
 }
 
 .status_list {

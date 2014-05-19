@@ -254,3 +254,15 @@ var RequisitionInfoWidget = Object.create(ExWidget);
 RequisitionInfoWidget.navId = "#requisition";
 RequisitionInfoWidget.folder = "/templates/";
 
+var ReportsMainWidget = Object.create(ExWidget);
+ReportsMainWidget.navId = "#reports-main";
+ReportsMainWidget.folder = "/templates/";
+
+var ReportsListWidget = Object.create(ExWidget);
+ReportsListWidget.navId = "#reports-list";
+ReportsListWidget.folder = "/templates/";
+
+var ReportsMainWidget = Object.create(ExWidget);
+ReportsMainWidget.navId = "#reports-main";
+ReportsMainWidget.folder = "/templates/";
+

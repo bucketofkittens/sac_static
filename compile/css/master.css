@@ -2789,7 +2789,7 @@ and (max-device-width : 1024px)  {
 	padding: 2px;
 }
 
-#requisition
+#requisition, #reports-main
 {
   position:absolute;
   background:url(/static/images/formats/table.png) center center no-repeat;
@@ -2805,14 +2805,14 @@ and (max-device-width : 1024px)  {
   transition:all 1s linear;
 }
 
-#requisition .close {
+#requisition .close, #reports-main .close {
   top: 50px !important;
   right: 50px !important;
   cursor: pointer;
   z-index: 50;
 }
 
-#requisition .sub {
+#requisition .sub, #reports-main .sub {
 	padding: 50px;
 	font-size: 16px;
 	
@@ -2881,7 +2881,7 @@ and (max-device-width : 1024px)  {
 	font-family:NeoSansPro-Light;
 }
 
-#appeals-list .sbHolder {
+#appeals-list .sbHolder, #reports-list .sbHolder {
 	position: relative;
 	top: 35px;
 }
@@ -2926,4 +2926,12 @@ div.olControlZoom {
 #appeals-list .status_list li.current {
 	color: #ffffff;
 	font-weight: bold;
+}
+
+#appeals-list .num {
+	text-decoration: underline;
+}
+
+#content .table {
+	z-index: 10000;
 }

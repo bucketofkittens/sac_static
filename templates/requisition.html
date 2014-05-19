@@ -1,4 +1,5 @@
 <div id="requisition" class="widget">
+	<span style="display: none;" id="txt"><%= requisition.id %></span>
 	<input type="hidden" id="req_id" value="<%= requisition.id %>" />
 	<span class="close" id="reports-close"></span>
     <div class="sub">
@@ -82,7 +83,7 @@
 		<div class="history">
 			<div class="left">
 				<h2>Журнал</h2>
-				<table>
+				<table id="app1">
 					<% _.each(history, function(h) { %>
 						<tr>
 							<td>

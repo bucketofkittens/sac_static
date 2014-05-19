@@ -56,6 +56,56 @@
 		<h1>Российская Федерация</h1>
 	</header>
 	<div id="content">
+	<div class="nav nav-elements" id="footer-nav-widget"></div>
+	
+ <div id="regions-params" class="hidden">
+     <div class="show nav-elements" id="regions-paramers-show"></div>
+     <div class="data" id="regions-parametrs-widget">
+         <a href="#" class="hidden"></a>
+         <h3>&nbsp;</h3>
+         <p id="regions-param-info">&nbsp;</p>
+        <input type="text" class="search" id="regions-params-filter" placeholder="Поиск" />
+        <select class="year" id="regions_age_select"></select>
+        <section class="scroll" id="regions-parametrs-list"></section>
+     </div>
+ </div>
+ 
+ <div id="regions-selector" class="hidden">
+<div class="data region" id="region-data">
+<h2>Регионы</h2>
+<input type="text" class="search" placeholder="Поиск" id="region-selector-filter" />
+<section class="scroll" id="region-data-place"></section>
+</div>
+</div>
+<!-- таблица форматов -->
+<div class="table hidden" id="format-data">
+<div id="table-format">
+<table>
+<col width="570px" />
+<col width="250px" />
+<col width="130px" />
+<col width="100px" />
+<thead>
+<tr>
+<th>Параметр</th>
+<th>Регион</th>
+<th>Значение</th>
+<th>Год</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+</div>
+</div>
+<div id="params-selector" class="hidden">
+<div class="data f" id="params-data">
+<h2>Параметры</h2>
+<h3>&nbsp;</h3>
+<input type="text" class="search" placeholder="Поиск" />
+<select class="year" id="params-age-selected"></select>
+<section class="scroll" id="params-data-place"></section>
+</div>
+</div>
 	<div class="time nav-elements">
 		<b><span id="hour">16</span>:<span id="minute">40</span></b>
 		<p><span id="day">04</span> <span id="month">апреля</span> <span id="age">2013</span></p>
@@ -65,6 +115,8 @@
 		<p class="text" id="loading"></p>
 		<img src="/static/images/load.png" id="load-image" alt="" />
 	</div>
+	
+	
 
 	<div id="bg-colored-image"></div>
 	<div id="bg-image"></div>

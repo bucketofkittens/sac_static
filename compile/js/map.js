@@ -75,7 +75,9 @@ _.extend(Map.prototype, {
 		this.setBgImage();
 		this.removeBlur();
 		if(this.currentZoom != 1) {
-			this.miniMap.opacityShow();
+			if(this.currentZoom != 3) {
+				this.miniMap.opacityShow();
+			}
 		}
 		this.SVGWriter.load(this.app.configManager.getSvgById(this.currentRegion));
 		this.SVGWriter.show();
@@ -118,6 +120,7 @@ _.extend(Map.prototype, {
 	
 	getPhotos_: function(photos) {
 		var self = this;
+		var self2 = this;
 		self.photos = photos;
 		
 		this.panel.requisitionInfoWidget.init();
@@ -155,8 +158,9 @@ _.extend(Map.prototype, {
 				$("#requisition .images img").eq(currentIndex).addClass("current");
 			});
 			
-			$("#requisition #assign").on("click", function() {
-				$.post(window.location.origin+"/requisitions/change_status", {status_id: 2, requisition_id: $("#req_id").val()}, function() {
+			$("#requisition #assign").on("click", function(event) {
+				$.post(window.location.origin+"/requisitions/change_status", {status_id: 2, requisition_id: $("#txt").html()}, function() {
+					
 					$(".warning1").fadeIn();
 				
 					$("#text1").html($(".executor option:selected").text());
@@ -165,6 +169,7 @@ _.extend(Map.prototype, {
 					$(".executor").remove();
 					
 					$("#stat").html("В работе");
+					$("#app1").append('<tr><td>'+moment().format('DD.MM.YYYY')+'</td><td>В работе</td><td></td></tr>')
 				});
 				
 			});

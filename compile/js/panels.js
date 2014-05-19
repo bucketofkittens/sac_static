@@ -136,18 +136,60 @@ var GraphPanel = Panel.extend({
 });
 
 var ReportsPanel = Panel.extend({
+	initialize: function(){
+		var self = this;
+		
+		this.list = ReportsListWidget;
+		this.list.afterCreate_ = function() {
+			$("#reports-list .num").on("click", function(event) {
+				self.main.beforeCreate_ = function(data) {
+					return _.template(data, { type : $(event.target).attr("data-index")});
+				}
+				if(self.main) {
+					self.main.destroy();
+				}
+				
+				self.main.init();
+				self.main.panel = self;
+				self.main.create();
+				self.main.show();
+				console.log($("#reports-main"));
+				setTimeout(function() {$("#reports-main").removeClass("hidden")}, 500);
+			});
+		};
+		this.list.init();
+		this.list.create();
+		
+		this.main = ReportsMainWidget;
+		
+		
+		
+	},
 
 	show: function() {
-		this.app.reportsParamsSelector.show();
-		this.app.reportsDiscSelector.show();
+		this.list.show();
+		
+		this.yearSelector = new YearSelectWidget(this, {
+		      years: [2014, 2013, 2012, 2011, 2010, 2009, 2008],
+		      selectedYear: 2012,
+		      container: "#age2_select",
+		      onAfterYearSelected: function() {}
+		  });
+		this.yearSelector.draw();
+	
+		//this.app.reportsParamsSelector.show();
+		//this.app.reportsDiscSelector.show();
 		//this.app.graphRegionsSelectorWidget.show();
 		//this.app.graphWidget.show();
 	},
 
 	hide: function() {
-		this.app.reportsParamsSelector.hidden();
-		this.app.reportsDiscSelector.hidden();
-		this.app.reportsWidget.hidden();
+		this.list.hide();
+		this.main.hide();
+		
+		//this.app.reportsParamsSelector.hidden();
+		//this.app.reportsDiscSelector.hidden();
+		//this.app.reportsWidget.hidden();
 		//this.app.graphRegionsSelectorWidget.hidden();
 		//this.app.graphWidget.hidden();
 	}
@@ -166,7 +208,7 @@ var RegionPanel = Panel.extend({
       "CAMERA-LEFT": $(this.CSS["CAMERA-LEFT"]),
       "CAMERA-RIGHT": $(this.CSS["CAMERA-RIGHT"])
     }
-		//this.regionsMapColorel = new RegionsMapColorel(this);
+		this.regionsMapColorel = new RegionsMapColorel(this);
 	  this.svgWriter = new SVGLoader(this.app, {panel: this});
     this.widgets.yearSelector = new YearSelectWidget(this, {
 			years: [2012],
@@ -174,12 +216,12 @@ var RegionPanel = Panel.extend({
 			container: "#regions_age_select"
 		});
 
-	  //this.widgets.regionsParametrs = new RegionsParametrsWidgets(this); 
-    //this.widgets.regionsParametrs.getRegionsParams();
-		//this.widgets.paramsSelector = new ParamsSelectorWidget(this);
-    //this.widgets.regionsSelector = new RegionsSelectorWidget(this)
-	 // this.widgets.regionsMapColor = new RegionsMapColorWidget(this); 
-	//	this.widgets.regionsMapColor.enable();
+	  this.widgets.regionsParametrs = new RegionsParametrsWidgets(this); 
+    this.widgets.regionsParametrs.getRegionsParams();
+		this.widgets.paramsSelector = new ParamsSelectorWidget(this);
+    this.widgets.regionsSelector = new RegionsSelectorWidget(this)
+	  this.widgets.regionsMapColor = new RegionsMapColorWidget(this); 
+		this.widgets.regionsMapColor.enable();
 	  this.bindEvents_();
   },
 
@@ -240,10 +282,10 @@ var RegionPanel = Panel.extend({
 		this.svgWriter.show();
 		this.svgWriter.load(this.getSVGCurrentCamera());
 
-		//this.widgets.regionsParametrs.fullShow();
+		this.widgets.regionsParametrs.fullShow();
 		this.widgets.regionsMapColor.updateParams();
 
-		//this.app.regionsLegendWidget.show();
+		this.app.regionsLegendWidget.show();
 	},
 
 	hide: function() {
@@ -252,9 +294,9 @@ var RegionPanel = Panel.extend({
 		this.elements["CAMERA-RIGHT"].removeClass("onShow");
     	$('#bg-colored-image').css({backgroundImage: 'none'});
 
-		//this.widgets.regionsParametrs.fullHidden();
+		this.widgets.regionsParametrs.fullHidden();
 
-		//this.app.regionsLegendWidget.hide();
+		this.app.regionsLegendWidget.hide();
 	},
 
 	addBlur: function() {
@@ -376,7 +418,6 @@ var EventsPanel = Panel.extend({
 			return _.template(data, { appeals : self.appeals, statuses: statuses});
 		}
 		this.appealsList.drawValue = function(type, status) {
-			console.log(this);
 			if(!type || type == "-1") {
 				type = "all"; 
 			} 
@@ -463,6 +504,7 @@ var EventsPanel = Panel.extend({
 
 	show: function() {
 		this.appealsList.show();
+		$("#appeals-list").removeClass("hidden");
 		this.elements["CONTAINER"].removeClass("onHidden");
 		
 		this.map.show(this.map.currentZoom)
@@ -473,6 +515,7 @@ var EventsPanel = Panel.extend({
 	},
 
 	hide: function() {
+		this.appealsList.hide();
 		this.elements["CONTAINER"].addClass("onHidden");
 	_.each(this.widgets, function(w){ w.hide() })
 		this.map.miniMap.opacityHidden();

@@ -567,10 +567,10 @@ var Application = function() {
 		this.regionsLegendWidget.show();
 		//this.eventsLegendWidget = new EventsLegendWidget(this);
 		this.pageTitleWidget = new PageTitleWidget(this);
-		
+		this.formatManager = new FormatManager(this);
 		/*
 			this.eventsDrawWidget = new EventsDrawWidget(this);
-			this.formatManager = new FormatManager(this);
+			
 			this.reportsParamsSelector = new ReportsParamsSelector(this);
 			this.reportsDiscSelector = new ReportsDiscSelector(this);
 			this.reportsWidget = new ReportsWidget(this);
@@ -579,14 +579,19 @@ var Application = function() {
 		this.panels = {
 		  'EVENTS':     new EventsPanel(this),
 		  'REGIONS':    new RegionPanel(this),
+		  /*
 		  'SVP':        new SvpPanel(this),
 		  'DCH':        new DchPanel(this),
-		  'REFBOOKS':   new TariffsPanel(this) 
-		  /*'TARIFFS':    new TariffsPanel(this),
+		  */
+		  'FORMATS':    new FormatsPanel(this),
+		  'REPORTS':    new ReportsPanel(this),
+		  'REFBOOKS':   new TariffsPanel(this),
+		  'TARIFFS':    new TariffsPanel(this),
+		  /*
 		  'DISTRICTS':  new DistrictsPanel(this),
 		  'FORMATS':    new FormatsPanel(this),
 		  'GRAPHS':     new GraphPanel(this),
-		  'REPORTS':    new ReportsPanel(this)*/
+		  */
 		};
 
 		this.footerNavWidget.draw();

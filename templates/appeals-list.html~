@@ -3,7 +3,7 @@
     <select class="year" id="age_select"></select>
     <div class="menu">
     <% _.each(appeals, function(item,key) { %>
-		<div class="ramp-entry sidebar-entry" data-index="<%= item.id %>">
+		<div class="ramp-entry sidebar-entry" data-index="<%= item.id %>"> 
 			<p class="num"><%= item.name %></p>
 			<ul class="status_list">
 				<% _.each(statuses, function(status,s_key) { %>

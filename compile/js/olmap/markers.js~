@@ -25,26 +25,13 @@ OLMap.prototype.addLpus =  function(lpus)
 
 OLMap.prototype.addRequisitions =  function(data, onPopupClick)
 {
+	if(!this.first) {
+		this.first = true;
+	} 
   if(data == null) return false;
+  	this.requisitionsLayer.destroyFeatures();
   	var self = this;
-  	if(!self.req) {
-  		self.req = [];
-  	}
-  	var newData = [];
-  	$.each(data, function(key, value) {
-  		var elems = self.req.filter(function(item) {
-			return item.id == value.id;
-		});
-		
-		if(elems && elems.length > 0) {
-			newData.push(value);
-		} else {
-			self.req.push(value);
-		}
-  	});
-  	console.log(newData);
-  	console.log(self.req);
-	for(var i = 0; i < newData.length; i++)
+	for(var i = 0; i < data.length; i++)
     {
         data[i].path = this.hostIP + '/static/compile/js/olmap/images/' +
        //   data[i].path = 'images/' +

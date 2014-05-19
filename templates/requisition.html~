@@ -1,4 +1,5 @@
 <div id="requisition" class="widget">
+	<span style="display: none;" id="txt"><%= requisition.id %></span>
 	<input type="hidden" id="req_id" value="<%= requisition.id %>" />
 	<span class="close" id="reports-close"></span>
     <div class="sub">
@@ -69,7 +70,7 @@
 							<img src="<%= p %>" alt="" <% if(kk == 1) { %> class="current"<% } %> />
 						<% }) %>
 					<% } %>
-					<% if($(images).size() == 0) { %>
+					<% if(len == 0) { %>
 						<img src="/static/images/photos/2_before_1.png" class="current" alt="" /> 
 						<img src="/static/images/photos/2_before_2.png" alt="" />
 						<img src="/static/images/photos/2_before_3.png" alt="" />
@@ -84,7 +85,7 @@
 				<h2>Журнал</h2>
 				<table>
 					<% _.each(history, function(h) { %>
-						<tr>
+						<tr id="app1">
 							<td>
 								<% 
 								var formatDateStr = moment(h.change_dt).format('DD.MM.YYYY'); 
